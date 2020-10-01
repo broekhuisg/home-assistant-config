@@ -7,7 +7,8 @@ services:
       - TZ=Europe/Amsterdam
     volumes:
       - /home/gavin/hass/hass-config:/config
+      - /etc/localtime:/etc/localtime:ro
     restart: always
     network_mode: host
-#    devices:
-#      - /dev/ttyACM0:/dev/ttyACM0
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
