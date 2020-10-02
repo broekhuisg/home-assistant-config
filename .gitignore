@@ -13,7 +13,6 @@
 
 # Folders
 .cloud
-.HA_VERSION
 .storage
 .google.token
 www
