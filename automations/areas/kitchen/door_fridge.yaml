@@ -1,0 +1,13 @@
+alias: Door fridge
+trigger:
+- entity_id: binary_sensor.openclose_25
+  platform: state
+  from: 'off'
+  to: 'on'
+  for:
+    seconds: 25
+condition: []
+action:
+- data:
+    message: De koellkast staat nog open!
+  service: telegram_bot.send_message

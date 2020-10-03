@@ -1,2 +1,3 @@
 binary_sensor.openclose_11:
   friendly_name: Voordeur
+  icon: mdi:door
