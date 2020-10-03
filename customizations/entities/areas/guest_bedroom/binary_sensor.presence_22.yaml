@@ -1,2 +1,2 @@
 binary_sensor.presence_22:
-  friendly: Logeerkamer
+  friendly_name: Logeerkamer
