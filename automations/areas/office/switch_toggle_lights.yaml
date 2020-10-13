@@ -1,0 +1,12 @@
+alias: Switch toggle lights office
+trigger:
+  platform: event
+  event_type: deconz_event
+  event_data:
+    id: "switch_27"
+    event: 3002
+condition: []
+action:
+- data:
+    entity_id: group.office_lights
+  service: light.toggle

@@ -1,0 +1,12 @@
+alias: Switch toggle kleurenlamp office
+trigger:
+  platform: event
+  event_type: deconz_event
+  event_data:
+    id: "switch_27"
+    event: 2002
+condition: []
+action:
+- data:
+    entity_id: light.color_light_9
+  service: light.toggle

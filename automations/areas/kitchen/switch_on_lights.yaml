@@ -1,12 +1,13 @@
-alias: Switch lights off kitchen
+alias: Switch on lights kitchen
 trigger:
   platform: event
   event_type: deconz_event
   event_data:
     id: "tradfri_on_off_switch_1"
-    event: 2002
+    event: 1002
 condition: []
 action:
 - data:
     entity_id: group.kitchen_spots
-  service: light.turn_off
+    brightness_pct: 45
+  service: light.turn_on

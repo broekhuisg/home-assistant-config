@@ -1,0 +1,12 @@
+alias: Switch toggle kastlamp office
+trigger:
+  platform: event
+  event_type: deconz_event
+  event_data:
+    id: "switch_27"
+    event: 1002
+condition: []
+action:
+- data:
+    entity_id: light.kastlamp_kantoor
+  service: light.toggle

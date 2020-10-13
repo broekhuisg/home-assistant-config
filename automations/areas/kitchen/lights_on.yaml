@@ -12,5 +12,5 @@ condition:
 action:
 - data:
     entity_id: group.kitchen_spots
-    brightness_pct: 48
+    brightness_pct: 45
   service: light.turn_on
