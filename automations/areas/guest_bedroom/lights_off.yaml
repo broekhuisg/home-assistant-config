@@ -1,0 +1,13 @@
+alias: Lights off guest bedroom
+trigger:
+- entity_id: binary_sensor.presence_22
+  platform: state
+  from: 'on'
+  to: 'off'
+  for:
+    minutes: 2
+condition: []
+action:
+- data:
+    entity_id: light.dimmable_light_10
+  service: light.turn_off

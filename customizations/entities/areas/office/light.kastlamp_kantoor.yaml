@@ -1,0 +1,6 @@
+# Original: switch.on_off_plug_in_unit_8
+# Converted to: light.hoeklamp via entities/lights
+
+light.kastlamp_kantoor:
+  friendly_name: Kastlamp Kantoor
+  icon: mdi:desk-lamp
