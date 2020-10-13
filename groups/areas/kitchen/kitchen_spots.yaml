@@ -1,0 +1,6 @@
+name: Kitchen spots
+entities:
+  - light.dimmable_light_12
+  - light.dimmable_light_11
+  - light.dimmable_light_13
+  - light.dimmable_light_14

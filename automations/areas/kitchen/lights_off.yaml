@@ -1,0 +1,13 @@
+alias: Lights off kitchen
+trigger:
+- entity_id: binary_sensor.presence_9
+  platform: state
+  from: 'on'
+  to: 'off'
+  for:
+    minutes: 12
+condition: []
+action:
+- data:
+    entity_id: group.kitchen_spots
+  service: light.turn_off

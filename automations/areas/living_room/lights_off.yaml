@@ -1,4 +1,4 @@
-alias: Turn off living room lights when no motion
+alias: Lights off living room
 trigger:
 - entity_id: binary_sensor.presence_3
   platform: state

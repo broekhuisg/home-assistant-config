@@ -18,15 +18,15 @@ sequence:
       entity_id: light.kleurlamp
 
   - delay:
-      seconds: 2
+      seconds: 1
 
   - service: light.turn_on
     data:
       entity_id: light.color_temperature_light_2
-      brightness_pct: 180
+      brightness_pct: 80
       transition: 3
   - service: light.turn_on
     data:
       entity_id: light.color_temperature_light_5
-      brightness_pct: 180
+      brightness_pct: 70
       transition: 3

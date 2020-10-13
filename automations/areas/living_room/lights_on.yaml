@@ -1,4 +1,4 @@
-alias: Turn on living room lights when motion
+alias: Lights on when motion living room
 trigger:
 - entity_id: binary_sensor.presence_3
   platform: state
