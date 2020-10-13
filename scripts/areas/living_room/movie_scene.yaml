@@ -1,4 +1,4 @@
-alias: Living room normal
+alias: Movie scene
 sequence:
   - service: light.turn_on
     data:
@@ -10,23 +10,23 @@ sequence:
       entity_id: light.color_temperature_light_5
       color_temp: 650
       transition: 1
-  - service: light.turn_on
+  - service: light.turn_off
     data:
       entity_id: light.hoeklamp
-  - service: light.turn_on
+  - service: light.turn_off
     data:
       entity_id: light.kleurlamp
 
   - delay:
-      seconds: 1
+      seconds: 2
 
   - service: light.turn_on
     data:
       entity_id: light.color_temperature_light_2
-      brightness_pct: 180
-      transition: 3
+      brightness_pct: 20
+      transition: 5
   - service: light.turn_on
     data:
       entity_id: light.color_temperature_light_5
-      brightness_pct: 180
-      transition: 3
+      brightness_pct: 10
+      transition: 5
