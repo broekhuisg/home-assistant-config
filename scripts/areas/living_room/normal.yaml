@@ -1,0 +1,32 @@
+alias: Living room normal
+sequence:
+  - service: light.turn_on
+    data:
+      entity_id: light.color_temperature_light_2
+      color_temp: 650
+      transition: 1
+  - service: light.turn_on
+    data:
+      entity_id: light.color_temperature_light_5
+      color_temp: 650
+      transition: 1
+  - service: light.turn_on
+    data:
+      entity_id: light.hoeklamp
+  - service: light.turn_on
+    data:
+      entity_id: light.kleurlamp
+
+  - delay:
+      seconds: 1
+
+  - service: light.turn_on
+    data:
+      entity_id: light.color_temperature_light_2
+      brightness_pct: 180
+      transition: 3
+  - service: light.turn_on
+    data:
+      entity_id: light.color_temperature_light_5
+      brightness_pct: 180
+      transition: 3
