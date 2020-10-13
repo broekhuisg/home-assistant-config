@@ -1,0 +1,6 @@
+# Original: switch.on_off_plug_in_unit_4
+# Converted to: light.#{friendly_name} via entities/lights
+
+light.kleurlamp:
+  friendly_name: Kleurlamp
+  icon: mdi:lava-lamp

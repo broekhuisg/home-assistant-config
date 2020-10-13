@@ -1,0 +1,20 @@
+alias: Turn on living room lights when motion
+trigger:
+- entity_id: binary_sensor.presence_3
+  platform: state
+  from: 'off'
+  to: 'on'
+condition:
+- condition: numeric_state
+  below: '5'
+  entity_id: sun.sun
+  value_template: '{{ state.attributes.elevation }}'
+- condition: not
+  conditions:
+  - condition: state
+    entity_id: media_player.xbian
+    state: 'playing'
+action:
+- data:
+    entity_id: group.living_room_lights
+  service: light.turn_on

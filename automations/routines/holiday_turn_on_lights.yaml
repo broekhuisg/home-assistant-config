@@ -1,0 +1,14 @@
+alias: Holiday turn on lights
+trigger:
+  platform: time
+  at: "18:45:00"
+condition: []
+action:
+- service: light.turn_on
+  data:
+    entity_id:
+      - light.hoeklamp
+      - light.kleurlamp
+      - light.color_temperature_light_2
+      - light.color_temperature_light_5
+      - light.color_light_9

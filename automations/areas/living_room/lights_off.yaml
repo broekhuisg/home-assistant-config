@@ -1,0 +1,18 @@
+alias: Turn off living room lights when no motion
+trigger:
+- entity_id: binary_sensor.presence_3
+  platform: state
+  from: 'on'
+  to: 'off'
+  for:
+    minutes: 20
+condition:
+- condition: not
+  conditions:
+  - condition: state
+    entity_id: media_player.xbian
+    state: 'playing'
+action:
+- data:
+    entity_id: group.living_room_lights
+  service: light.turn_off

@@ -5,7 +5,7 @@ trigger:
   from: 'off'
   to: 'on'
   for:
-    seconds: 25
+    seconds: 60
 condition: []
 action:
 - data:
