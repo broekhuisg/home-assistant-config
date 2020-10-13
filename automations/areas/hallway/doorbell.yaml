@@ -10,42 +10,38 @@ action:
 - data:
     message: Er staat iemand voor de deur
   service: telegram_bot.send_message
-# - service: media_player.volume_set
-#   data_template:
-#     entity_id: media_player.living_room_google_hub
-#     volume_level: 1.0
-# - service: media_player.volume_set
-#   data_template:
-#     entity_id: media_player.office_home_mini
-#     volume_level: 1.0
-# - data:
-#     entity_id: media_player.living_room_google_hub
-#     media_content_id: http://192.168.2.26:8123/local/classic-doorbell-sound.mp3
-#     media_content_type: audio/mp3
-#   service: media_player.play_media  
-# - data:
-#     entity_id: media_player.office_home_mini
-#     media_content_id: http://192.168.2.26:8123/local/classic-doorbell-sound.mp3
-#     media_content_type: audio/mp3
-#   service: media_player.play_media
-# - delay: '00:00:10'
-# - service: media_player.volume_set
-#   data_template:
-#     entity_id: media_player.living_room_google_hub
-#     volume_level: 0.5
-# - service: media_player.volume_set
-#   data_template:
-#     entity_id: media_player.office_home_mini
-#     volume_level: 0.5
-# - data:
-#     url: 'https://192.168.2.1/cgi-bin/currentpic.cgi'
-#     username: !secret camera_user
-#     password: !secret camera_pass
-#     verify_ssl: false
-#   service: telegram_bot.send_photo
-#    - delay: '00:00:02'
-#    - data:
-#        entity_id: camera.front_door_camera_rtsp
-#        media_player: media_player.living_google_hub
-#      service: camera.play_stream
+- data_template:
+    entity_id: media_player.living_room_display
+    volume_level: 1.0
+  service: media_player.volume_set
+- data_template:
+    entity_id: media_player.office_home_mini
+    volume_level: 1.0
+  service: media_player.volume_set
+- data:
+    entity_id: media_player.living_room_display
+    media_content_id: http://192.168.2.17:8123/local/doorbell/doorbell.mp3
+    media_content_type: audio/mp3
+  service: media_player.play_media
+- data:
+    entity_id: media_player.office_home_mini
+    media_content_id: http://192.168.2.17:8123/local/doorbell/doorbell.mp3
+    media_content_type: audio/mp3
+  service: media_player.play_media
+- data:
+    url: !secret still_img_frontdoor_camera
+    username: !secret camera_user
+    password: !secret camera_pass
+    verify_ssl: false
+  service: telegram_bot.send_photo
 
+- delay: '00:00:05'
+
+- data_template:
+    entity_id: media_player.living_room_display
+    volume_level: 0.7
+  service: media_player.volume_set
+- data_template:
+    entity_id: media_player.office_home_mini
+    volume_level: 0.8
+  service: media_player.volume_set
