@@ -1,0 +1,10 @@
+alias: Alarm triggered
+trigger:
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: 'triggered'
+condition: []
+action:
+- data:
+    entity_id: script.alarm_lights_flash_init
+  service: script.turn_on
