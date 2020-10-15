@@ -1,0 +1,17 @@
+alias: Alarm trigger arming
+trigger:
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: 'arming'
+condition: []
+action:
+- data:
+    entity_id: media_player.living_room_display
+    volume_level: 0.7
+  service: media_player.volume_set
+- data:
+    entity_id: group.alarm_pending_lights
+  service: light.turn_on
+- data:
+    entity_id: script.alarm_arming_sound_init
+  service: script.turn_on
