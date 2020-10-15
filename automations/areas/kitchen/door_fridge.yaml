@@ -9,5 +9,5 @@ trigger:
 condition: []
 action:
 - data:
-    message: De koellkast staat nog open!
-  service: telegram_bot.send_message
+    entity_id: script.door_fridge_open_init
+  service: script.turn_on

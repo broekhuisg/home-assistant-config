@@ -1,0 +1,10 @@
+alias: Alarm lights flash init
+sequence:
+  - service: homeassistant.turn_off
+    entity_id: group.alarm_triggered_lights
+  - delay:
+      seconds: 2
+  - service: homeassistant.turn_on
+    entity_id: group.alarm_triggered_lights
+  - service: script.turn_on
+    entity_id: script.alarm_lights_flash_loop
