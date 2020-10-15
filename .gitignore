@@ -41,3 +41,4 @@ image_processing.yaml
 .tradfri_psk.conf
 .spotify-token-cache
 .ios.conf
+.DS_Store
