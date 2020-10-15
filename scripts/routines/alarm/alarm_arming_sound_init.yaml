@@ -1,7 +1,7 @@
 alias: Alarm arming sound init
 sequence:
 - data:
-    entity_id: media_player.living_room_display
+    entity_id: group.alarm_sound_players
     media_content_id: http://192.168.2.17:8123/local/alarm/arming-beep.mp3
     media_content_type: audio/mp3
   service: media_player.play_media

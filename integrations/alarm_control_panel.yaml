@@ -4,7 +4,7 @@ alarm_control_panel:
     name: Home alarm
     arming_time: 12
     delay_time: 12
-    trigger_time: 10
+    trigger_time: 40
     disarmed:
       trigger_time: 0
     armed_home:

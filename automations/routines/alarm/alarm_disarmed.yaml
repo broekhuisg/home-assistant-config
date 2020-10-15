@@ -24,5 +24,12 @@ action:
     entity_id: script.alarm_triggered_sound_loop
   service: script.turn_off
 - data:
-    entity_id: group.alarm_lights
+    entity_id: group.alarm_pending_lights
+    brightness_pct: 60
+  service: light.turn_on
+- delay:
+    seconds: 1
+- data:
+    entity_id: group.alarm_pending_lights
+    color_temp: 650
   service: light.turn_on
