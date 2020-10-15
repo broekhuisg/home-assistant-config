@@ -3,7 +3,7 @@ trigger:
   platform: event
   event_type: deconz_event
   event_data:
-    id: "switch_27"
+    id: "xiaomi_double_button_switch_1"
     event: 3002
 condition: []
 action:
