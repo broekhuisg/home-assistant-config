@@ -1,3 +1,0 @@
-name: Alarm Lights
-entities:
-  - light.color_light_9

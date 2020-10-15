@@ -1,0 +1,4 @@
+name: Alarm Pending Lights
+entities:
+  - light.color_light_9
+  - light.color_temperature_light_2

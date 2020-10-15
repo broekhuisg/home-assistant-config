@@ -1,0 +1,15 @@
+alias: Alarm trigger pending
+trigger:
+  - platform: state
+    entity_id: group.alarm_triggers
+    from: 'off'
+    to: 'on'
+condition: []
+action:
+- data:
+    entity_id: alarm_control_panel.home_alarm
+  service: alarm_control_panel.alarm_trigger
+- data:
+    entity_id: media_player.living_room_display
+    volume_level: 0.1
+  service: media_player.volume_set

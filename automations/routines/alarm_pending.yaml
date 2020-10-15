@@ -1,0 +1,13 @@
+alias: Alarm pending
+trigger:
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: 'pending'
+condition: []
+action:
+- data:
+    entity_id: group.alarm_pending_lights
+  service: light.turn_on
+- data:
+    entity_id: script.alarm_pending_sound_init
+  service: script.turn_on
