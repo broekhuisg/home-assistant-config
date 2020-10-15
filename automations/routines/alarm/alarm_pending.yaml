@@ -7,7 +7,7 @@ condition: []
 action:
 - data:
     entity_id: group.alarm_sound_players
-    volume_level: 0.4
+    volume_level: 1
   service: media_player.volume_set
 - data:
     entity_id: group.alarm_pending_lights
