@@ -1,9 +1,9 @@
 alias: Door fridge open loop
 sequence:
+  - delay:
+      seconds: 20
   - condition: state
     entity_id: binary_sensor.openclose_25
     state: 'on'
-  - delay:
-      seconds: 20
   - service: script.turn_on
     entity_id: script.door_fridge_open_init
