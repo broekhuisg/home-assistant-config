@@ -2,7 +2,7 @@ alias: Alarm lights flash loop
 sequence:
   - condition: state
     entity_id: alarm_control_panel.home_alarm
-    state: triggered
+    state: 'triggered'
   - delay:
       seconds: 2
   - service: script.turn_on

@@ -6,5 +6,13 @@ trigger:
 condition: []
 action:
 - data:
+    entity_id: script.alarm_pending_sound_init
+  service: script.turn_off
+- data:
     entity_id: script.alarm_lights_flash_init
+  service: script.turn_on
+- delay:
+    seconds: 2
+- data:
+    entity_id: script.alarm_triggered_sound_init
   service: script.turn_on
