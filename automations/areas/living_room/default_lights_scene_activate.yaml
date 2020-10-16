@@ -13,7 +13,3 @@ action:
 - data:
     entity_id: script.living_room_lights_default
   service: script.turn_on
-- data:
-    entity_id: light.hyperion
-    effect: "Fire"
-  service: light.turn_on

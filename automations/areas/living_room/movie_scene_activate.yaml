@@ -13,7 +13,3 @@ action:
 - data:
     entity_id: script.movie_scene
   service: script.turn_on
-- data:
-    entity_id: light.hyperion
-    effect: V4L
-  service: light.turn_on
