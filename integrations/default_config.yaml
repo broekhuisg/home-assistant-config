@@ -1,2 +1,31 @@
 # Loads default config: #see https://www.home-assistant.io/integrations/default_config/
 default_config:
+
+# 20-10-2020: Disabled default_config since the cloud wasnt loading and HASS was tripping balls because of that
+# The cause was that the modem didnt serve internet to the NUC :(
+
+# automation:
+# cloud:
+# config:
+# frontend:
+# history:
+# image:
+# input_boolean:
+# input_datetime:
+# input_number:
+# input_select:
+# input_text:
+# logbook:
+# map:
+# media_source:
+# mobile_app:
+# person:
+# scene:
+# script:
+# ssdp:
+# sun:
+# system_health:
+# tag:
+# updater:
+# zeroconf:
+# zone:
