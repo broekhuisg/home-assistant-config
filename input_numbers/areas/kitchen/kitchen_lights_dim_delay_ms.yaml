@@ -1,0 +1,5 @@
+name: 'Step the kitchen lights this often (ms)'
+initial: 500
+min: 100
+max: 5000
+step: 100
