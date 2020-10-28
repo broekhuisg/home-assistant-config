@@ -5,7 +5,7 @@ fields:
     example: up
   light:
     description: 'The lights that are controlled'
-    example: group.kitchen
+    example: light.dimmable_light_12
 mode: restart
 sequence:
   - repeat:
@@ -30,5 +30,5 @@ sequence:
               {% else %}
                 {{ [br - st, mn]|max }}
               {% endif %}
-        # - delay:
-        #     milliseconds: "{{ states('input_number.kitchen_lights_dim_delay_ms')|int }}"
+        - delay:
+            milliseconds: "{{ states('input_number.kitchen_lights_dim_delay_ms')|int }}"
