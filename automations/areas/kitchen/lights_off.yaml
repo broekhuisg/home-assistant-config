@@ -9,5 +9,5 @@ trigger:
 condition: []
 action:
 - data:
-    entity_id: group.kitchen_spots
+    entity_id: light.keuken_spots
   service: light.turn_off

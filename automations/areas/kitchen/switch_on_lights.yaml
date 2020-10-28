@@ -8,6 +8,6 @@ trigger:
 condition: []
 action:
 - data:
-    entity_id: group.kitchen_spots
+    entity_id: light.keuken_spots
     brightness_pct: 45
   service: light.turn_on

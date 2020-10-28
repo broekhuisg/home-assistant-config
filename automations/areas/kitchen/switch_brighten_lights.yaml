@@ -16,7 +16,7 @@ action:
 - data:
     variables:
       direction: up
-      light: light.dimmable_light_12
+      light: light.keuken_spots
   service: script.turn_on
   entity_id: script.kitchen_lights_dimmer
 

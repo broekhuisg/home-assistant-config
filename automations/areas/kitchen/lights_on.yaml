@@ -11,6 +11,6 @@ condition:
   value_template: '{{ state.attributes.elevation }}'
 action:
 - data:
-    entity_id: group.kitchen_spots
-    brightness_pct: 45
+    entity_id: light.keuken_spots
+    brightness: 115
   service: light.turn_on

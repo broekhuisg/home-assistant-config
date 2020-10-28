@@ -1,4 +1,5 @@
-name: Kitchen spots
+platform: group
+name: Keuken spots
 entities:
   - light.dimmable_light_12
   - light.dimmable_light_11
