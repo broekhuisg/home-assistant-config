@@ -1,0 +1,13 @@
+alias: Nightmode on frontdoor camera
+trigger:
+- platform: sun
+  event: sunset
+  offset: "00:00:00"
+condition: []
+action:
+- data:
+    entity_id: switch.frontdoor_camera_night_mode
+  service: switch.turn_on
+# - data:
+#     entity_id: switch.frontdoor_camera_ir_filter
+#   service: switch.turn_on
