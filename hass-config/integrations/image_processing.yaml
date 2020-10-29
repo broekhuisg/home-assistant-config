@@ -1,9 +1,9 @@
-image_processing:
-  platform: doods
-  url: http://192.168.2.17:8080
-  detector: default
-  source:
-    - entity_id: camera.driveway_camera
-  file_out: '/config/www/doods.jpg'
-  scan_interval: 120
-  confidence: 60
+# image_processing:
+#   platform: doods
+#   url: http://192.168.2.17:8080
+#   detector: default
+#   source:
+#     - entity_id: camera.driveway_camera
+#   file_out: '/config/www/doods.jpg'
+#   scan_interval: 120
+#   confidence: 60
