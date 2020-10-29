@@ -1,0 +1,86 @@
+## MariaDB
+version: '3.1'
+services:
+  db:
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    volumes:
+      - /home/gavin/mariadb:/etc/mysql/conf.d
+      - /home/gavin/mariadb:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - TZ=Europe/Amsterdam
+      - PGID=1000
+      - PUID=1000
+
+## Deconz
+version: '3'
+services:
+  deconz:
+    container_name: deconz
+    image: marthoc/deconz
+    environment:
+      - TZ=Europe/Amsterdam
+      - DECONZ_DEVICE=/dev/ttyACM0
+    volumes:
+      - /home/gavin/deconz:/root/.local/share/dresden-elektronik/deCONZ
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    network_mode: host
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+
+## Mosquitto MQTT
+version: '3'
+services:
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - /home/gavin/mosquitto/config:/mosquitto/config
+      - /home/gavin/mosquitto/log:/mosquitto/log
+      - /home/gavin/mosquitto/data:/mosquitto/data
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    network_mode: host
+
+## Home Assistant
+version: '3'
+services:
+  homeassistant:
+    container_name: home-assistant
+    image: homeassistant/home-assistant:latest
+    environment:
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /home/gavin/hass/hass-config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    network_mode: host
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+
+## ISPYAgent DVR
+version: '3'
+services:
+  ispyagentdvr:
+    container_name: ispyagentdvr
+    image: doitandbedone/ispyagentdvr:latest
+    environment:
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /mnt/allexhdds/exhdd1/ispyagentdvr/config/:/agent/Media/XML/
+      - /mnt/allexhdds/exhdd1/ispyagentdvr/media/:/agent/Media/WebServerRoot/Media/
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8090:8090
+      - 3478:3478/udp
+      - 50000:50100/udp
+    restart: always
+    network_mode: host
