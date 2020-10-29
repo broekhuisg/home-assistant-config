@@ -1,0 +1,12 @@
+# platform: generic
+# name: driveway_camera
+# username: !secret camera_user
+# password: !secret camera_pass
+# authentication: basic
+# still_image_url: !secret still_img_driveway_camera
+# verify_ssl: false
+# scan_interval: 5
+
+platform: ffmpeg
+name: Driveway camera
+input: !secret rtsp_driveway_camera_full
