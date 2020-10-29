@@ -1,0 +1,14 @@
+alias: 'Motion detected on driveway'
+trigger:
+  payload: 'ON'
+  platform: mqtt
+  topic: home/driveway_camera/motion
+condition: []
+action:
+- data:
+    message: Er is beweging op de oprit
+  service: telegram_bot.send_message
+- data:
+    entity_id: camera.driveway_camera
+    filename: '/config/www/snapshots/test.jpg'
+  service: camera.snapshot
