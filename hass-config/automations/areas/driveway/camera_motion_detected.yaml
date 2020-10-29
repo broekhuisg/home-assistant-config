@@ -10,5 +10,11 @@ action:
   service: telegram_bot.send_message
 - data:
     entity_id: camera.driveway_camera
-    filename: '/config/www/snapshots/test.jpg'
+    filename: '/config/www/snapshots/driveway_camera_snapshot.jpg'
   service: camera.snapshot
+- data:
+    entity_id: camera.driveway_camera
+    filename: '/config/www/snapshots/driveway_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+  service: camera.snapshot
+
+  
