@@ -37,6 +37,7 @@ server.pem
 home-assistant_v2.db-shm
 home-assistant_v2.db-wal
 image_processing.yaml
+!integrations/image_processing.yaml
 .tradfri_psk.conf
 .spotify-token-cache
 .ios.conf
