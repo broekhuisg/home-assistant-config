@@ -8,6 +8,9 @@ action:
 - data:
     entity_id: switch.frontdoor_camera_night_mode
   service: switch.turn_on
-# - data:
-#     entity_id: switch.frontdoor_camera_ir_filter
-#   service: switch.turn_on
+- data:
+    entity_id: switch.frontdoor_camera_ir_filter
+  service: switch.turn_on
+- data:
+    entity_id: switch.frontdoor_camera_ir_led
+  service: switch.turn_off

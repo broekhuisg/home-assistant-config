@@ -8,6 +8,3 @@ action:
 - data:
     entity_id: switch.driveway_camera_night_mode
   service: switch.turn_on
-# - data:
-#     entity_id: switch.driveway_camera_ir_filter
-#   service: switch.turn_on
