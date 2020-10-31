@@ -1,0 +1,7 @@
+platform: mqtt
+name: "Oprit"
+state_topic: "home/driveway_camera/motion"
+payload_on: "ON"
+device_class: motion
+off_delay: 5
+unique_id: "camera_driveway_motion"

@@ -1,0 +1,5 @@
+platform: generic
+name: Driveway camera doods
+still_image_url: http://192.168.2.17:8123/local/doods/driveway_camera_latest.jpg
+verify_ssl: false
+scan_interval: 5

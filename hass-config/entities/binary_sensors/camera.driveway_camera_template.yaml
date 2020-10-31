@@ -1,9 +1,0 @@
-## Create binary sensor from value_template for motion detection
-
-platform: template
-sensors:
-  oprit:
-    friendly_name: Oprit
-    device_class: motion
-    value_template: >-
-      {{ state_attr('camera.driveway_camera', 'detected') }}

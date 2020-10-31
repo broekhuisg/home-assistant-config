@@ -1,9 +1,0 @@
-## Create binary sensor from value_template for motion detection
-
-platform: template
-sensors:
-  voordeur:
-    friendly_name: Voordeur
-    device_class: motion
-    value_template: >-
-      {{ state_attr('camera.frontdoor_camera', 'detected') }}

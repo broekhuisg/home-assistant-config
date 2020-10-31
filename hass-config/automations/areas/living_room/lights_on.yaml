@@ -14,6 +14,11 @@ condition:
   - condition: state
     entity_id: media_player.xbian
     state: 'playing'
+- condition: not
+  conditions:
+  - condition: state
+    entity_id: media_player.xbian
+    state: 'paused'
 action:
 - data:
     entity_id: group.living_room_lights

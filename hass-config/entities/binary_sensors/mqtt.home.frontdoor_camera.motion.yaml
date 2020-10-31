@@ -1,0 +1,7 @@
+platform: mqtt
+name: "Voordeur"
+state_topic: "home/frontdoor_camera/motion"
+payload_on: "ON"
+device_class: motion
+off_delay: 5
+unique_id: "camera_frontdoor_motion"
