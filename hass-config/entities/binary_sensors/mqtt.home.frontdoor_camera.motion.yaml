@@ -3,5 +3,5 @@ name: "Voordeur"
 state_topic: "home/frontdoor_camera/motion"
 payload_on: "ON"
 device_class: motion
-off_delay: 5
+off_delay: 5 # To make sure it goes back to off when the MQTT Message is not send
 unique_id: "camera_frontdoor_motion"
