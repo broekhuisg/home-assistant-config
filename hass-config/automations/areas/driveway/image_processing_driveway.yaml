@@ -1,0 +1,14 @@
+alias: 'Image processing driveway'
+trigger:
+- entity_id: image_processing.doods_driveway_camera
+  platform: state
+condition:
+- condition: template
+  value_template: "{{ 'person' in state_attr('image_processing.doods_driveway_camera', 'summary') }}"
+action:
+- data:
+    file: /config/www/doods/driveway_camera_latest.jpg
+  service: telegram_bot.send_photo
+- data:
+    message: '{{ state_attr("image_processing.doods_driveway_camera","matches").keys()|list|unique|list|join(",")|title }} detected on the driveway camera'
+  service: telegram_bot.send_message
