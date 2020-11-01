@@ -3,20 +3,28 @@ trigger:
 - entity_id: binary_sensor.oprit
   platform: state
   to: 'on'
-  for:
-    seconds: 5
 condition: []
 action:
 - data:
-    message: Er is beweging op de oprit
-  service: telegram_bot.send_message
-- data:
-    entity_id: camera.driveway_camera
-    filename: '/config/www/snapshots/driveway_camera_snapshot.jpg'
-  service: camera.snapshot
-- data:
-    entity_id: camera.driveway_camera
-    filename: '/config/www/snapshots/driveway_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
-  service: camera.snapshot
+    entity_id: timer.driveway_doods
+  service: timer.start
+
+
+##
+## Create the tensorflow automation on the Timer trigger. So not on this MQTT message
+## This will quick ON/OFF/ON problem
+##
+
+# - data:
+#     message: Er is beweging op de oprit
+#   service: telegram_bot.send_message
+# - data:
+#     entity_id: camera.driveway_camera
+#     filename: '/config/www/snapshots/driveway_camera_snapshot.jpg'
+#   service: camera.snapshot
+# - data:
+#     entity_id: camera.driveway_camera
+#     filename: '/config/www/snapshots/driveway_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+#   service: camera.snapshot
 
   

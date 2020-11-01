@@ -1,1 +1,1 @@
-input_number: !include_dir_named ../input_numbers
+input_number: !include_dir_named ../entities/input_numbers

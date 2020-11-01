@@ -1,0 +1,11 @@
+alias: 'Doods start driveway'
+trigger:
+- event_type: timer.started
+  platform: event
+  event_data:
+    entity_id: timer.driveway_doods
+condition: []
+action:
+- data:
+    message: Er is beweging op de oprit
+  service: telegram_bot.send_message

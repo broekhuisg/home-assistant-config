@@ -5,3 +5,7 @@ recorder:
     domains:
       - automation
       - updater
+      - input_boolean
+      - input_number
+      - input_select
+      - input_text

@@ -1,1 +1,1 @@
-camera: !include_dir_list ../cameras
+camera: !include_dir_list ../entities/cameras
