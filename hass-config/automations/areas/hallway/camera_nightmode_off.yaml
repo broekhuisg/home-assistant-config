@@ -8,5 +8,8 @@ action:
 - data:
     entity_id: switch.frontdoor_camera_night_mode
   service: switch.turn_off
+- data:
+    entity_id: switch.frontdoor_camera_ir_filter
+  service: switch.turn_on
 
 # Nightmode is a package with a few commandos for the cam

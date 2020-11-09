@@ -1,0 +1,9 @@
+platform: rest
+name: Frigate Debug
+resource: http://192.168.2.17:5000/debug/stats
+scan_interval: 5
+json_attributes:
+  - driveway
+  - detection_fps
+  - detectors
+value_template: 'OK'  

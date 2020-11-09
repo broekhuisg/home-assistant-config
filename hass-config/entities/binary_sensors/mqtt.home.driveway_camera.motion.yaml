@@ -1,7 +1,0 @@
-platform: mqtt
-name: "Oprit"
-state_topic: "home/driveway_camera/motion"
-payload_on: "ON"
-device_class: motion
-off_delay: 5 # To make sure it goes back to off when the MQTT Message is not send
-unique_id: "camera_driveway_motion"

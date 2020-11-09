@@ -51,15 +51,15 @@ services:
     network_mode: host
 
 ## Doods
-version: '3'
-services:
-  doods:
-    container_name: doods
-    image: snowzach/doods:latest
-    ports:
-      - 8080:8080
-    restart: always
-    network_mode: host
+# version: '3'
+# services:
+#   doods:
+#     container_name: doods
+#     image: snowzach/doods:latest
+#     ports:
+#       - 8080:8080
+#     restart: always
+#     network_mode: host
 
 ## Home Assistant
 version: '3'

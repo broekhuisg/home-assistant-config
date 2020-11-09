@@ -1,0 +1,5 @@
+name: Oprit auto
+platform: mqtt
+state_topic: "frigate/driveway/car"
+device_class: motion
+availability_topic: "frigate/available"
