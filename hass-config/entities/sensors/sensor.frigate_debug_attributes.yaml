@@ -9,6 +9,15 @@ sensors:
   driveway_detection_fps: 
     value_template: '{{ states.sensor.frigate_debug.attributes["driveway"]["detection_fps"] }}'
     unit_of_measurement: 'FPS'
+  frontdoor_fps: 
+    value_template: '{{ states.sensor.frigate_debug.attributes["frontdoor"]["camera_fps"] }}'
+    unit_of_measurement: 'FPS'
+  frontdoor_skipped_fps: 
+    value_template: '{{ states.sensor.frigate_debug.attributes["frontdoor"]["skipped_fps"] }}'
+    unit_of_measurement: 'FPS'
+  frontdoor_detection_fps: 
+    value_template: '{{ states.sensor.frigate_debug.attributes["frontdoor"]["detection_fps"] }}'
+    unit_of_measurement: 'FPS'
   frigate_detection_fps: 
     value_template: '{{ states.sensor.frigate_debug.attributes["detection_fps"] }}'
     unit_of_measurement: 'FPS'

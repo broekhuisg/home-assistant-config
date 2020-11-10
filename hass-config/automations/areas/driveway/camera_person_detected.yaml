@@ -1,0 +1,13 @@
+alias: Person detected on driveway camera 
+trigger: 
+  platform: state
+  entity_id: binary_sensor.oprit_persoon
+  from: 'off'
+  to: 'on'
+condition: []
+action:
+- delay: '00:00:01'
+- data:
+    url: http://192.168.2.17:5000/driveway/person/best.jpg
+    caption: "Er is een persoon op de oprit"
+  service: telegram_bot.send_photo
