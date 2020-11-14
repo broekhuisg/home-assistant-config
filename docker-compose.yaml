@@ -8,7 +8,7 @@ services:
       - TZ=Europe/Amsterdam
     volumes:
       - /home/gavin/hass/hass-config:/config
-      - /mnt/allexhdds/exhdd2/frigate_clips:/media
+      - /mnt/allexhdds/exhdd2/frigate-clips:/media
       - /etc/localtime:/etc/localtime:ro
     restart: always
     network_mode: host
