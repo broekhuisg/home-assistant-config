@@ -1,0 +1,10 @@
+alias: Christmas lights backyard on
+trigger:
+- platform: sun
+  event: sunset
+  offset: "00:00:00"
+condition: []
+action:
+- data:
+    entity_id: light.kerstverlichting_achtertuin
+  service: light.turn_on

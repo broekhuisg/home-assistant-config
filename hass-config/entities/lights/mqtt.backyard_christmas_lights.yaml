@@ -1,0 +1,10 @@
+name: Kerstverlichting achtertuin
+platform: mqtt
+command_topic: "cmnd/christmas_lights_backyard/POWER"
+state_topic: "stat/christmas_lights_backyard/RESULT"
+state_value_template: "{{value_json.POWER}}"
+availability_topic: "tele/christmas_lights_backyard/LWT"
+payload_on: "ON"
+payload_off: "OFF"
+payload_available: "Online"
+payload_not_available: "Offline"

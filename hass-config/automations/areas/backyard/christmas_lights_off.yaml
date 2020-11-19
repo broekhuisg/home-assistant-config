@@ -1,0 +1,9 @@
+alias: Christmas lights backyard off
+trigger:
+- platform: time
+  at: "23:30:00"
+condition: []
+action:
+- data:
+    entity_id: light.kerstverlichting_achtertuin
+  service: light.turn_off
