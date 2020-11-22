@@ -12,5 +12,5 @@ condition:
 action:
 - data:
     entity_id: light.keuken_spots
-    brightness: 115
+    # brightness: 115
   service: light.turn_on
