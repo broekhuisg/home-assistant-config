@@ -1,0 +1,3 @@
+sensor.circulus_berkel_afvalbeheer_vandaag:
+  friendly_name: Afvalbeheer vandaag
+  icon: mdi:delete-empty

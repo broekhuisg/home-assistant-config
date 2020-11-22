@@ -1,0 +1,12 @@
+platform: afvalbeheer
+wastecollector: Circulus-Berkel
+postcode: !secret postcode
+streetnumber: !secret huisnummer
+resources:
+  - gft
+  - pmd
+  - papier
+  - restafval
+upcomingsensor: 1
+name: 'Afvalbeheer'
+builtinicons: 0
