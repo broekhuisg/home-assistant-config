@@ -5,3 +5,4 @@ entities:
   - light.color_temperature_light_5
   - light.color_temperature_light_2
   - light.kerstverlichting_raam
+  - light.kerstboom
