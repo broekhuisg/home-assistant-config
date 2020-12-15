@@ -1,9 +1,8 @@
 name: Alarm Triggers
 entities:
-  - binary_sensor.presence_3
-  - binary_sensor.presence_9
-  - binary_sensor.presence_13
-  - binary_sensor.presence_22
-  - binary_sensor.presence_24
-  - binary_sensor.openclose_11
-  - binary_sensor.openclose_7
+  - binary_sensor.window_door_sensor_3
+  - binary_sensor.window_door_sensor_1
+  - binary_sensor.motion_sensor_1
+  - binary_sensor.motion_sensor_2
+  - binary_sensor.motion_sensor_3
+  - binary_sensor.motion_sensor_5
