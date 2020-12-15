@@ -4,7 +4,7 @@
 # 2003 = button DOWN released
 
 alias: Switch stop brighten lights kitchen
-initial_state: 'on'
+initial_state: "on"
 trigger:
   platform: event
   event_type: deconz_event
@@ -13,6 +13,6 @@ trigger:
     event: 1003
 condition: []
 action:
-- data:
-    entity_id: script.kitchen_lights_dimmer
-  service: script.turn_off
+  - data:
+      entity_id: script.kitchen_lights_dimmer
+    service: script.turn_off
