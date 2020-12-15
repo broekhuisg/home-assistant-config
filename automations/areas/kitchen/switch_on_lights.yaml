@@ -7,7 +7,7 @@ trigger:
     event: 1002
 condition: []
 action:
-- data:
-    entity_id: light.keuken_spots
-    brightness_pct: 45
-  service: light.turn_on
+  - data:
+      entity_id: light.keuken_spots
+      brightness_pct: 45
+    service: light.turn_on

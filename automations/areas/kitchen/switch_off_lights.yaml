@@ -7,6 +7,6 @@ trigger:
     event: 2002
 condition: []
 action:
-- data:
-    entity_id: light.keuken_spots
-  service: light.turn_off
+  - data:
+      entity_id: light.keuken_spots
+    service: light.turn_off

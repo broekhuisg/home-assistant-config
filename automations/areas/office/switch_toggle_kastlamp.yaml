@@ -7,6 +7,6 @@ trigger:
     event: 1002
 condition: []
 action:
-- data:
-    entity_id: light.kastlamp_kantoor
-  service: light.toggle
+  - data:
+      entity_id: light.kastlamp_kantoor
+    service: light.toggle

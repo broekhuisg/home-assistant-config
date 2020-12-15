@@ -4,7 +4,7 @@
 # 2003 = button DOWN released
 
 alias: Switch brighten lights kitchen
-initial_state: 'on'
+initial_state: "on"
 trigger:
   platform: event
   event_type: deconz_event
@@ -13,18 +13,9 @@ trigger:
     event: 1001
 condition: []
 action:
-- data:
-    variables:
-      direction: up
-      light: light.keuken_spots
-  service: script.turn_on
-  entity_id: script.kitchen_lights_dimmer
-
-
-# action:
-# - data:
-#     entity_id: script.kitchen_lights_dimmer
-#   service: script.turn_on
-#   variables:
-#     direction: up
-#     light: group.kitchen
+  - data:
+      variables:
+        direction: up
+        light: light.keuken_spots
+    service: script.turn_on
+    entity_id: script.kitchen_lights_dimmer

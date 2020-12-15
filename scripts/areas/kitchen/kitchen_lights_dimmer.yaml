@@ -1,10 +1,10 @@
 alias: Kitchen lights dimmer
 fields:
   direction:
-    description: 'Direction to change brightness: up or down'
+    description: "Direction to change brightness: up or down"
     example: up
   light:
-    description: 'The lights that are controlled'
+    description: "The lights that are controlled"
     example: light.keuken_spots
 mode: restart
 sequence:
