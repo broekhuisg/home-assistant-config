@@ -1,0 +1,3 @@
+binary_sensor.window_door_sensor_1:
+  friendly_name: Achterdeur
+  icon: mdi:door

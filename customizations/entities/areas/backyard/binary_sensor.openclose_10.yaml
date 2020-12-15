@@ -1,3 +1,0 @@
-binary_sensor.openclose_10:
-  friendly_name: Tuinpoort
-  icon: mdi:door

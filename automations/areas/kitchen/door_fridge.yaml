@@ -1,13 +1,13 @@
 alias: Door fridge
 trigger:
-- entity_id: binary_sensor.openclose_25
-  platform: state
-  from: 'off'
-  to: 'on'
-  for:
-    seconds: 60
+  - entity_id: binary_sensor.window_door_sensor_4
+    platform: state
+    from: "off"
+    to: "on"
+    for:
+      seconds: 60
 condition: []
 action:
-- data:
-    entity_id: script.door_fridge_open_init
-  service: script.turn_on
+  - data:
+      entity_id: script.door_fridge_open_init
+    service: script.turn_on

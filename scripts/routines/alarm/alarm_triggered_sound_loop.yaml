@@ -1,0 +1,9 @@
+alias: Alarm triggered sound loop
+sequence:
+  - delay:
+      seconds: 4
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: 'triggered'
+  - service: script.turn_on
+    entity_id: script.alarm_triggered_sound_init

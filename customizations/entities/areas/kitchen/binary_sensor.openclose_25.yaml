@@ -1,3 +1,0 @@
-binary_sensor.openclose_25:
-  friendly_name: Koelkast
-  icon: mdi:fridge-alert

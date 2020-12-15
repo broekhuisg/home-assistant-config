@@ -1,11 +1,11 @@
 alias: Lights off hallway
 trigger:
-- entity_id: binary_sensor.presence_13
-  platform: state
-  from: 'on'
-  to: 'off'
+  - entity_id: binary_sensor.motion_sensor_3
+    platform: state
+    from: "on"
+    to: "off"
 condition: []
 action:
-- data:
-    entity_id: group.hallway_spots
-  service: light.turn_off
+  - data:
+      entity_id: group.hallway_spots
+    service: light.turn_off

@@ -1,13 +1,13 @@
 alias: Lights off office
 trigger:
-- entity_id: binary_sensor.presence_24
-  platform: state
-  from: 'on'
-  to: 'off'
-  for:
-    minutes: 15
+  - entity_id: binary_sensor.motion_sensor_5
+    platform: state
+    from: "on"
+    to: "off"
+    for:
+      minutes: 15
 condition: []
 action:
-- data:
-    entity_id: group.office_lights
-  service: light.turn_off
+  - data:
+      entity_id: group.office_lights
+    service: light.turn_off
