@@ -1,0 +1,12 @@
+alias: Backyard christmas lights on
+description: >-
+  Turn christmas lights on in the backyard on sunset.
+trigger:
+  - platform: sun
+    event: sunset
+    offset: "00:00:00"
+condition: []
+action:
+  - data:
+      entity_id: light.backyard_christmas_lights
+    service: light.turn_on

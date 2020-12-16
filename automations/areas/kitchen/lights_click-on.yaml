@@ -1,0 +1,15 @@
+alias: Kitchen lights on single press
+description: >-
+  Turn lights on when single-press the switch up.
+trigger:
+  platform: event
+  event_type: deconz_event
+  event_data:
+    id: "kitchen_on_off_switch"
+    event: 1002
+condition: []
+action:
+  - data:
+      entity_id: light.kitchen_lights
+      brightness_pct: 45
+    service: light.turn_on

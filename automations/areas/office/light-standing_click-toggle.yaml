@@ -1,0 +1,14 @@
+alias: Office standing light on right press
+description: >-
+  Turns the office standing light on when you click on the right button.
+trigger:
+  platform: event
+  event_type: deconz_event
+  event_data:
+    id: "office_double_switch"
+    event: 2002
+condition: []
+action:
+  - data:
+      entity_id: light.office_standing_corner_light
+    service: light.toggle

@@ -1,5 +1,5 @@
 platform: group
-name: Keuken spots
+name: Kitchen lights
 entities:
   - light.kitchen_light_1
   - light.kitchen_light_2

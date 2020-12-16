@@ -1,0 +1,17 @@
+alias: Backyard lights on
+description: >-
+  Turn lights on when there is motion and after sunset.
+trigger:
+  - entity_id: binary_sensor.backyard_motion_sensor
+    platform: state
+    from: "off"
+    to: "on"
+condition:
+  - condition: numeric_state
+    below: "5"
+    entity_id: sun.sun
+    value_template: "{{ state.attributes.elevation }}"
+action:
+  - data:
+      entity_id: light.backyard_roof_lights
+    service: light.turn_on

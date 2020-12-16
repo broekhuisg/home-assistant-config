@@ -1,0 +1,19 @@
+alias: Garbage out tomorrow
+description: >-
+  Notify via Google speakers which garbage has to go out tomorrow morning.
+trigger:
+  - platform: time
+    at: "20:30:00"
+condition:
+  condition: not
+  conditions:
+    - condition: state
+      entity_id: sensor.circulus_berkel_afvalbeheer_morgen
+      state: "None"
+action:
+  - data:
+      message: "Morgen moet het volgende afval naar buiten, {{ states('sensor.circulus_berkel_afvalbeheer_morgen') }}"
+    entity_id:
+      - media_player.living_room_display
+      - media_player.office_home_mini
+    service: tts.google_translate_say

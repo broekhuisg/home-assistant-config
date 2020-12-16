@@ -1,0 +1,13 @@
+alias: Hallway lights off
+description: >-
+  Turn lights off when there is no motion.
+trigger:
+  - entity_id: binary_sensor.hallway_motion_sensor
+    platform: state
+    from: "on"
+    to: "off"
+condition: []
+action:
+  - data:
+      entity_id: light.hallway_lights
+    service: light.turn_off

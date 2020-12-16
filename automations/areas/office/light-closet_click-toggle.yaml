@@ -1,0 +1,14 @@
+alias: Office closet light on left press
+description: >-
+  Turns the office clost light on when you click on the left button.
+trigger:
+  platform: event
+  event_type: deconz_event
+  event_data:
+    id: "office_double_switch"
+    event: 1002
+condition: []
+action:
+  - data:
+      entity_id: light.office_closet_light
+    service: light.toggle

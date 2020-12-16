@@ -1,0 +1,11 @@
+alias: Holiday turn off lights
+description: >-
+  Turn lights off when when we are on holiday.
+trigger:
+  platform: time
+  at: "23:12:30"
+condition: []
+action:
+  - data:
+      entity_id: group.holiday_lights
+    service: light.turn_off

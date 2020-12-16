@@ -1,0 +1,14 @@
+alias: Kitchen lights of single press
+description: >-
+  Turn lights off when single-press the switch down.
+trigger:
+  platform: event
+  event_type: deconz_event
+  event_data:
+    id: "kitchen_on_off_switch"
+    event: 2002
+condition: []
+action:
+  - data:
+      entity_id: light.kitchen_lights
+    service: light.turn_off

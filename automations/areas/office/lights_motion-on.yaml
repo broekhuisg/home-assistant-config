@@ -1,0 +1,17 @@
+alias: Office lights on
+description: >-
+  Turn lights on when there is motion after sunset.
+trigger:
+  - entity_id: binary_sensor.office_motion_sensor
+    platform: state
+    from: "off"
+    to: "on"
+condition:
+  - condition: numeric_state
+    below: "5"
+    entity_id: sun.sun
+    value_template: "{{ state.attributes.elevation }}"
+action:
+  - data:
+      entity_id: group.office_lights
+    service: light.turn_on

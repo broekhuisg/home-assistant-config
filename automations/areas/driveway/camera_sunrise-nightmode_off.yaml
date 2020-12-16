@@ -1,0 +1,12 @@
+alias: Driveway camera nightmode off
+description: >-
+  Turn the driveway camera nightmode off on sunrise.
+trigger:
+  - platform: sun
+    event: sunrise
+    offset: "00:00:00"
+condition: []
+action:
+  - data:
+      entity_id: switch.driveway_camera_night_mode
+    service: switch.turn_off

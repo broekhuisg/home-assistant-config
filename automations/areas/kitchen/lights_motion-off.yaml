@@ -1,0 +1,15 @@
+alias: Kitchen lights off
+description: >-
+  Turn lights off when there is no motion for 12 minutes.
+trigger:
+  - entity_id: binary_sensor.kitchen_motion_sensor
+    platform: state
+    from: "on"
+    to: "off"
+    for:
+      minutes: 12
+condition: []
+action:
+  - data:
+      entity_id: light.kitchen_lights
+    service: light.turn_off

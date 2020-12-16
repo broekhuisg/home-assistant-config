@@ -1,0 +1,9 @@
+platform: group
+name: Livingroom lights
+entities:
+  - light.livingroom_standing_corner_light
+  - light.livingroom_tv_light
+  - light.livingroom_couch_light
+  - light.livingroom_closet_light
+  - light.livingroom_window_christmas_lights
+  - light.twinkly_f6bc91

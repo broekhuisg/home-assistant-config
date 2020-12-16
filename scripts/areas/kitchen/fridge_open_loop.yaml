@@ -1,0 +1,11 @@
+alias: Fridge open loop
+description: >-
+  Loop the sequence when the fridge is open until the door is closed.
+sequence:
+  - delay:
+      seconds: 20
+  - condition: state
+    entity_id: binary_sensor.fridge_door_sensor
+    state: "on"
+  - service: script.turn_on
+    entity_id: script.fridge_open_init

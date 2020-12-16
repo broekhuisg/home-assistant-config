@@ -1,0 +1,17 @@
+alias: Living room activate movie scene
+description: >-
+  Activate the movie scene when starting mediaplayer.
+trigger:
+  - platform: state
+    entity_id: media_player.xbian
+    from: "idle"
+    to: "playing"
+condition:
+  - condition: numeric_state
+    below: "5"
+    entity_id: sun.sun
+    value_template: "{{ state.attributes.elevation }}"
+action:
+  - data:
+      entity_id: script.movie_scene
+    service: script.turn_on

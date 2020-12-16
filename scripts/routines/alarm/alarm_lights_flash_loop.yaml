@@ -1,0 +1,9 @@
+alias: Alarm lights flash loop
+sequence:
+  - delay:
+      seconds: 2
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: 'triggered'
+  - service: script.turn_on
+    entity_id: script.alarm_lights_flash_init

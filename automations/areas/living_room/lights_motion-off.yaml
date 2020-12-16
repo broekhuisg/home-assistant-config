@@ -1,0 +1,20 @@
+alias: Living room lights off
+description: >-
+  Turn lights off when there is no motion for 20 minutes.
+trigger:
+  - entity_id: binary_sensor.livingroom_motion_sensor
+    platform: state
+    from: "on"
+    to: "off"
+    for:
+      minutes: 20
+condition:
+  - condition: not
+    conditions:
+      - condition: state
+        entity_id: media_player.xbian
+        state: "playing"
+action:
+  - data:
+      entity_id: light.livingroom_lights
+    service: light.turn_off

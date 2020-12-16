@@ -27,7 +27,7 @@ TODO: Fill in software
 
 #### Automation naming:
 If room specific, lighting for example.
-`<room>_<type>_<trigger>.yaml` e.g. `kitchen_light_motion-on.yaml` or `livingroom_light_button-1.yaml`
+`<room>/<type>_<trigger>.yaml` e.g. `kitchen/light_motion-on.yaml` or `livingroom/light_button-1.yaml`
 
 If it's a virtual automation, like alarm:
 `<type>_<trigger>_<action>.yaml` e.g. `alarm_pending_notification.yaml` or `telegram_windows-open_notification.yaml`

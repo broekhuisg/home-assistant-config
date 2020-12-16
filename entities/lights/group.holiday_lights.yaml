@@ -1,0 +1,7 @@
+platform: group
+name: Holiday lights
+entities:
+  - light.livingroom_standing_corner_light
+  - light.livingroom_tv_light
+  - light.livingroom_couch_light
+  - light.office_standing_corner_light
