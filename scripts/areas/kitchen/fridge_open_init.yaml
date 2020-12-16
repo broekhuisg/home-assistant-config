@@ -13,4 +13,4 @@ sequence:
     service: tts.google_translate_say
   - service: script.turn_on
     entity_id: script.fridge_open_loop
-## TODO
+## TODO: Telegram
