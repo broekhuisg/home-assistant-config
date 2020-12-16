@@ -1,0 +1,2 @@
+binary_sensor.backyard_motion_sensor:
+  friendly_name: Achtertuin

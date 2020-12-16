@@ -1,0 +1,2 @@
+binary_sensor.livingroom_motion_sensor:
+  friendly_name: Woonkamer
