@@ -1,4 +1,4 @@
-name: Kerstverlichting achtertuin
+name: Backyard christmas lights
 platform: mqtt
 command_topic: "cmnd/christmas_lights_backyard/POWER"
 state_topic: "stat/christmas_lights_backyard/RESULT"

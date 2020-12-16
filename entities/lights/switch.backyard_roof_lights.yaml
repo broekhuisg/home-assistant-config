@@ -1,0 +1,6 @@
+## Convert switch to light
+## See entities/areas/backyard/light_#{name} for more
+
+platform: switch
+name: Backyard roof lights
+entity_id: switch.backyard_roof_lights

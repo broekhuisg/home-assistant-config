@@ -1,8 +1,0 @@
-## Convert switch to light
-## See entities/areas/office/light_#{name} for more
-
-# platform: switch
-# name: Kastlamp kantoor
-# entity_id: switch.on_off_plug_in_unit_8
-
-## TODO

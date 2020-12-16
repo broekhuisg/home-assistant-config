@@ -1,8 +1,0 @@
-## Convert switch to light
-## See entities/areas/living_room/light_#{name} for more
-
-# platform: switch
-# name: Hoeklamp
-# entity_id: switch.on_off_plug_in_unit_3
-
-## TODO

@@ -1,0 +1,6 @@
+## Convert switch to light
+## See entities/areas/office/light_#{name} for more
+
+platform: switch
+name: Office closet light
+entity_id: switch.office_closet_light

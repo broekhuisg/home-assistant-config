@@ -1,0 +1,5 @@
+# Converted light from switch
+
+light.livingroom_closet_light:
+  friendly_name: Kleurlamp
+  icon: mdi:lava-lamp

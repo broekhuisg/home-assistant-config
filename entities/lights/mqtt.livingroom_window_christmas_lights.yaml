@@ -1,4 +1,4 @@
-name: Kerstverlichting raam
+name: Livingroom window christmas lights
 platform: mqtt
 command_topic: "cmnd/christmas_lights_window/POWER"
 state_topic: "stat/christmas_lights_window/RESULT"
