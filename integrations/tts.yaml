@@ -1,3 +1,0 @@
-tts:
-  - platform: google_translate
-    language: 'nl'

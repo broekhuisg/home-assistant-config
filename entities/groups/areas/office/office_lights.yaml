@@ -1,5 +1,0 @@
-name: Office lights
-entities:
-  - light.color_light_9
-  - light.kastlamp_kantoor
-  - light.office_closet

@@ -1,6 +1,8 @@
 ## Convert switch to light
 ## See entities/areas/living_room/light_#{name} for more
 
-platform: switch
-name: Kleurlamp
-entity_id: switch.on_off_plug_in_unit_4
+# platform: switch
+# name: Kleurlamp
+# entity_id: switch.on_off_plug_in_unit_4
+
+## TODO

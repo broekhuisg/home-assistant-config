@@ -1,6 +1,8 @@
 # Original: switch.on_off_plug_in_unit_3
 # Converted to: light.hoeklamp via entities/lights
 
-light.hoeklamp:
-  friendly_name: Hoeklamp
-  icon: mdi:floor-lamp-dual
+# light.hoeklamp:
+#   friendly_name: Hoeklamp
+#   icon: mdi:floor-lamp-dual
+
+## TODO

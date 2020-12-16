@@ -1,8 +1,0 @@
-name: Alarm Triggers
-entities:
-  - binary_sensor.window_door_sensor_3
-  - binary_sensor.window_door_sensor_1
-  - binary_sensor.motion_sensor_1
-  - binary_sensor.motion_sensor_2
-  - binary_sensor.motion_sensor_3
-  - binary_sensor.motion_sensor_5

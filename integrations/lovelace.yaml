@@ -1,3 +1,0 @@
-lovelace:
-  # This is the default storage mode. My main Lovelace dashboard is UI managed.
-  mode: storage

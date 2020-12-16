@@ -1,5 +1,0 @@
-name: Oprit persoon
-platform: mqtt
-state_topic: "frigate/driveway/person"
-device_class: motion
-availability_topic: "frigate/available"
