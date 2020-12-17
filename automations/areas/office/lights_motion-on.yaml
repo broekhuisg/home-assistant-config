@@ -13,5 +13,5 @@ condition:
     value_template: "{{ state.attributes.elevation }}"
 action:
   - data:
-      entity_id: group.office_lights
+      entity_id: light.office_lights
     service: light.turn_on
