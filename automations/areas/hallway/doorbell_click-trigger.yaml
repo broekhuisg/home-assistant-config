@@ -10,11 +10,6 @@ trigger:
 condition: []
 action:
   - data:
-      entity_id: camera.frontdoor_camera
-      filename: "/config/www/doorbell/doorbell.jpg"
-    service: camera.snapshot
-
-  - data:
       entity_id: media_player.living_room_display
       volume_level: 1.0
     service: media_player.volume_set
@@ -34,31 +29,39 @@ action:
     service: media_player.play_media
 
   - data:
-      title: Send image of the person at the door
-      message: "Send image of the person at the door"
+      title: "Ik moest kloppen"
+      message: "want de bel doet het niet"
       data:
-        photo:
-          - file: "/config/www/doorbell/doorbell.jpg"
-            caption: "Er staat iemand voor de deur"
-    service: notify.telegram_poco_f1
+        image: "http://192.168.2.17:5000/frontdoor/latest.jpg"
+        channel: Doorbell
+        importance: high
+        vibrationPattern: "100, 1000, 100, 1000, 100, 1000"
+    service: notify.mobile_app_poco_f1
+
+  - data:
+      entity_id: camera.frontdoor_camera
+      filename: '/media/doorbell/doorbell_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+    service: camera.snapshot
 
   - delay: "00:00:05"
 
   - data_template:
       entity_id: media_player.living_room_display
-      volume_level: 0.7
+      volume_level: 0.6
     service: media_player.volume_set
   - data_template:
       entity_id: media_player.office_home_mini
-      volume_level: 0.8
+      volume_level: 0.6
     service: media_player.volume_set
 
   # - data:
-  #     title: "Ik moest kloppen"
-  #     message: "want de bel doet het niet"
+  #     title: Send image of the person at the door
+  #     message: "Send image of the person at the door"
   #     data:
-  #       image: "/config/www/doorbell/doorbell.jpg"
-  #   service: notify.mobile_app_poco_f1
+  #       photo:
+  #         - url: "http://192.168.2.17:5000/frontdoor/latest.jpg"
+  #           caption: "Er staat iemand voor de deur"
+  #   service: notify.telegram_poco_f1
 
   # - data:
   #     url: !secret still_img_frontdoor_camera
