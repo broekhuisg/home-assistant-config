@@ -36,6 +36,7 @@ action:
         channel: Doorbell
         importance: high
         vibrationPattern: "100, 1000, 100, 1000, 100, 1000"
+        clickAction: /lovelace/camera
     service: notify.mobile_app_poco_f1
 
   - data:
