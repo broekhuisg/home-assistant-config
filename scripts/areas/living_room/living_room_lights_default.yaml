@@ -2,31 +2,31 @@ alias: Living room lights default
 sequence:
   - service: light.turn_on
     data:
-      entity_id: light.color_temperature_light_2
+      entity_id: light.livingroom_standing_corner_light
       color_temp: 650
       transition: 1
   - service: light.turn_on
     data:
-      entity_id: light.color_temperature_light_5
+      entity_id: light.livingroom_tv_light
       color_temp: 650
       transition: 1
   - service: light.turn_on
     data:
-      entity_id: light.hoeklamp
+      entity_id: light.livingroom_couch_light
   - service: light.turn_on
     data:
-      entity_id: light.kleurlamp
+      entity_id: light.livingroom_closet_light
 
   - delay:
       seconds: 1
 
   - service: light.turn_on
     data:
-      entity_id: light.color_temperature_light_2
+      entity_id: light.livingroom_standing_corner_light
       brightness_pct: 80
       transition: 3
   - service: light.turn_on
     data:
-      entity_id: light.color_temperature_light_5
+      entity_id: light.livingroom_tv_light
       brightness_pct: 70
       transition: 3
