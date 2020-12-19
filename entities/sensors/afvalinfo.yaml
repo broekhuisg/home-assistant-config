@@ -1,0 +1,14 @@
+platform: afvalinfo
+resources:
+  - gft
+  - kerstboom
+  - pbd
+  - papier
+  - restafval
+  - trash_type_today
+  - trash_type_tomorrow
+location: !secret gemeente
+postcode: !secret postcode
+streetnumber: !secret huisnummer
+locale: "nl"
+timespanindays: 365

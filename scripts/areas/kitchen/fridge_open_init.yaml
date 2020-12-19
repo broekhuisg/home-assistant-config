@@ -7,6 +7,7 @@ sequence:
   #   service: telegram_bot.send_message
   - data:
       message: "De koelkast staat nog open"
+      language: "nl"
     entity_id:
       - media_player.living_room_display
       - media_player.office_home_mini
