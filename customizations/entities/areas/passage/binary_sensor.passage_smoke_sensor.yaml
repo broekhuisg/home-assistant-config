@@ -1,0 +1,3 @@
+binary_sensor.passage_smoke_sensor:
+  friendly_name: Rookmelder overloop
+  icon: mdi:fire
