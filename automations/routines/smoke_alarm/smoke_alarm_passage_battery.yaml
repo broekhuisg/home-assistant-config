@@ -1,0 +1,14 @@
+alias: Smoke alarm passage battery
+description: >-
+  The battery of the smoke alarm passage is almost empty
+trigger:
+  - entity_id: sensor.passage_smoke_sensor_battery_level
+    platform: numeric_state
+    below: 15
+condition: []
+action:
+  - data:
+      message: >-
+        "Batterij van brandalarm overloop is bijna leeg - 
+        ({{ states('sensor.passage_smoke_sensor_battery_level')|int }}%)"
+    service: notify.telegram_poco_f1
