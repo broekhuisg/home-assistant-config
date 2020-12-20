@@ -17,6 +17,7 @@
 .google.token
 www
 zones
+!entities/zones
 deps
 tmp
 __pycache__

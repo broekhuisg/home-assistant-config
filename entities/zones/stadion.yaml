@@ -1,0 +1,5 @@
+name: Stadion
+latitude: !secret lat_stadion
+longitude: !secret lon_stadion
+radius: 95
+icon: mdi:soccer
