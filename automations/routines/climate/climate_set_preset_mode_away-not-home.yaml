@@ -1,0 +1,14 @@
+alias: Climate Away
+description: >-
+  Set the preset of the climate to away when everyone is leaving
+trigger:
+  - entity_id: group.phones
+    platform: state
+    from: "home"
+    to: "not_home"
+condition: []
+action:
+  - data:
+      entity_id: climate.heating
+      preset_mode: "away"
+    service: climate.set_preset_mode

@@ -1,0 +1,18 @@
+alias: Climate Home
+description: >-
+  Set the preset of the climate to home when somebody comes home
+trigger:
+  - entity_id: group.phones
+    platform: state
+    from: "not_home"
+    to: "home"
+condition: []
+# condition:
+#   condition: time
+#   after: "07:30:00"
+#   before: "22:30:00"
+action:
+  - data:
+      entity_id: climate.heating
+      preset_mode: "home"
+    service: climate.set_preset_mode
