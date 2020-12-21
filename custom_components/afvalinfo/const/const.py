@@ -13,16 +13,11 @@ SENSOR_TYPES = {
 }
 
 SENSOR_LOCATIONS_TO_URL = {
-    "defriesemeren": ["https://www.afvalalert.nl/kalender/{0}/{1}/?web=1"],
     "hoekschewaard": ["https://www.radhw.nl/inwoners/ophaalschema?p={0}&h={1}"],
     "katwijk": ["https://afval.katwijk.nl/nc/afvalkalender/?tx_windwastecalendar_pi1%5Baction%5D=search"],
     "middendrenthe": [
         "https://www.middendrenthe.nl/website/!suite86.scherm0325?mPag=6523&mAlle=J",
         "https://www.middendrenthe.nl/website/!ctm_afval.Kalender"],
-    "montferland": [
-        "https://www.montferland.afvalwijzer.net/",
-        "https://www.montferland.afvalwijzer.net/aanmelden.aspx"
-        ],
     "trashapi": ["http://trashapi.azurewebsites.net/trash?Location={0}&ZipCode={1}&HouseNumber={2}"],
     "uden": ["https://www.uden.nl/inwoners/afval/ophaaldagen-afval/{0}-{1}.html"],
     "veldhoven": ["https://www.veldhoven.nl/afvalkalender/{0}-{1}"],

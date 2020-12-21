@@ -1,2 +1,2 @@
-sensor.livingroom_multi_sensor:
+sensor.heating_temperature:
   friendly_name: Temperatuur Woonkamer
