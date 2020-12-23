@@ -1,6 +1,8 @@
 homeassistant:
   # Load packages
   packages: !include_dir_named integrations
+  latitude: !secret lat
+  longitude: !secret lon
   elevation: 15
   unit_system: metric
   time_zone: Europe/Amsterdam

@@ -32,7 +32,7 @@ action:
       title: "Ik moest kloppen"
       message: "want de bel doet het niet"
       data:
-        image: "http://192.168.2.17:5000/frontdoor/latest.jpg"
+        image: "http://192.168.2.17:5000/frontdoor/person/best.jpg"
         channel: Doorbell
         importance: high
         vibrationPattern: "100, 1000, 100, 1000, 100, 1000"

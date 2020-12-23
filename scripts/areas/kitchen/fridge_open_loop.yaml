@@ -3,7 +3,7 @@ description: >-
   Loop the sequence when the fridge is open until the door is closed.
 sequence:
   - delay:
-      seconds: 20
+      seconds: 45
   - condition: state
     entity_id: binary_sensor.fridge_door_sensor
     state: "on"
