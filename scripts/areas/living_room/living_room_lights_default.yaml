@@ -1,4 +1,6 @@
 alias: Living room lights default
+description: >-
+  Set the state of the living room lights to default.
 sequence:
   - service: light.turn_on
     data:

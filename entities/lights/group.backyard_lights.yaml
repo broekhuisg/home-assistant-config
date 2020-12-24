@@ -1,0 +1,5 @@
+platform: group
+name: Backyard lights
+entities:
+  - light.backyard_roof_lights
+  - light.backyard_christmas_lights

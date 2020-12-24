@@ -1,7 +1,0 @@
-alias: Test
-  - service: tts.google_translate_say
-    entity_id: media_player.living_room_display
-    data:
-      language: "nl"
-      message: >
-        "Hallo"
