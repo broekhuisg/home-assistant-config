@@ -1,0 +1,4 @@
+name: Game PC
+platform: ping
+host: 192.168.2.26
+scan_interval: 300
