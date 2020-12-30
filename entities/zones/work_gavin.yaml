@@ -1,5 +1,5 @@
 name: Werk Gavin
 latitude: !secret lat_work_gavin
 longitude: !secret lon_work_gavin
-radius: 55
+radius: 100
 icon: mdi:briefcase
