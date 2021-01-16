@@ -1,0 +1,14 @@
+alias: Living room lights toggle on press
+description: >-
+  Turns all the living room lights on/off on click Tradfri remote.
+trigger:
+  platform: event
+  event_type: deconz_event
+  event_data:
+    id: "living_room_remote_control"
+    event: 1002
+condition: []
+action:
+  - data:
+      entity_id: light.livingroom_lights
+    service: light.toggle
