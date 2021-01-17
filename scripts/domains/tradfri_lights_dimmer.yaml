@@ -15,8 +15,8 @@ sequence:
         - condition: template
           value_template: >
             {% set br = state_attr(light, 'brightness')|int(0) %}
-            {% set mn = states('input_number.kitchen_lights_dim_minimum')|int %}
-            {% set mx = states('input_number.kitchen_lights_dim_maximum')|int %}
+            {% set mn = states('input_number.tradfri_lights_dim_minimum')|int %}
+            {% set mx = states('input_number.tradfri_lights_dim_maximum')|int %}
             {{ direction == 'up' and br < mx or direction == 'down' and br > mn }}
       sequence:
         - service: light.turn_on
@@ -24,13 +24,13 @@ sequence:
             entity_id: "{{ light }}"
             brightness: >
               {% set br = state_attr(light, 'brightness')|int(0) %}
-              {% set mn = states('input_number.kitchen_lights_dim_minimum')|int %}
-              {% set mx = states('input_number.kitchen_lights_dim_maximum')|int %}
-              {% set st = states('input_number.kitchen_lights_steps_amount')|int %}
+              {% set mn = states('input_number.tradfri_lights_dim_minimum')|int %}
+              {% set mx = states('input_number.tradfri_lights_dim_maximum')|int %}
+              {% set st = states('input_number.tradfri_lights_steps_amount')|int %}
               {% if direction == 'up' %}
                 {{ [br + st, mx]|min }}
               {% else %}
                 {{ [br - st, mn]|max }}
               {% endif %}
         - delay:
-            milliseconds: "{{ states('input_number.kitchen_lights_dim_delay_ms')|int }}"
+            milliseconds: "{{ states('input_number.tradfri_lights_dim_delay_ms')|int }}"

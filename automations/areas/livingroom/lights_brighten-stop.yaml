@@ -1,0 +1,20 @@
+# 2001 = button UP is held
+# 2003 = button UP release
+# 3001 = button DOWN is held
+# 3003 = button DOWN released
+
+alias: Livingroom lights brighten stop
+description: >-
+  Stop the brighten function for the living room lights when releasing the button up.
+initial_state: "on"
+trigger:
+  platform: event
+  event_type: deconz_event
+  event_data:
+    id: "living_room_remote_control"
+    event: 2003
+condition: []
+action:
+  - data:
+      entity_id: script.tradfri_lights_dimmer
+    service: script.turn_off

@@ -1,5 +1,0 @@
-name: 'Kitchen lights dim maximum'
-initial: 254
-min: 50
-max: 254
-step: 1

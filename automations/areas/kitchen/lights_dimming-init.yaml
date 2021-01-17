@@ -20,4 +20,4 @@ action:
         direction: down
         light: light.kitchen_lights
     service: script.turn_on
-    entity_id: script.kitchen_lights_dimmer
+    entity_id: script.tradfri_lights_dimmer
