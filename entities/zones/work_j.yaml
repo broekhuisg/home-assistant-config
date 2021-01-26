@@ -1,0 +1,5 @@
+name: Werk J
+latitude: !secret lat_work_j
+longitude: !secret lon_work_j
+radius: 350
+icon: mdi:briefcase
