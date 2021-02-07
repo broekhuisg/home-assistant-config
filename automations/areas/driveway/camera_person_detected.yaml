@@ -18,6 +18,6 @@ action:
       message: "Send image person on driveway"
       data:
         photo:
-          - url: "http://192.168.2.17:5000/driveway/person/best.jpg"
+          - url: "http://192.168.2.17:5000/api/driveway/person/best.jpg"
             caption: "Er is een persoon op de oprit"
     service: notify.telegram_poco_f1

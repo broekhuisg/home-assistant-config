@@ -32,7 +32,7 @@ action:
       message: "Send image person frontdoor"
       data:
         photo:
-          - url: "http://192.168.2.17:5000/frontdoor/latest.jpg"
+          - url: "http://192.168.2.17:5000/api/frontdoor/latest.jpg"
             caption: "Er is iemand aan de deur"
     service: notify.telegram_poco_f1
   - data:
