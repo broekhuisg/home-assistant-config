@@ -1,3 +1,0 @@
-name: Pan Last Bird
-platform: mqtt
-topic: frigate/pan/bird/snapshot

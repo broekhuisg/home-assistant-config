@@ -1,3 +1,0 @@
-name: Driveway Last Person
-platform: mqtt
-topic: frigate/driveway/person/snapshot

@@ -1,3 +1,0 @@
-name: Frontdoor Last Person
-platform: mqtt
-topic: frigate/frontdoor/person/snapshot

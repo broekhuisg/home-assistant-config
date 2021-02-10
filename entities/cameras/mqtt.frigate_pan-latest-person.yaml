@@ -1,3 +1,0 @@
-name: Pan Last Person
-platform: mqtt
-topic: frigate/pan/person/snapshot

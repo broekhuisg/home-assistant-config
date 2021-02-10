@@ -1,3 +1,0 @@
-name: Pan Last Dog
-platform: mqtt
-topic: frigate/pan/dog/snapshot

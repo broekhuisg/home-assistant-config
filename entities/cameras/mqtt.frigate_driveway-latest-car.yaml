@@ -1,3 +1,0 @@
-name: Driveway Last Car
-platform: mqtt
-topic: frigate/driveway/car/snapshot
