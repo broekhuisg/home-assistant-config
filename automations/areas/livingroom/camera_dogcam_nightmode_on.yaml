@@ -1,0 +1,12 @@
+# alias: Dogcam camera nightmode on
+# description: >-
+#   Turn nightmode on dogcam and spin it to the bench [todo: fill in trigger]
+# trigger:
+#   - platform: sun
+#     event: sunset
+#     offset: "00:00:00"
+# condition: []
+# action:
+#   - data:
+#       entity_id: switch.dogcam_camera_night_mode
+#     service: switch.turn_on

@@ -27,6 +27,7 @@ video
 tts
 
 # Files
+frigate.yml
 adbkey
 google_calendars.yaml
 secrets.yaml
