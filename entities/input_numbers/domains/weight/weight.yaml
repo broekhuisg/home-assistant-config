@@ -1,0 +1,4 @@
+name: Weight box
+min: 80
+max: 105
+step: 0.1

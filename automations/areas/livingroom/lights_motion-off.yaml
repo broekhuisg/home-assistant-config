@@ -12,7 +12,7 @@ condition:
   - condition: not
     conditions:
       - condition: state
-        entity_id: media_player.xbian
+        entity_id: media_player.kodi
         state: "playing"
 action:
   - data:

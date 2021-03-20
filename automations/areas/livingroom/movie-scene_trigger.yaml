@@ -3,7 +3,7 @@ description: >-
   Activate the movie scene when starting mediaplayer.
 trigger:
   - platform: state
-    entity_id: media_player.xbian
+    entity_id: media_player.kodi
     from: "idle"
     to: "playing"
 condition:
