@@ -9,7 +9,7 @@ action:
   - data:
       entity_id: switch.dogcam_camera_night_mode
     service: switch.turn_on
-  - data:
-      entity_id: cover.dogcam_camera_move_left_right
-      position: 100
-    service: cover.set_cover_position
+  # - data:
+  #     entity_id: cover.dogcam_camera_move_left_right
+  #     position: 100
+  #   service: cover.set_cover_position

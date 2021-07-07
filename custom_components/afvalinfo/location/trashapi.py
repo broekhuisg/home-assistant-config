@@ -3,21 +3,19 @@ from ..const.const import (
     SENSOR_LOCATIONS_TO_URL,
     _LOGGER,
 )
-from datetime import datetime
-from datetime import timedelta
-from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
 import urllib.request
 import urllib.error
 import requests
 
 
 class TrashApiAfval(object):
-    def get_data(self, location, postcode, street_number, resources):
+    def get_data(self, location, postcode, street_number, street_number_suffix, resources):
         _LOGGER.debug("Updating Waste collection dates")
 
         try:
             API_ENDPOINT = SENSOR_LOCATIONS_TO_URL["trashapi"][0].format(
-                location, postcode, street_number
+                location, postcode, street_number, street_number_suffix
             )
 
             r = requests.get(url=API_ENDPOINT)
@@ -45,6 +43,9 @@ class TrashApiAfval(object):
                 # find restafval.
                 if "restafval" in resources and data["name"].lower() == "restafval":
                     waste_dict["restafval"] = data["date"].split("T")[0]
+                # find takken
+                if "takken" in resources and data["name"].lower() == "takken":
+                    waste_dict["takken"] = data["date"].split("T")[0]
                 # find textiel
                 if "textiel" in resources and data["name"].lower() == "textiel":
                     waste_dict["textiel"] = data["date"].split("T")[0]

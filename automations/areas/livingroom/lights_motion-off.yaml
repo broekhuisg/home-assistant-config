@@ -12,7 +12,7 @@ condition:
   - condition: not
     conditions:
       - condition: state
-        entity_id: media_player.kodi
+        entity_id: media_player.plex_plex_for_lg
         state: "playing"
 action:
   - data:

@@ -14,12 +14,12 @@ condition:
   - condition: not
     conditions:
       - condition: state
-        entity_id: media_player.kodi
+        entity_id: media_player.plex_plex_for_lg
         state: "playing"
   - condition: not
     conditions:
       - condition: state
-        entity_id: media_player.kodi
+        entity_id: media_player.plex_plex_for_lg
         state: "paused"
 action:
   - data:
