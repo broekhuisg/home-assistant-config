@@ -3,9 +3,8 @@ description: >-
   Activate the movie scene when starting mediaplayer.
 trigger:
   - platform: state
-    entity_id: sensor.plex_desktop_qi2hgjn
-    from: "0"
-    to: "1"
+    entity_id: media_player.plex_plex_for_lg_lg_oled55bx6lb
+    to: "playing"
 condition:
   - condition: numeric_state
     below: "5"
