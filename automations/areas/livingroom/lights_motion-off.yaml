@@ -12,8 +12,8 @@ condition:
   - condition: not
     conditions:
       - condition: state
-        entity_id: media_player.plex_plex_for_lg
-        state: "playing"
+        entity_id: sensor.plex_desktop_gavin
+        state: "1"
 action:
   - data:
       entity_id: light.livingroom_lights

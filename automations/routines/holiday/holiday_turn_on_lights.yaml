@@ -7,5 +7,5 @@ trigger:
 condition: []
 action:
   - data:
-      entity_id: group.holiday_lights
+      entity_id: light.holiday_lights
     service: light.turn_on
