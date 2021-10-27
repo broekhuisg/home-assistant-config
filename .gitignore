@@ -45,3 +45,4 @@ image_processing.yaml
 .ios.conf
 .DS_Store
 *.DS_Store
+home-assistant.log.*

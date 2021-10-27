@@ -1,11 +1,11 @@
-# alias: Backyard christmas lights off
-# description: >-
-#   Turn christmas lights off in the backyard when its 23:30h.
-# trigger:
-#   - platform: time
-#     at: "23:30:00"
-# condition: []
-# action:
-#   - data:
-#       entity_id: light.backyard_christmas_lights
-#     service: light.turn_off
+alias: Backyard christmas lights off
+description: >-
+  Turn christmas lights off in the backyard when its 23:30h.
+trigger:
+  - platform: time
+    at: "00:01:00"
+condition: []
+action:
+  - data:
+      entity_id: light.backyard_christmas_lights
+    service: light.turn_off
