@@ -1,11 +1,12 @@
 alias: Climate Away
 description: >-
-  Set the preset of the climate to away when everyone is leaving
+  Set the preset of the climate to away when no motion for an hour
 trigger:
-  - entity_id: group.phones
+  - entity_id: group.alarm_triggers
     platform: state
-    from: "home"
-    to: "not_home"
+    to: "off"
+    for:
+      minutes: 60
 condition: []
 action:
   - data:

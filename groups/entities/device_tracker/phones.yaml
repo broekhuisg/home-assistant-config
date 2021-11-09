@@ -1,4 +1,0 @@
-name: Phones
-entities:
-  - device_tracker.poco_f1
-  - device_tracker.sm_a505fn
