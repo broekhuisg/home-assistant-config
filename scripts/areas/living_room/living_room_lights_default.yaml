@@ -12,23 +12,25 @@ sequence:
       entity_id: light.livingroom_tv_light
       color_temp: 650
       transition: 1
-  - service: light.turn_on
-    data:
-      entity_id: light.livingroom_couch_light
-  - service: light.turn_on
+  - service: light.turn_off
     data:
       entity_id: light.livingroom_closet_light
 
   - delay:
-      seconds: 1
+      seconds: 2
 
+  - service: light.turn_on
+    data:
+      entity_id: light.wled_living_room
+      brightness_pct: 40
+      transition: 3
   - service: light.turn_on
     data:
       entity_id: light.livingroom_standing_corner_light
       brightness_pct: 80
-      transition: 3
+      transition: 5
   - service: light.turn_on
     data:
       entity_id: light.livingroom_tv_light
       brightness_pct: 70
-      transition: 3
+      transition: 5

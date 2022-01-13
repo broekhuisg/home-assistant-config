@@ -9,3 +9,6 @@ action:
   - data:
       entity_id: light.backyard_christmas_lights
     service: light.turn_off
+  - data:
+      entity_id: light.livingroom_couch_light
+    service: light.turn_off

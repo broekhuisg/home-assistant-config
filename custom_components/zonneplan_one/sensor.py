@@ -8,14 +8,11 @@ from homeassistant.helpers.update_coordinator import (
 import logging
 from homeassistant.helpers.typing import HomeAssistantType
 from homeassistant.components.sensor import (
+    SensorDeviceClass,
     SensorEntity,
 )
-from homeassistant.const import (
-    ENERGY_KILO_WATT_HOUR,
-    VOLUME_CUBIC_METERS,
-)
+
 import homeassistant.util.dt as dt_util
-import pytz
 
 from .coordinator import ZonneplanUpdateCoordinator
 from .const import (
@@ -23,6 +20,7 @@ from .const import (
     P1_INSTALL,
     PV_INSTALL,
     SENSOR_TYPES,
+    SUMMARY,
     ZonneplanSensorEntityDescription,
 )
 
@@ -37,9 +35,23 @@ async def async_setup_entry(hass: HomeAssistantType, config_entry, async_add_ent
 
     entities = []
     for uuid, connection in coordinator.connections.items():
-        pv_installations = coordinator.getConnectionValue(uuid, "pv_installation")
-        p1_installations = coordinator.getConnectionValue(uuid, "p1_installation")
+        pv_installations = coordinator.getConnectionValue(uuid, PV_INSTALL)
+        p1_installations = coordinator.getConnectionValue(uuid, P1_INSTALL)
+        summary = coordinator.getConnectionValue(uuid, SUMMARY)
+
         _LOGGER.debug("Setup sensors for connnection %s", uuid)
+
+        if summary:
+            for sensor_key in SENSOR_TYPES[SUMMARY]:
+                entities.append(
+                    ZonneplanSensor(
+                        uuid,
+                        sensor_key,
+                        coordinator,
+                        None,
+                        SENSOR_TYPES[SUMMARY][sensor_key],
+                    )
+                )
 
         if pv_installations:
             for install_index in range(len(pv_installations)):
@@ -125,10 +137,19 @@ class ZonneplanSensor(CoordinatorEntity, SensorEntity):
         """Return the name of the entity."""
 
         name = self.entity_description.name
-        if self._install_index > 0:
+        if self._install_index and self._install_index > 0:
             name += " (" + str(self._install_index + 1) + ")"
 
         return name
+
+    @property
+    def device_info(self):
+        """Return the device information."""
+        return {
+            "identifiers": {(DOMAIN, self._connection_uuid, SUMMARY)},
+            "manufacturer": "Zonneplan",
+            "name": "Usage",
+        }
 
     @property
     def native_value(self):
@@ -140,10 +161,11 @@ class ZonneplanSensor(CoordinatorEntity, SensorEntity):
         if not value:
             return value
 
-        if self.native_unit_of_measurement == ENERGY_KILO_WATT_HOUR:
-            value = value / 1000
-        if self.native_unit_of_measurement == VOLUME_CUBIC_METERS:
-            value = value / 1000
+        if self.entity_description.device_class == SensorDeviceClass.TIMESTAMP:
+            value = dt_util.parse_datetime(value)
+
+        if self.entity_description.value_factor:
+            value = value * self.entity_description.value_factor
 
         return value
 
@@ -189,18 +211,24 @@ class ZonneplanPvSensor(ZonneplanSensor):
                 ),
             )
             device_info["sw_version"] = (
-                self.coordinator.getConnectionValue(
-                    self._connection_uuid,
-                    "pv_installation.{install_index}.meta.module_firmware_version".format(
-                        install_index=self._install_index
-                    ),
+                str(
+                    self.coordinator.getConnectionValue(
+                        self._connection_uuid,
+                        "pv_installation.{install_index}.meta.module_firmware_version".format(
+                            install_index=self._install_index
+                        ),
+                    )
+                    or "unknown"
                 )
                 + " - "
-                + self.coordinator.getConnectionValue(
-                    self._connection_uuid,
-                    "pv_installation.{install_index}.meta.inverter_firmware_version".format(
-                        install_index=self._install_index
-                    ),
+                + str(
+                    self.coordinator.getConnectionValue(
+                        self._connection_uuid,
+                        "pv_installation.{install_index}.meta.inverter_firmware_version".format(
+                            install_index=self._install_index
+                        ),
+                    )
+                    or "unknown"
                 )
             )
 

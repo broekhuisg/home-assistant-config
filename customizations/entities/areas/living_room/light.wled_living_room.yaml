@@ -1,0 +1,3 @@
+light.wled_living_room:
+  friendly_name: LED strip vensterbank
+  icon: mdi:led-strip-variant

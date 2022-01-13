@@ -14,14 +14,16 @@ sequence:
       transition: 1
   - service: light.turn_off
     data:
-      entity_id: light.livingroom_couch_light
-  - service: light.turn_off
-    data:
       entity_id: light.livingroom_closet_light
 
   - delay:
       seconds: 2
 
+  - service: light.turn_on
+    data:
+      entity_id: light.wled_living_room
+      brightness_pct: 4
+      transition: 5
   - service: light.turn_on
     data:
       entity_id: light.livingroom_standing_corner_light
