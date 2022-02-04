@@ -15,6 +15,9 @@ sequence:
   - service: light.turn_off
     data:
       entity_id: light.livingroom_closet_light
+  - service: light.turn_off
+    data:
+      entity_id: light.livingroom_couch_light
 
   - delay:
       seconds: 2

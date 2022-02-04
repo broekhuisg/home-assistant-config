@@ -12,9 +12,12 @@ sequence:
       entity_id: light.livingroom_tv_light
       color_temp: 650
       transition: 1
-  - service: light.turn_off
+  - service: light.turn_on
     data:
       entity_id: light.livingroom_closet_light
+  - service: light.turn_on
+    data:
+      entity_id: light.livingroom_couch_light
 
   - delay:
       seconds: 2
