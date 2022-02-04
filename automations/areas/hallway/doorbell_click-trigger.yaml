@@ -1,51 +1,25 @@
 alias: Doorbell
 description: >-
-  Play sound on the Google speakers and send a message/photo to phone.
+  Play sound on the Google speaker upstairs.
 trigger:
-  platform: event
-  event_type: deconz_event
-  event_data:
-    id: "lumi_sensor_switch_aq3"
-    event: 1002
+  - entity_id: binary_sensor.doorbell_ringing_sensor
+    platform: state
+    from: "False"
+    to: "True"
 condition: []
 action:
   - data:
-      entity_id: media_player.living_room_display
-      volume_level: 1.0
-    service: media_player.volume_set
-  - data:
       entity_id: media_player.office_home_mini
       volume_level: 1.0
     service: media_player.volume_set
-  - data:
-      entity_id: media_player.living_room_display
-      media_content_id: http://192.168.2.17:8123/local/doorbell/doorbell.mp3
-      media_content_type: audio/mp3
-    service: media_player.play_media
   - data:
       entity_id: media_player.office_home_mini
       media_content_id: http://192.168.2.17:8123/local/doorbell/doorbell.mp3
       media_content_type: audio/mp3
     service: media_player.play_media
-  - data:
-      title: Send image person frontdoor
-      message: "Send image person frontdoor"
-      data:
-        photo:
-          - url: "http://192.168.2.17:5000/api/frontdoor/latest.jpg"
-            caption: "Er is iemand aan de deur"
-    service: notify.telegram_poco_f1
-  - data:
-      entity_id: camera.frontdoor_camera
-      filename: '/media/doorbell/doorbell_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
-    service: camera.snapshot
 
-  - delay: "00:00:05"
+  - delay: "00:00:07"
 
-  - data_template:
-      entity_id: media_player.living_room_display
-      volume_level: 0.6
-    service: media_player.volume_set
   - data_template:
       entity_id: media_player.office_home_mini
       volume_level: 0.6

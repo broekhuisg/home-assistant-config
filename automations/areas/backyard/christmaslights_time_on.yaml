@@ -1,14 +1,14 @@
-alias: Backyard christmas lights on
-description: >-
-  Turn christmas lights on in the backyard on sunset.
-trigger:
-  - platform: numeric_state
-    entity_id: sun.sun
-    attribute: elevation
-    # Can be a positive or negative number
-    below: -1
-condition: []
-action:
-  - data:
-      entity_id: light.backyard_christmas_lights
-    service: light.turn_on
+# alias: Backyard christmas lights on
+# description: >-
+#   Turn christmas lights on in the backyard on sunset.
+# trigger:
+#   - platform: numeric_state
+#     entity_id: sun.sun
+#     attribute: elevation
+#     # Can be a positive or negative number
+#     below: -1
+# condition: []
+# action:
+#   - data:
+#       entity_id: light.backyard_christmas_lights
+#     service: light.turn_on

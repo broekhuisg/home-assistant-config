@@ -1,18 +1,18 @@
-alias: Frontdoor lights turn off no motion
-description: >-
-  Turn lights off when there is no motion after sunset.
-trigger:
-  - entity_id: binary_sensor.motion_at_frontdoor
-    platform: state
-    to: "off"
-    for:
-      minutes: 5
-condition:
-  - condition: time
-    after: "00:00:01"
-    before: "09:00:01"
-action:
-  - data:
-      entity_id: light.frontdoor_lights
-      transition: 1
-    service: light.turn_off
+# alias: Frontdoor lights turn off no motion
+# description: >-
+#   Turn lights off when there is no motion after sunset.
+# trigger:
+#   - entity_id: binary_sensor.motion_at_frontdoor
+#     platform: state
+#     to: "off"
+#     for:
+#       minutes: 5
+# condition:
+#   - condition: time
+#     after: "00:00:01"
+#     before: "09:00:01"
+# action:
+#   - data:
+#       entity_id: light.frontdoor_lights
+#       transition: 1
+#     service: light.turn_off
