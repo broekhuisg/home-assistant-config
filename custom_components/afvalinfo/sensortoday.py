@@ -3,6 +3,7 @@ from datetime import datetime, date, timedelta
 from .const.const import (
     _LOGGER,
     ATTR_LAST_UPDATE,
+    ATTR_FRIENDLY_NAME,
     ATTR_YEAR_MONTH_DAY_DATE,
     SENSOR_TYPES,
     SENSOR_PREFIX,
@@ -12,20 +13,29 @@ from homeassistant.util import Throttle
 
 
 class AfvalInfoTodaySensor(Entity):
-    def __init__(self, data, sensor_type, entities, id_name):
+    def __init__(
+        self, data, sensor_type, sensor_friendly_name, entities, id_name, no_trash_text
+    ):
         self.data = data
         self.type = sensor_type
+        self.friendly_name = sensor_friendly_name
         self._last_update = None
-        self._name = (
-            SENSOR_PREFIX
-            + (id_name + " " if len(id_name) > 0 else "")
-            + SENSOR_TYPES[sensor_type][0]
+        self._name = sensor_friendly_name
+        self.entity_id = "sensor." + (
+            (
+                SENSOR_PREFIX
+                + (id_name + " " if len(id_name) > 0 else "")
+                + sensor_friendly_name
+            )
+            .lower()
+            .replace(" ", "_")
         )
         self._attr_unique_id = (
             SENSOR_PREFIX
             + (id_name + " " if len(id_name) > 0 else "")
-            + SENSOR_TYPES[sensor_type][0]
+            + sensor_friendly_name
         )
+        self._no_trash_text = no_trash_text
         self._state = None
         self._icon = SENSOR_TYPES[sensor_type][1]
         self._entities = entities
@@ -51,7 +61,7 @@ class AfvalInfoTodaySensor(Entity):
         self.data.update()
         self._last_update = datetime.today().strftime("%d-%m-%Y %H:%M")
         # use a tempState to change the real state only on a change...
-        tempState = "none"
+        tempState = self._no_trash_text
         numberOfMatches = 0
         today = str(date.today().strftime("%Y-%m-%d"))
         for entity in self._entities:
@@ -60,16 +70,16 @@ class AfvalInfoTodaySensor(Entity):
                 if numberOfMatches == 0:
                     tempState = ""
                 numberOfMatches = numberOfMatches + 1
-                # add trash name to string
+                # add trash friendly name or if no friendly name is provided, trash type to string
                 tempState = (
                     (
                         tempState
-                        + " "
-                        + entity.name.split()[len(entity.name.split()) - 1]
+                        + ", "
+                        + entity.extra_state_attributes.get(ATTR_FRIENDLY_NAME)
                     )
-                    .strip()
-                    .lower()
-                )
+                ).strip()
+        if tempState.startswith(", "):
+            tempState = tempState[2:]
         # only change state if the new state is different than the last state
         if tempState != self._state:
             self._state = tempState
