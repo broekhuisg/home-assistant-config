@@ -7,7 +7,7 @@ fields:
     example: up
   light:
     description: "The lights that are controlled"
-    example: light.keuken_spots
+    example: light.kitchen_lights
 mode: restart
 sequence:
   - repeat:

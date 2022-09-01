@@ -43,33 +43,49 @@ async def async_setup_entry(
 ) -> None:
     """Camera entry setup."""
 
-    config = hass.data[DOMAIN][entry.entry_id][ATTR_CONFIG]
+    frigate_config = hass.data[DOMAIN][entry.entry_id][ATTR_CONFIG]
 
     async_add_entities(
         [
-            FrigateCamera(entry, cam_name, camera_config)
-            for cam_name, camera_config in config["cameras"].items()
+            FrigateCamera(entry, cam_name, frigate_config, camera_config)
+            for cam_name, camera_config in frigate_config["cameras"].items()
         ]
         + [
-            FrigateMqttSnapshots(entry, config, cam_name, obj_name)
-            for cam_name, obj_name in get_cameras_and_objects(config)
+            FrigateMqttSnapshots(entry, frigate_config, cam_name, obj_name)
+            for cam_name, obj_name in get_cameras_and_objects(frigate_config, False)
         ]
     )
 
 
-class FrigateCamera(FrigateEntity, Camera):  # type: ignore[misc]
+class FrigateCamera(FrigateMQTTEntity, Camera):  # type: ignore[misc]
     """Representation a Frigate camera."""
 
     def __init__(
-        self, config_entry: ConfigEntry, cam_name: str, camera_config: dict[str, Any]
+        self,
+        config_entry: ConfigEntry,
+        cam_name: str,
+        frigate_config: dict[str, Any],
+        camera_config: dict[str, Any],
     ) -> None:
         """Initialize a Frigate camera."""
+        super().__init__(
+            config_entry,
+            frigate_config,
+            {
+                "topic": (
+                    f"{frigate_config['mqtt']['topic_prefix']}"
+                    f"/{cam_name}/recordings/state"
+                ),
+                "encoding": None,
+            },
+        )
         FrigateEntity.__init__(self, config_entry)
         Camera.__init__(self)
         self._cam_name = cam_name
         self._camera_config = camera_config
         self._url = config_entry.data[CONF_URL]
-        self._stream_enabled = self._camera_config["rtmp"]["enabled"]
+        self._attr_is_streaming = self._camera_config.get("rtmp", {}).get("enabled")
+        self._attr_is_recording = self._camera_config.get("record", {}).get("enabled")
 
         streaming_template = config_entry.options.get(
             CONF_RTMP_URL_TEMPLATE, ""
@@ -85,6 +101,12 @@ class FrigateCamera(FrigateEntity, Camera):  # type: ignore[misc]
             )
         else:
             self._stream_source = f"rtmp://{URL(self._url).host}/live/{self._cam_name}"
+
+    @callback  # type: ignore[misc]
+    def _state_message_received(self, msg: ReceiveMessage) -> None:
+        """Handle a new received MQTT state message."""
+        self._attr_is_recording = msg.payload.decode("utf-8") == "ON"
+        super()._state_message_received(msg)
 
     @property
     def unique_id(self) -> str:
@@ -110,13 +132,14 @@ class FrigateCamera(FrigateEntity, Camera):  # type: ignore[misc]
             "via_device": get_frigate_device_identifier(self._config_entry),
             "name": get_friendly_name(self._cam_name),
             "model": self._get_model(),
+            "configuration_url": f"{self._url}/cameras/{self._cam_name}",
             "manufacturer": NAME,
         }
 
     @property
     def supported_features(self) -> int:
         """Return supported features of this camera."""
-        if not self._stream_enabled:
+        if not self._attr_is_streaming:
             return 0
         return cast(int, SUPPORT_STREAM)
 
@@ -138,7 +161,7 @@ class FrigateCamera(FrigateEntity, Camera):  # type: ignore[misc]
 
     async def stream_source(self) -> str | None:
         """Return the source of the stream."""
-        if not self._stream_enabled:
+        if not self._attr_is_streaming:
             return None
         return self._stream_source
 
@@ -197,6 +220,7 @@ class FrigateMqttSnapshots(FrigateMQTTEntity, Camera):  # type: ignore[misc]
             "via_device": get_frigate_device_identifier(self._config_entry),
             "name": get_friendly_name(self._cam_name),
             "model": self._get_model(),
+            "configuration_url": f"{self._config_entry.data.get(CONF_URL)}/cameras/{self._cam_name}",
             "manufacturer": NAME,
         }
 

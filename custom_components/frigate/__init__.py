@@ -14,7 +14,9 @@ from typing import Any, Callable, Final
 from awesomeversion import AwesomeVersion
 
 from custom_components.frigate.config_flow import get_config_entry_title
+from homeassistant.components.mqtt.models import ReceiveMessage
 from homeassistant.components.mqtt.subscription import (
+    async_prepare_subscribe_topics,
     async_subscribe_topics,
     async_unsubscribe_topics,
 )
@@ -29,16 +31,6 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.loader import async_get_integration
 from homeassistant.util import slugify
-
-# TODO(@dermotduffy): To be removed some safe distance from the official release of 2021.8.
-try:
-    from homeassistant.components.mqtt.models import (  # pylint: disable=no-name-in-module  # pragma: no cover
-        ReceiveMessage,
-    )
-except ImportError:  # pragma: no cover
-    from homeassistant.components.mqtt.models import (  # pylint: disable=no-name-in-module  # pragma: no cover
-        Message as ReceiveMessage,
-    )
 
 from .api import FrigateApiClient, FrigateApiClientError
 from .const import (
@@ -64,6 +56,7 @@ from .views import (
 SCAN_INTERVAL = timedelta(seconds=5)
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
+
 
 # Typing notes:
 # - The HomeAssistant library does not provide usable type hints for custom
@@ -95,12 +88,20 @@ def get_friendly_name(name: str) -> str:
     return name.replace("_", " ").title()
 
 
-def get_cameras_and_objects(config: dict[str, Any]) -> set[tuple[str, str]]:
+def get_cameras_and_objects(
+    config: dict[str, Any], include_all: bool = True
+) -> set[tuple[str, str]]:
     """Get cameras and tracking object tuples."""
     camera_objects = set()
     for cam_name, cam_config in config["cameras"].items():
         for obj in cam_config["objects"]["track"]:
             camera_objects.add((cam_name, obj))
+
+        # add an artificial all label to track
+        # all objects for this camera
+        if include_all:
+            camera_objects.add((cam_name, "all"))
+
     return camera_objects
 
 
@@ -111,7 +112,15 @@ def get_cameras_zones_and_objects(config: dict[str, Any]) -> set[tuple[str, str]
     zone_objects = set()
     for cam_name, obj in camera_objects:
         for zone_name in config["cameras"][cam_name]["zones"]:
-            zone_objects.add((zone_name, obj))
+            zone_name_objects = config["cameras"][cam_name]["zones"][zone_name].get(
+                "objects"
+            )
+            if not zone_name_objects or obj in zone_name_objects:
+                zone_objects.add((zone_name, obj))
+
+            # add an artificial all label to track
+            # all objects for this zone
+            zone_objects.add((zone_name, "all"))
     return camera_objects.union(zone_objects)
 
 
@@ -120,6 +129,15 @@ def get_cameras_and_zones(config: dict[str, Any]) -> set[str]:
     cameras_zones = set()
     for camera in config.get("cameras", {}).keys():
         cameras_zones.add(camera)
+        for zone in config["cameras"][camera].get("zones", {}).keys():
+            cameras_zones.add(zone)
+    return cameras_zones
+
+
+def get_zones(config: dict[str, Any]) -> set[str]:
+    """Get zones."""
+    cameras_zones = set()
+    for camera in config.get("cameras", {}).keys():
         for zone in config["cameras"][camera].get("zones", {}).keys():
             cameras_zones.add(zone)
     return cameras_zones
@@ -361,7 +379,7 @@ class FrigateMQTTEntity(FrigateEntity):
 
     async def async_added_to_hass(self) -> None:
         """Subscribe mqtt events."""
-        self._sub_state = await async_subscribe_topics(
+        state = async_prepare_subscribe_topics(
             self.hass,
             self._sub_state,
             {
@@ -373,10 +391,11 @@ class FrigateMQTTEntity(FrigateEntity):
                 },
             },
         )
+        self._sub_state = await async_subscribe_topics(self.hass, state)
 
     async def async_will_remove_from_hass(self) -> None:
         """Cleanup prior to hass removal."""
-        await async_unsubscribe_topics(self.hass, self._sub_state)
+        async_unsubscribe_topics(self.hass, self._sub_state)
         self._sub_state = None
 
     @callback  # type: ignore[misc]
