@@ -1,0 +1,1 @@
+mqtt: !include_dir_merge_named ../entities/mqtt

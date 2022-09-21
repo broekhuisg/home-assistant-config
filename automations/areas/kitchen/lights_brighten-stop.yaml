@@ -6,7 +6,7 @@
 alias: Kitchen lights brighten stop
 description: >-
   Stop the brighten function for the kitchen lights when releasing the button up.
-initial_state: "on"
+initial_state: true
 trigger:
   platform: event
   event_type: deconz_event

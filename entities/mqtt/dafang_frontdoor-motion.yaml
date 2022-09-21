@@ -1,0 +1,7 @@
+binary_sensor:
+  name: Motion at frontdoor
+  state_topic: "home/frontdoor_camera/motion"
+  device_class: motion
+  off_delay: 60
+  # platform: mqtt
+  # availability_topic: "frigate/available"

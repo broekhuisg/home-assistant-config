@@ -1,0 +1,12 @@
+alias: WLED TV Turn off when Shield turn off
+description: >-
+  Turns the WLED Ambilight off when the NVidia Shield is turned off
+trigger:
+  - entity_id: media_player.shield
+    platform: state
+    to: "off"
+condition: []
+action:
+  - data:
+      entity_id: light.wled_tv
+    service: light.turn_off

@@ -3,3 +3,4 @@ name: Office lights
 entities:
   - light.office_standing_corner_light
   - light.office_closet_light
+  - light.wled_office
