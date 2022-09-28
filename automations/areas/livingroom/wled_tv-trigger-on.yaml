@@ -8,5 +8,5 @@ trigger:
 condition: []
 action:
   - data:
-      entity_id: light.wled_tv
+      entity_id: light.tvambilight
     service: light.turn_on
