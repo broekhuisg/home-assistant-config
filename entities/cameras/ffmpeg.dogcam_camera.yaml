@@ -1,3 +1,0 @@
-platform: ffmpeg
-name: Dogcam camera
-input: !secret rtsp_pan_camera_full

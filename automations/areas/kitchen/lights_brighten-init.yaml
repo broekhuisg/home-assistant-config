@@ -6,7 +6,7 @@
 alias: Kitchen lights brighten init
 description: >-
   Initialize the brighten function for the kitchen lights when holding the button up.
-initial_state: "on"
+initial_state: true
 trigger:
   platform: event
   event_type: deconz_event

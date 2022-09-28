@@ -1,6 +1,0 @@
-name: Motion at frontdoor
-platform: mqtt
-state_topic: "home/frontdoor_camera/motion"
-device_class: motion
-off_delay: 60
-# availability_topic: "frigate/available"

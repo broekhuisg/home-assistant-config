@@ -2,9 +2,9 @@ alias: Frontdoor lights turn off no motion
 description: >-
   Turn lights off when there is no motion after sunset.
 trigger:
-  - entity_id: binary_sensor.motion_at_frontdoor
+  - entity_id: binary_sensor.doorbell_global_motion_sensor
     platform: state
-    to: "off"
+    to: "False"
     for:
       minutes: 5
 condition:

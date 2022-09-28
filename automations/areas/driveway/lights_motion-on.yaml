@@ -2,9 +2,9 @@ alias: Frontdoor lights turn on motion
 description: >-
   Turn lights on when there is motion after sunset.
 trigger:
-  - entity_id: binary_sensor.motion_at_frontdoor
+  - entity_id: binary_sensor.doorbell_motion_sensor
     platform: state
-    to: "on"
+    to: "True"
 condition:
   - condition: time
     after: "00:00:01"

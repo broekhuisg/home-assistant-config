@@ -46,3 +46,6 @@ image_processing.yaml
 .DS_Store
 *.DS_Store
 home-assistant.log.*
+
+# Wacthman report
+*/watchman_report.txt

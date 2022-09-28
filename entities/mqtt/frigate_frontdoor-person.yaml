@@ -1,0 +1,6 @@
+binary_sensor:
+  name: Person at frontdoor
+  state_topic: "frigate/frontdoor/person"
+  device_class: motion
+  availability_topic: "frigate/available"
+  # platform: mqtt

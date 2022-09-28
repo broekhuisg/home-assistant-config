@@ -1,3 +1,0 @@
-platform: ffmpeg
-name: Frontdoor camera
-input: !secret rtsp_frontdoor_camera_full

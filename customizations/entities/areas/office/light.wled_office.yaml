@@ -1,0 +1,3 @@
+light.wled_office:
+  friendly_name: LED strip kast kantoor
+  icon: mdi:led-strip-variant

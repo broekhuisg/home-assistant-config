@@ -8,9 +8,9 @@ trigger:
     to: "on"
 condition:
   - condition: numeric_state
-    below: "5"
+    below: 2
     entity_id: sun.sun
-    value_template: "{{ state.attributes.elevation }}"
+    attribute: elevation
 action:
   - data:
       entity_id: light.backyard_roof_lights

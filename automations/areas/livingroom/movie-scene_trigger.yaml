@@ -3,13 +3,13 @@ description: >-
   Activate the movie scene when starting mediaplayer.
 trigger:
   - platform: state
-    entity_id: media_player.plex_plex_for_lg_lg_oled55bx6lb
+    entity_id: media_player.plex_plex_for_android_tv_shield_android_tv
     to: "playing"
 condition:
   - condition: numeric_state
-    below: "5"
+    below: 5
     entity_id: sun.sun
-    value_template: "{{ state.attributes.elevation }}"
+    attribute: elevation
 action:
   - data:
       entity_id: script.movie_scene

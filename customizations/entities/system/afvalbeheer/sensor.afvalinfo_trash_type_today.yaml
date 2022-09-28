@@ -1,0 +1,3 @@
+sensor.afvalinfo_trash_type_today:
+  friendly_name: Afvalbeheer vandaag
+  icon: mdi:delete-empty
