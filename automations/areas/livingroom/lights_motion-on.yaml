@@ -8,7 +8,7 @@ trigger:
     to: "on"
 condition:
   - condition: numeric_state
-    below: 2
+    below: 4
     entity_id: sun.sun
     attribute: elevation
   - condition: not
