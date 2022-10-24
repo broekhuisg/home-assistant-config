@@ -9,9 +9,7 @@ sequence:
       transition: 1
   - service: light.turn_on
     data:
-      entity_id: light.livingroom_tv_light
-      color_temp: 670
-      transition: 1
+      entity_id: light.livingroom_television_light
   - service: light.turn_on
     data:
       entity_id: light.livingroom_closet_light
@@ -31,9 +29,4 @@ sequence:
     data:
       entity_id: light.livingroom_standing_corner_light
       brightness_pct: 90
-      transition: 5
-  - service: light.turn_on
-    data:
-      entity_id: light.livingroom_tv_light
-      brightness_pct: 70
       transition: 5

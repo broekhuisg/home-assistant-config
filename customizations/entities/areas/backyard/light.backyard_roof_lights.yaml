@@ -1,6 +1,0 @@
-# Original: switch.on_off_plug_in_unit_6
-# Converted to: light.achtertuin_spots via entities/lights
-
-light.backyard_roof_lights:
-  friendly_name: Achtertuin spots
-  icon: mdi:spotlight-beam
