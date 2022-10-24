@@ -1,0 +1,3 @@
+platform: switch
+name: Livingroom television light
+entity_id: switch.livingroom_television_light

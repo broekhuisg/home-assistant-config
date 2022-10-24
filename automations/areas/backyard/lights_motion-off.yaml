@@ -11,5 +11,5 @@ trigger:
 condition: []
 action:
   - data:
-      entity_id: light.backyard_roof_lights
+      entity_id: light.backyard_roof_spots
     service: light.turn_off

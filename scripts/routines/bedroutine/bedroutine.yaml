@@ -15,7 +15,7 @@ sequence:
   - service: light.turn_off
     entity_id: light.frontdoor_lights
   - service: light.turn_off
-    entity_id: light.backyard_christmas_lights
+    entity_id: light.backyard_christmas_light
   - service: climate.set_temperature
     data:
       entity_id: climate.heating
