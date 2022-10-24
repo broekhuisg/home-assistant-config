@@ -4,7 +4,7 @@ entities:
   - light.hallway_light_1
   - light.hallway_light_2
   - light.livingroom_standing_corner_light
-  - light.livingroom_tv_light
+  - light.livingroom_television_light
   - light.kitchen_light_1
   - light.kitchen_light_2
   - light.kitchen_light_3
