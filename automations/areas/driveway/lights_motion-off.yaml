@@ -10,6 +10,8 @@ trigger:
 condition:
   - condition: time
     after: "06:00:00"
+  - condition: time
+    before: "12:00:00"
 action:
   - data:
       entity_id: light.frontdoor_lights
