@@ -7,7 +7,9 @@ trigger:
     to: "off"
     for:
       minutes: 1
-condition: []
+condition:
+  - condition: time
+    after: "06:00:00"
 action:
   - data:
       entity_id: light.frontdoor_lights
