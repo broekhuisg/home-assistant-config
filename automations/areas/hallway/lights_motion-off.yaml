@@ -4,7 +4,6 @@ description: >-
 trigger:
   - entity_id: binary_sensor.hallway_motion_sensor
     platform: state
-    from: "on"
     to: "off"
 condition: []
 action:
