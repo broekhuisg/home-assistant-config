@@ -1,0 +1,9 @@
+name: Roofspots backyard
+command_topic: "cmnd/roofspots_backyard/POWER"
+state_topic: "stat/roofspots_backyard/RESULT"
+state_value_template: "{{value_json.POWER}}"
+availability_topic: "tele/roofspots_backyard/LWT"
+payload_on: "ON"
+payload_off: "OFF"
+payload_available: "Online"
+payload_not_available: "Offline"
