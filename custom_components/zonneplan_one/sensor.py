@@ -1,7 +1,7 @@
 """Zonneplan Sensor"""
-from typing import Optional
-
+from typing import Optional, Any
 from voluptuous.validators import Number
+
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
 )
@@ -163,14 +163,65 @@ class ZonneplanSensor(CoordinatorEntity, SensorEntity):
         if value is None and self.entity_description.none_value_behaviour == NONE_USE_PREVIOUS:
             return
 
+        if self.skip_update_based_on_daily_update_hour():
+            _LOGGER.info(f'Skip update {self.name} until {self.entity_description.daily_update_hour}h')
+            return
+
+        _LOGGER.debug(f'Update {self.name}: {value}')
+
         self._attr_native_value = value
         self.async_write_ha_state()
 
+    def skip_update_based_on_daily_update_hour(self) -> bool:
+
+        if self.entity_description.daily_update_hour is None:
+            return False
+
+        # No state? then we update
+        if not (state := self.hass.states.get(self.entity_id)):
+            return False
+
+        # No last update value? then we update
+        if not state.last_updated:
+            return False
+
+        update_today = dt_util.now().replace(hour=self.entity_description.daily_update_hour, minute=0, second=0, microsecond=0)
+
+        # Is it time already to update the value today? No then we skip
+        if update_today > dt_util.now():
+            _LOGGER.debug(f'Skipped update {self.name}: {update_today} (update today) > {dt_util.now()} (now)')
+            return True
+
+        # Already updated today after daily_update_hour? Then skip
+        if dt_util.as_local(state.last_updated) >= update_today:
+            _LOGGER.debug(f'Skipped update {self.name}: {dt_util.as_local(state.last_updated)} (last update) >= {update_today} (update today)')
+            return True
+
+        return False
+
+    @property
+    def extra_state_attributes(self):
+
+        if not self.entity_description.attributes:
+            return
+
+        attrs = {}
+        for attribute in self.entity_description.attributes:
+            value = self.coordinator.getConnectionValue(
+                self._connection_uuid,
+                attribute.key.format(install_index=self._install_index),
+            )
+            _LOGGER.debug(f'Update {self.name}.attribute[{attribute.label}]: {value}')
+            attrs[attribute.label] = value
+
+        return attrs
+
     def _value_from_coordinator(self):
-        value = self.coordinator.getConnectionValue(
+        raw_value = value = self.coordinator.getConnectionValue(
             self._connection_uuid,
             self.entity_description.key.format(install_index=self._install_index),
         )
+
         if value is None and self.entity_description.none_value_behaviour == NONE_IS_ZERO:
             value = 0
 
@@ -181,6 +232,8 @@ class ZonneplanSensor(CoordinatorEntity, SensorEntity):
 
             if self.entity_description.value_factor:
                 value = value * self.entity_description.value_factor
+
+        _LOGGER.debug(f'Value {self.name}: {value} [{raw_value}]')
 
         return value
 
