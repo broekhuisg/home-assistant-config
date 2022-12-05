@@ -1,4 +1,4 @@
 platform: group
 name: Backyard lights
 entities:
-  - light.backyard_roof_spots
+  - light.roofspots_backyard
