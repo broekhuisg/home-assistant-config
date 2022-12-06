@@ -1,0 +1,5 @@
+state_topic: "dsmr/day-consumption/electricity1_returned"
+name: "DSMR Daltarief Day Returned"
+unit_of_measurement: "kWh"
+device_class: "energy"
+state_class: total_increasing

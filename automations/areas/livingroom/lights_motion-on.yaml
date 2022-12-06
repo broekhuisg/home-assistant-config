@@ -1,4 +1,4 @@
-alias: Living room lights on when motion
+alias: Living room lights on
 description: >-
   Turn lights on when there is motion and after sunset.
 trigger:
@@ -7,15 +7,15 @@ trigger:
     from: "off"
     to: "on"
 condition:
-  - condition: numeric_state
-    below: 4
-    entity_id: sun.sun
-    attribute: elevation
-  - condition: not
-    conditions:
-      - condition: state
-        entity_id: media_player.plex_plex_for_android_tv_shield_android_tv
-        state: "playing"
+  and:
+    - condition: numeric_state
+      below: 4
+      entity_id: sun.sun
+      attribute: elevation
+    - not:
+        - condition: state
+          entity_id: media_player.plex_plex_for_android_tv_shield_android_tv
+          state: "playing"
 action:
   - data:
       entity_id: light.livingroom_lights

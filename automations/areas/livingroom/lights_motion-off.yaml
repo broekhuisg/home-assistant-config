@@ -9,11 +9,10 @@ trigger:
     for:
       minutes: 20
 condition:
-  - condition: not
-    conditions:
-      - condition: state
-        entity_id: media_player.plex_plex_for_android_tv_shield_android_tv
-        state: "playing"
+  not:
+    - condition: state
+      entity_id: media_player.plex_plex_for_android_tv_shield_android_tv
+      state: "playing"
 action:
   - data:
       entity_id: light.livingroom_lights

@@ -1,0 +1,5 @@
+state_topic: "dsmr/day-consumption/electricity2"
+name: "DSMR Hoogtarief Day Consumption"
+unit_of_measurement: "kWh"
+device_class: "energy"
+state_class: total_increasing
