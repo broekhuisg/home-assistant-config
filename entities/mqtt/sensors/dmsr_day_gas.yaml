@@ -1,0 +1,5 @@
+state_topic: "dsmr/day-consumption/gas"
+name: "DSMR Gas Day"
+unit_of_measurement: "m³"
+device_class: "gas"
+state_class: total_increasing
