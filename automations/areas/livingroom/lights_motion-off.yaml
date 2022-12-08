@@ -4,7 +4,6 @@ description: >-
 trigger:
   - entity_id: binary_sensor.livingroom_motion_sensor
     platform: state
-    from: "on"
     to: "off"
     for:
       minutes: 20
