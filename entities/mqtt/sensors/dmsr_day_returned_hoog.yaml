@@ -1,0 +1,5 @@
+state_topic: "dsmr/day-consumption/electricity2_returned"
+name: "DSMR Hoogtarief Day Returned"
+unit_of_measurement: "kWh"
+device_class: "energy"
+state_class: total_increasing

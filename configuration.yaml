@@ -4,6 +4,7 @@ homeassistant:
 
   latitude: !secret lat
   longitude: !secret lon
+  country: NL
   elevation: 15
   unit_system: metric
   time_zone: Europe/Amsterdam

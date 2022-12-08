@@ -1,1 +1,3 @@
-mqtt: !include_dir_merge_named ../entities/mqtt
+mqtt:
+  light: !include_dir_list ../entities/mqtt/lights
+  sensor: !include_dir_list ../entities/mqtt/sensors
