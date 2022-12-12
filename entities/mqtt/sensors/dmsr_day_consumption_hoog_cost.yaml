@@ -1,0 +1,5 @@
+state_topic: "dsmr/day-consumption/electricity2_cost"
+name: "DSMR Hoogtarief Day Consumption Costs"
+unit_of_measurement: "EUR/kWh"
+device_class: "monetary"
+state_class: total_increasing
