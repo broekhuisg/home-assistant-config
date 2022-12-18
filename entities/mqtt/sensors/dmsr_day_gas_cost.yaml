@@ -1,0 +1,5 @@
+state_topic: "dsmr/day-consumption/gas_cost"
+name: "DSMR Gas Day Costs"
+unit_of_measurement: "EUR/m³"
+device_class: "monetary"
+state_class: total_increasing
