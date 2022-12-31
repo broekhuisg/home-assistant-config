@@ -1,26 +1,26 @@
-alias: Doorbell
-description: >-
-  Play sound on the Google speaker upstairs.
-trigger:
-  - entity_id: binary_sensor.doorbell_ringing_sensor
-    platform: state
-    from: "False"
-    to: "True"
-condition: []
-action:
-  - data:
-      entity_id: media_player.office_home_mini
-      volume_level: 1.0
-    service: media_player.volume_set
-  - data:
-      entity_id: media_player.office_home_mini
-      media_content_id: http://192.168.2.17:8123/local/doorbell/doorbell.mp3
-      media_content_type: audio/mp3
-    service: media_player.play_media
+# alias: Doorbell
+# description: >-
+#   Play sound on the Google speaker upstairs.
+# trigger:
+#   - entity_id: binary_sensor.doorbell_ringing_sensor
+#     platform: state
+#     from: "False"
+#     to: "True"
+# condition: []
+# action:
+#   - data:
+#       entity_id: media_player.office_home_mini
+#       volume_level: 1.0
+#     service: media_player.volume_set
+#   - data:
+#       entity_id: media_player.office_home_mini
+#       media_content_id: http://192.168.2.17:8123/local/doorbell/doorbell.mp3
+#       media_content_type: audio/mp3
+#     service: media_player.play_media
 
-  - delay: "00:00:07"
+#   - delay: "00:00:07"
 
-  - data_template:
-      entity_id: media_player.office_home_mini
-      volume_level: 0.6
-    service: media_player.volume_set
+#   - data_template:
+#       entity_id: media_player.office_home_mini
+#       volume_level: 0.6
+#     service: media_player.volume_set
