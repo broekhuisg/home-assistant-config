@@ -11,6 +11,6 @@ sequence:
     service: tts.cloud_say
   - data:
       message: De koelkast staat nog open!
-    service: notify.telegram_poco_f1
+    service: notify.telegram_notify
   - service: script.turn_on
     entity_id: script.fridge_open_loop

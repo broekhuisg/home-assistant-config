@@ -1,24 +1,24 @@
-alias: Alarm pending
-trigger:
-  - platform: state
-    entity_id: alarm_control_panel.home_alarm
-    to: 'pending'
-condition: []
-action:
-- data:
-    entity_id: group.alarm_sound_players
-    volume_level: 1
-  service: media_player.volume_set
-- data:
-    entity_id: group.alarm_pending_lights
-    brightness_pct: 95
-  service: light.turn_on
-- delay:
-    seconds: 1
-- data:
-    entity_id: group.alarm_pending_lights
-    color_temp: 150
-  service: light.turn_on
-- data:
-    entity_id: script.alarm_pending_sound_init
-  service: script.turn_on
+# alias: Alarm pending
+# trigger:
+#   - platform: state
+#     entity_id: alarm_control_panel.home_alarm
+#     to: 'pending'
+# condition: []
+# action:
+# - data:
+#     entity_id: group.alarm_sound_players
+#     volume_level: 1
+#   service: media_player.volume_set
+# - data:
+#     entity_id: group.alarm_pending_lights
+#     brightness_pct: 95
+#   service: light.turn_on
+# - delay:
+#     seconds: 1
+# - data:
+#     entity_id: group.alarm_pending_lights
+#     color_temp: 150
+#   service: light.turn_on
+# - data:
+#     entity_id: script.alarm_pending_sound_init
+#   service: script.turn_on

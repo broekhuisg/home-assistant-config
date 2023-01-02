@@ -11,4 +11,4 @@ action:
       message: >-
         "Batterij van brandalarm gang is bijna leeg - 
         ({{ states('sensor.hallway_smoke_sensor_battery_level')|int }}%)"
-    service: notify.telegram_poco_f1
+    service: notify.telegram_notify

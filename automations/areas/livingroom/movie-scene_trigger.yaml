@@ -1,9 +1,9 @@
 alias: Living room activate movie scene
 description: >-
-  Activate the movie scene when starting mediaplayer.
+  Activate the movie scene when starting media player.
 trigger:
   - platform: state
-    entity_id: media_player.plex_plex_for_android_tv_shield_android_tv
+    entity_id: media_player.shield
     to: "playing"
 condition:
   - condition: numeric_state

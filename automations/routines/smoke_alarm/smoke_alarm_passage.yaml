@@ -9,4 +9,4 @@ condition: []
 action:
   - data:
       message: "Brandalarm op de overloop gaat af!"
-    service: notify.telegram_poco_f1
+    service: notify.telegram_notify
