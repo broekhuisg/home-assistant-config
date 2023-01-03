@@ -6,10 +6,21 @@ trigger:
     entity_id: media_player.shield
     to: "playing"
 condition:
-  - condition: numeric_state
-    below: 5
-    entity_id: sun.sun
-    attribute: elevation
+  and:
+    - condition: numeric_state
+      below: 5
+      entity_id: sun.sun
+      attribute: elevation
+    - or:
+        - not:
+            - condition: state
+              entity_id: media_player.shield
+              attribute: app_name
+              state: YouTube
+            - condition: state
+              entity_id: media_player.shield
+              attribute: app_name
+              state: Twitch
 action:
   - data:
       entity_id: script.movie_scene
