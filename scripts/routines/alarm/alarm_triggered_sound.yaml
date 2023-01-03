@@ -1,4 +1,4 @@
-alias: Alarm triggered sound init
+alias: Alarm triggered sound
 sequence:
   - data: {}
     entity_id: group.alarm_sound_players
@@ -8,5 +8,3 @@ sequence:
       media_content_id: http://192.168.2.17:8123/local/alarm/purge.mp3
       media_content_type: audio/mp3
     service: media_player.play_media
-  - service: script.turn_on
-    entity_id: script.alarm_triggered_sound_loop
