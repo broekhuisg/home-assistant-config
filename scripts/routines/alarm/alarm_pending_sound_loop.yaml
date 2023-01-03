@@ -1,9 +1,0 @@
-# alias: Alarm pending sound loop
-# sequence:
-#   - delay:
-#       seconds: 4
-#   - condition: state
-#     entity_id: alarm_control_panel.home_alarm
-#     state: "pending"
-#   - service: script.turn_on
-#     entity_id: script.alarm_pending_sound_init
