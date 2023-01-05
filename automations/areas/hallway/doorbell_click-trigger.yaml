@@ -8,6 +8,9 @@ trigger:
 condition: []
 action:
   - data:
+      message: "Er is iemand aan de deur"
+    service: notify.telegram_notify
+  - data:
       entity_id: media_player.office_home_mini
       volume_level: 0.8
     service: media_player.volume_set
