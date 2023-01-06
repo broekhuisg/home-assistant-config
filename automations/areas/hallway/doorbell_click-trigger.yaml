@@ -1,16 +1,18 @@
-alias: Doorbell
+alias: Doorbell ringing
 description: >-
   Play sound on the Google speaker upstairs.
 trigger:
-  - entity_id: binary_sensor.doorbell_ringing_sensor
+  - entity_id: binary_sensor.doorbell_ringing
     platform: state
-    from: "False"
-    to: "True"
+    to: "on"
 condition: []
 action:
   - data:
+      message: "Er is iemand aan de deur"
+    service: notify.telegram_notify
+  - data:
       entity_id: media_player.office_home_mini
-      volume_level: 1.0
+      volume_level: 0.8
     service: media_player.volume_set
   - data:
       entity_id: media_player.office_home_mini

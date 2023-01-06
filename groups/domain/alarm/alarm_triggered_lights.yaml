@@ -1,12 +1,7 @@
 name: Alarm Triggered Lights
 entities:
   - light.guestbedroom_standing_light
-  - light.hallway_light_1
-  - light.hallway_light_2
-  - light.livingroom_standing_corner_light
-  - light.livingroom_television_light
-  - light.kitchen_light_1
-  - light.kitchen_light_2
-  - light.kitchen_light_3
-  - light.kitchen_light_4
-  - light.office_standing_corner_light
+  - light.hallway_lights
+  - light.livingroom_lights
+  - light.kitchen_lights
+  - light.office_lights

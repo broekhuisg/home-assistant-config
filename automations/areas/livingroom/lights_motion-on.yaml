@@ -13,7 +13,7 @@ condition:
       attribute: elevation
     - not:
         - condition: state
-          entity_id: media_player.plex_plex_for_android_tv_shield_android_tv
+          entity_id: media_player.shield
           state: "playing"
 action:
   - data:
