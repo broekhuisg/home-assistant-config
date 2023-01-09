@@ -21,6 +21,10 @@ condition:
               entity_id: media_player.shield
               attribute: app_name
               state: Twitch
+            - condition: state
+              entity_id: media_player.shield
+              attribute: app_name
+              state: Spotify
 action:
   - data:
       entity_id: script.movie_scene
