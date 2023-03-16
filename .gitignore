@@ -49,3 +49,6 @@ home-assistant.log.*
 
 # Wacthman report
 */watchman_report.txt
+
+# Hyperion
+hyperion/*

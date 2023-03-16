@@ -5,5 +5,5 @@ entities:
   - light.livingroom_television_light
   - light.livingroom_couch_light
   - light.livingroom_closet_light
-  - light.twinkly_f6bc91
   - light.wled_living_room
+  # - light.twinkly_f6bc91
