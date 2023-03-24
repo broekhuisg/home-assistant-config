@@ -23,7 +23,7 @@ sequence:
   - service: light.turn_on
     data:
       entity_id: light.wled_living_room
-      brightness_pct: 4
+      brightness_pct: 5
       transition: 5
   - service: light.turn_on
     data:

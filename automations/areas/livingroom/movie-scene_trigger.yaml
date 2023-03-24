@@ -25,6 +25,14 @@ condition:
               entity_id: media_player.shield
               attribute: app_name
               state: Spotify
+            - condition: state
+              entity_id: media_player.shield
+              attribute: app_name
+              state: "F1TV Chromecast"
+            - condition: state
+              entity_id: media_player.shield
+              attribute: app_name
+              state: "Videoland v2"
 action:
   - data:
       entity_id: script.movie_scene
