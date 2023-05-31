@@ -3,7 +3,7 @@ description: >-
   Turn lights on when when we are on holiday.
 trigger:
   platform: time
-  at: "18:45:00"
+  at: "19:45:00"
 condition: []
 action:
   - data:
