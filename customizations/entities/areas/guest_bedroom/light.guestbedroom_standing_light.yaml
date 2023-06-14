@@ -1,3 +1,3 @@
-light.guestbedroom_standing_light:
-  friendly_name: Logeerkamer Lamp
-  icon: mdi:floor-lamp-dual-outline
+light.shed_light:
+  friendly_name: Schuur lamp
+  icon: mdi:light-flood-down
