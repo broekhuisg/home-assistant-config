@@ -15,7 +15,7 @@ from .const import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-def getGasPriceFromSummary(summary) -> int | None:
+def getGasPriceFromSummary(summary):
     if not "price_per_hour" in summary:
         return None
 
@@ -97,23 +97,16 @@ class ZonneplanUpdateCoordinator(DataUpdateCoordinator):
                     result[uuid]["gas_data"] = gas
 
             # Electricity summary also contains gas data - only need to retrieve summary once
-            if "electricity" in connection:
-                summary = await self.api.async_get(uuid, "/summary")
-                if summary:
-                    result[uuid]["summary_data"] = summary
-                    result[uuid]["summary_data"]["gas_price"] = getGasPriceFromSummary(summary)
-                    summary_retrieved = True
-
             # Prevent duplicate sensors being setup if there is also an electricity contract
-            if "gas" in connection and summary_retrieved == False:
+            if ("electricity" in connection or "gas" in connection) and summary_retrieved == False:
                 summary = await self.api.async_get(uuid, "/summary")
                 if summary:
                     result[uuid]["summary_data"] = summary
                     result[uuid]["summary_data"]["gas_price"] = getGasPriceFromSummary(summary)
                     summary_retrieved = True
 
-            if "charge_point" in connection:
-                charge_point = await self.api.async_get(uuid, "/charge-points/" + connection["charge_point"][0]["uuid"])
+            if "charge_point_installation" in connection:
+                charge_point = await self.api.async_get(uuid, "/charge-points/" + connection["charge_point_installation"][0]["uuid"])
                 if charge_point:
                     result[uuid]["charge_point_data"] = charge_point["contracts"][0]
 
