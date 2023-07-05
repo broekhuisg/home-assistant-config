@@ -25,6 +25,18 @@ sequence:
       entity_id: light.wled_living_room
       brightness_pct: 5
       transition: 5
+      rgb_color: [255, 48, 213]
+      effect: "Candle Multi"
+  - service: number.set_value
+    data:
+      value: "30"
+    target:
+      entity_id: number.wled_living_room_speed
+  - service: number.set_value
+    data:
+      value: "200"
+    target:
+      entity_id: number.wled_living_room_intensity
   - service: light.turn_on
     data:
       entity_id: light.livingroom_standing_corner_light
