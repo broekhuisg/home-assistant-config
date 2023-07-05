@@ -1,0 +1,14 @@
+alias: Shed lights off
+description: >-
+  Turn lights off when there is no motion for 5 minutes.
+trigger:
+  - entity_id: binary_sensor.shed_motion_sensor
+    platform: state
+    to: "off"
+    for:
+      minutes: 2
+condition: []
+action:
+  - data:
+      entity_id: light.shed_light
+    service: light.turn_off
