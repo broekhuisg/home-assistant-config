@@ -26,6 +26,7 @@ sequence:
       brightness_pct: 30
       transition: 3
       rgb_color: [255, 167, 74]
+      effect: "Solid"
   - service: light.turn_on
     data:
       entity_id: light.livingroom_standing_corner_light
