@@ -6,7 +6,7 @@ trigger:
     platform: state
     to: "off"
     for:
-      minutes: 5
+      minutes: 2
 condition: []
 action:
   - data:
