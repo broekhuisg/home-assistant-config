@@ -1,0 +1,35 @@
+# "Killswitch for the lights. In a few cases the lights are still on in the middle of the night"
+alias: Killswitch lights
+description: >-
+  Turn all the lights off at 2AM, as a double check so that no light is on the whole night long
+trigger:
+  - platform: time
+    at: "01:30:00"
+condition: []
+action:
+  - data:
+      entity_id: light.livingroom_lights
+    service: light.turn_off
+  - data:
+      entity_id: light.kitchen_lights
+    service: light.turn_off
+
+  - delay:
+      seconds: 2
+
+  - data:
+      entity_id: light.hallway_lights
+    service: light.turn_off
+  - data:
+      entity_id: light.office_lights
+    service: light.turn_off
+
+  - delay:
+      seconds: 2
+
+  - data:
+      entity_id: light.backyard_lights
+    service: light.turn_off
+  - data:
+      entity_id: light.shed_light
+    service: light.turn_off
