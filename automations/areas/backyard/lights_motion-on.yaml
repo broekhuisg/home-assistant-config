@@ -12,5 +12,5 @@ condition:
     attribute: elevation
 action:
   - data:
-      entity_id: light.roofspots_backyard
+      entity_id: light.backyard_spots
     service: light.turn_on

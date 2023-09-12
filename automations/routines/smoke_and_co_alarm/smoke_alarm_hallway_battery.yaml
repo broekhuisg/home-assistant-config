@@ -1,0 +1,13 @@
+lias: Smoke alarm hallway battery
+description: >-
+  The battery of the smoke alarm hallway is almost empty
+trigger:
+  - entity_id: binary_sensor.hallway_smoke_sensor
+    platform: state
+    to: "on"
+condition: []
+action:
+  - data:
+      message: >-
+        "Batterij van brandalarm gang is bijna leeg"
+    service: notify.telegram_notify
