@@ -1,9 +1,12 @@
-# My Home Assistant Configuration
-
+# Home Assistant Configuration
+![GitHub Last Commit][last-commit-shield]
+![GitHub Activity][commits-shield]
+![HA Version][ha-version-shield]
 
 ## Home Assistant
 [Home Assistant][hassurl]
 My config for Home Assistant
+<img align="right" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Home_Assistant_Logo.svg/519px-Home_Assistant_Logo.svg.png?raw=true" height="170">
 
 ## Based on Frenck's config and Patatman's config
 See: [Frencks Github][frencksgithub]
@@ -12,12 +15,6 @@ See: [Patatmans Github][patatmangithub]
 [frencksgithub]: https://github.com/frenck/home-assistant-config
 [patatmangithub]: https://github.com/patatman/patatman-homeassistant-config
 [hassurl]: https://www.home-assistant.io/
-
-## Hardware
-TODO: Fill in hardware
-
-## Software
-TODO: Fill in software
 
 #### Entity file naming:
 `<entity_type>/<platform>.<name>.yaml` e.g. `light/mqtt.color_light.yaml`
@@ -31,3 +28,7 @@ If room specific, lighting for example.
 
 If it's a virtual automation, like alarm:
 `<type>_<trigger>_<action>.yaml` e.g. `alarm_pending_notification.yaml` or `telegram_windows-open_notification.yaml`
+
+[last-commit-shield]: https://img.shields.io/github/last-commit/broekhuisg/home-assistant-config.svg
+[commits-shield]: https://img.shields.io/github/commit-activity/y/broekhuisg/home-assistant-config.svg
+[ha-version-shield]: https://img.shields.io/badge/Home%20Assistant-2023.9.2-blue.svg
