@@ -1,0 +1,13 @@
+alias: Kitchen lights dimmer on hold down
+description: >-
+  Turn the lights dimmer when hold-press the switch down.
+trigger:
+  - entity_id: sensor.kitchen_switch_action
+    platform: state
+    to: "brightness_move_down"
+condition: []
+action:
+  - data:
+      entity_id: light.kitchen_lights
+      brightness_step_pct: -10
+    service: light.turn_on

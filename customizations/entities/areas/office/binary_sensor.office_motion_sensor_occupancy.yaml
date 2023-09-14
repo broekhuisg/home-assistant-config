@@ -1,0 +1,2 @@
+binary_sensor.office_motion_sensor_occupancy:
+  friendly_name: Kantoor

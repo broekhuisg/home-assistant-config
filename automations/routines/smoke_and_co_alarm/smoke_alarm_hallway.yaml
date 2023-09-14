@@ -2,7 +2,7 @@ alias: Smoke alarm hallway
 description: >-
   The smoke alarm in the hallway is triggered
 trigger:
-  - entity_id: binary_sensor.hallway_smoke_sensor
+  - entity_id: binary_sensor.hallway_smoke_sensor_smoke
     platform: state
     to: "on"
 condition: []

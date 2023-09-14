@@ -2,11 +2,9 @@ alias: Kitchen lights of single press
 description: >-
   Turn lights off when single-press the switch down.
 trigger:
-  platform: event
-  event_type: deconz_event
-  event_data:
-    id: "kitchen_on_off_switch"
-    event: 2002
+  - entity_id: sensor.kitchen_switch_action
+    platform: state
+    to: "off"
 condition: []
 action:
   - data:

@@ -1,6 +1,6 @@
 name: Alarm Triggered Lights
 entities:
   - light.hallway_lights
-  - light.livingroom_lights
+  - light.living_room_lights
   - light.kitchen_lights
   - light.office_lights

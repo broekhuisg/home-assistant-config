@@ -2,7 +2,7 @@ alias: CO alarm passage battery
 description: >-
   The battery of the co alarm passage is almost empty
 trigger:
-  - entity_id: binary_sensor.passage_co_sensor_low_battery
+  - entity_id: binary_sensor.passage_co_sensor_battery_low
     platform: state
     to: "on"
 condition: []

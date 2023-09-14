@@ -1,6 +1,0 @@
-# Original: switch.livingroom_television_light
-# Converted to: light.livingroom_television_light via entities/lights
-
-light.livingroom_television_light:
-  friendly_name: Televisie lamp
-  icon: mdi:post-lamp
