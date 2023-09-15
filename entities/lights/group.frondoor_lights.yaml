@@ -1,5 +1,0 @@
-platform: group
-name: Frontdoor lights
-entities:
-  - light.frontdoor_light_1
-  - light.frontdoor_light_2
