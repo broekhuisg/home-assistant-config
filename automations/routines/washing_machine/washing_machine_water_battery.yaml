@@ -1,0 +1,13 @@
+alias: Washing machine water battery
+description: >-
+  The battery of the washing machine water detection is almost empty
+trigger:
+  - entity_id: binary_sensor.washing_machine_water_sensor_battery_low
+    platform: state
+    to: "on"
+condition: []
+action:
+  - data:
+      message: >-
+        Batterij van water detectie wasmachine is bijna leeg
+    service: notify.telegram_notify

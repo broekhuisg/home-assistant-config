@@ -1,0 +1,12 @@
+alias: Washing machine water detected
+description: >-
+  The water alarm behind the washing machine is triggered
+trigger:
+  - entity_id: binary_sensor.washing_machine_water_sensor_water_leak
+    platform: state
+    to: "on"
+condition: []
+action:
+  - data:
+      message: "Er is water gedetecteerd achter de wasmachine!"
+    service: notify.telegram_notify
