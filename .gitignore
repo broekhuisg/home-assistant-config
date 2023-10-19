@@ -52,3 +52,7 @@ home-assistant.log.*
 
 # Hyperion
 hyperion/*
+
+#Zigbee2MQTT
+zigbee2mqtt
+zigbee.*

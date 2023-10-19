@@ -2,7 +2,7 @@ alias: Hallway lights on
 description: >-
   Turn lights on when there is motion and after sunset.
 trigger:
-  - entity_id: binary_sensor.hallway_motion_sensor
+  - entity_id: binary_sensor.hallway_motion_sensor_occupancy
     platform: state
     to: "on"
 condition:

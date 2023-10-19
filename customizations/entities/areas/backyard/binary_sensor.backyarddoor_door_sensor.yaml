@@ -1,3 +1,0 @@
-binary_sensor.backyarddoor_door_sensor:
-  friendly_name: Tuinpoort
-  icon: mdi:door

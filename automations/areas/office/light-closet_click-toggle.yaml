@@ -1,14 +1,15 @@
-alias: Office closet light on left press
+alias: Lights in and around the closet on left press
 description: >-
-  Turns the office clost light on when you click on the left button.
+  Turns the big light and WLED light on left press
 trigger:
-  platform: event
-  event_type: deconz_event
-  event_data:
-    id: "office_double_switch"
-    event: 1002
+  - entity_id: sensor.office_double_switch_action
+    platform: state
+    to: "single_left"
 condition: []
 action:
   - data:
-      entity_id: light.office_closet_light
+      entity_id: light.office_standing_corner_light
+    service: light.toggle
+  - data:
+      entity_id: light.wled_office
     service: light.toggle

@@ -1,0 +1,5 @@
+## Convert switch to light
+
+platform: switch
+name: Living room couch light
+entity_id: switch.living_room_couch_light

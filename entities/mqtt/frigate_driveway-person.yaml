@@ -1,7 +1,0 @@
-# binary_sensor:
-#   name: Person on driveway
-#   state_topic: "frigate/driveway/person"
-#   device_class: motion
-#   availability_topic: "frigate/available"
-
-# platform: mqtt

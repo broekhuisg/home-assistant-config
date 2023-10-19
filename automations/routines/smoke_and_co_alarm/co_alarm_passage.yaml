@@ -1,0 +1,12 @@
+alias: CO alarm passage
+description: >-
+  The CO alarm in the passage is triggered
+trigger:
+  - entity_id: binary_sensor.passage_co_sensor_carbon_monoxide
+    platform: state
+    to: "on"
+condition: []
+action:
+  - data:
+      message: "Koolmonoxide op de overloop gaat af!"
+    service: notify.telegram_notify

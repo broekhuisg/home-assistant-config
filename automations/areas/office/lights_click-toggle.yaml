@@ -2,13 +2,14 @@ alias: Office lights toggle double click
 description: >-
   Toggles all office lights on double click
 trigger:
-  platform: event
-  event_type: deconz_event
-  event_data:
-    id: "office_double_switch"
-    event: 3002
+  - entity_id: sensor.office_double_switch_action
+    platform: state
+    to: "single_both"
 condition: []
 action:
   - data:
       entity_id: light.office_lights
+    service: light.toggle
+  - data:
+      entity_id: light.wled_office
     service: light.toggle

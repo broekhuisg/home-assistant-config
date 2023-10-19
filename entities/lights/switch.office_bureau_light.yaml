@@ -1,0 +1,3 @@
+platform: switch
+name: Office bureau light
+entity_id: switch.office_bureau_light
