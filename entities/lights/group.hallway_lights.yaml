@@ -1,5 +1,0 @@
-platform: group
-name: Hallway lights
-entities:
-  - light.hallway_light_1
-  - light.hallway_light_2

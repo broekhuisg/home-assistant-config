@@ -2,7 +2,7 @@ alias: Living room lights off
 description: >-
   Turn lights off when there is no motion for 20 minutes.
 trigger:
-  - entity_id: binary_sensor.livingroom_motion_sensor
+  - entity_id: binary_sensor.living_room_motion_sensor_occupancy
     platform: state
     to: "off"
     for:
@@ -14,5 +14,8 @@ condition:
       state: "playing"
 action:
   - data:
-      entity_id: light.livingroom_lights
+      entity_id: light.living_room_lights
+    service: light.turn_off
+  - data:
+      entity_id: light.wled_living_room
     service: light.turn_off

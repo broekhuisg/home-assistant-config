@@ -2,7 +2,7 @@ alias: Frontdoor lights turn on motion
 description: >-
   Turn lights on when there is motion in the hallway in the morning
 trigger:
-  - entity_id: binary_sensor.hallway_motion_sensor
+  - entity_id: binary_sensor.hallway_motion_sensor_occupancy
     platform: state
     to: "on"
 condition:

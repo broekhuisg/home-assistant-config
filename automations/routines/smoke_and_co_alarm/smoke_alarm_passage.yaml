@@ -1,0 +1,12 @@
+alias: Smoke alarm passage
+description: >-
+  The smoke alarm in the passage is triggered
+trigger:
+  - entity_id: binary_sensor.passage_smoke_sensor_smoke
+    platform: state
+    to: "on"
+condition: []
+action:
+  - data:
+      message: "Brandalarm op de overloop gaat af!"
+    service: notify.telegram_notify

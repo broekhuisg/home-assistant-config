@@ -2,9 +2,8 @@ alias: Door Fridge
 description: >-
   TTS to Google speakers when the fridge door is open for longer then 60 seconds. Repeats every 20 seconds until closed.
 trigger:
-  - entity_id: binary_sensor.fridge_door_sensor
+  - entity_id: binary_sensor.fridge_door_sensor_contact
     platform: state
-    from: "off"
     to: "on"
     for:
       seconds: 120

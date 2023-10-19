@@ -1,0 +1,13 @@
+alias: Kitchen lights brighter on hold up
+description: >-
+  Turn the lights brigther when hold-press the switch up.
+trigger:
+  - entity_id: sensor.kitchen_switch_action
+    platform: state
+    to: "brightness_move_up"
+condition: []
+action:
+  - data:
+      entity_id: light.kitchen_lights
+      brightness_step_pct: 10
+    service: light.turn_on

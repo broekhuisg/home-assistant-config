@@ -1,3 +1,0 @@
-binary_sensor.backdoor_door_sensor:
-  friendly_name: Achterdeur
-  icon: mdi:door

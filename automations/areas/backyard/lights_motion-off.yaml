@@ -2,7 +2,7 @@ alias: Backyard lights off
 description: >-
   Turn lights off when there is no motion for 5 minutes.
 trigger:
-  - entity_id: binary_sensor.backyard_motion_sensor
+  - entity_id: binary_sensor.backyard_motion_sensor_occupancy
     platform: state
     to: "off"
     for:
@@ -10,5 +10,5 @@ trigger:
 condition: []
 action:
   - data:
-      entity_id: light.roofspots_backyard
+      entity_id: light.backyard_spots
     service: light.turn_off

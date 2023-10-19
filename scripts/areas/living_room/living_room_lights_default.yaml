@@ -4,18 +4,18 @@ description: >-
 sequence:
   - service: light.turn_on
     data:
-      entity_id: light.livingroom_standing_corner_light
+      entity_id: light.living_room_standing_corner_light
       color_temp: 670
       transition: 1
   - service: light.turn_on
     data:
-      entity_id: light.livingroom_television_light
+      entity_id: light.living_room_television_light
   - service: light.turn_on
     data:
-      entity_id: light.livingroom_closet_light
+      entity_id: light.living_room_closet_light
   - service: light.turn_on
     data:
-      entity_id: light.livingroom_couch_light
+      entity_id: light.living_room_couch_light
 
   - delay:
       seconds: 2
@@ -23,12 +23,12 @@ sequence:
   - service: light.turn_on
     data:
       entity_id: light.wled_living_room
-      brightness_pct: 30
+      brightness_pct: 27
       transition: 3
       rgb_color: [255, 167, 74]
       effect: "Solid"
   - service: light.turn_on
     data:
-      entity_id: light.livingroom_standing_corner_light
+      entity_id: light.living_room_standing_corner_light
       brightness_pct: 90
       transition: 5

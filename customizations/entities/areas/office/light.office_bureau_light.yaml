@@ -1,0 +1,5 @@
+# Converted from switch
+
+light.office_bureau_light:
+  friendly_name: Bureaulamp Kantoor
+  icon: mdi:desk-lamp

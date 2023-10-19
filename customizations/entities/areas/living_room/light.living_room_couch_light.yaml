@@ -1,0 +1,5 @@
+# Converted from switch
+
+light.living_room_couch_light:
+  friendly_name: Hoeklamp
+  icon: mdi:floor-lamp-dual
