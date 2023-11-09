@@ -1,0 +1,12 @@
+alias: Nano is getting picked up
+description: >-
+  The Nano Tril sensor is triggert!
+trigger:
+  - entity_id: binary_sensor.aqara_trilling_sensor_vibration
+    platform: state
+    to: "on"
+condition: []
+action:
+  - data:
+      message: "Nano is opgepakt!"
+    service: notify.telegram_notify

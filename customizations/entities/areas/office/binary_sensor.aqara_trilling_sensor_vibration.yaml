@@ -1,0 +1,3 @@
+binary_sensor.aqara_trilling_sensor_vibration:
+    icon: mdi:vibrate
+    friendly_name: Nano Tril sensor
