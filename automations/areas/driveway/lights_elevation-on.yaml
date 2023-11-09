@@ -6,7 +6,7 @@ trigger:
     entity_id: sun.sun
     attribute: elevation
     # Can be a positive or negative number
-    below: -3.5
+    below: -3.85
 condition: []
 action:
   - data:
