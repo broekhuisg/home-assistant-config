@@ -1,11 +1,11 @@
-# alias: Frontyard christmas lights on in the morning
-# description: >-
-#   Turn christmas lights in the frontyard on in the morning at 6
-# trigger:
-#   - platform: time
-#     at: "06:00:00"
-# condition: []
-# action:
-#   - data:
-#       entity_id: light.christmas_lights_frontyard
-#     service: light.turn_on
+alias: Frontyard christmas lights on in the morning
+description: >-
+  Turn christmas lights in the frontyard on in the morning at 6
+trigger:
+  - platform: time
+    at: "06:00:00"
+condition: []
+action:
+  - data:
+      entity_id: light.christmas_lights_front
+    service: light.turn_on
