@@ -10,3 +10,9 @@ action:
   - data:
       entity_id: light.living_room_lights
     service: light.toggle
+  - data:
+      entity_id: light.wled_living_room
+    service: light.toggle
+  - data:
+      entity_id: light.twinkly_f6bc91
+    service: light.toggle
