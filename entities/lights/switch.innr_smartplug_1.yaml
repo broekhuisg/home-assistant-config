@@ -1,0 +1,3 @@
+platform: switch
+name: Christmas lights back
+entity_id: switch.innr_smartplug_1
