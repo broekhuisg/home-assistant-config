@@ -1,16 +1,16 @@
-alias: Frontyard christmas lights off on sunrise
-description: >-
-  Turn christmas lights in the frontyard on in the backyard on sunset.
-trigger:
-  - platform: numeric_state
-    entity_id: sun.sun
-    attribute: elevation
-    above: 0
-condition: []
-action:
-  - data:
-      entity_id: light.christmas_lights_front
-    service: light.turn_off
-  - data:
-      entity_id: light.christmas_lights_back
-    service: light.turn_off
+# alias: Frontyard christmas lights off on sunrise
+# description: >-
+#   Turn christmas lights in the frontyard on in the backyard on sunset.
+# trigger:
+#   - platform: numeric_state
+#     entity_id: sun.sun
+#     attribute: elevation
+#     above: 0
+# condition: []
+# action:
+#   - data:
+#       entity_id: light.christmas_lights_front
+#     service: light.turn_off
+#   - data:
+#       entity_id: light.christmas_lights_back
+#     service: light.turn_off
