@@ -19,6 +19,3 @@ action:
   - data:
       entity_id: light.wled_living_room
     service: light.turn_off
-  - data:
-      entity_id: light.twinkly_f6bc91
-    service: light.turn_off
