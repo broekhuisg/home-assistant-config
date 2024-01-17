@@ -23,7 +23,7 @@ sequence:
   - service: light.turn_on
     data:
       entity_id: light.wled_living_room
-      brightness_pct: 27
+      brightness_pct: 10
       transition: 3
       rgb_color: [255, 167, 74]
       effect: "Solid"

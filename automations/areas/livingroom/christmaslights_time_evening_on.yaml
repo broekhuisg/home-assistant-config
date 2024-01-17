@@ -9,5 +9,8 @@
 # condition: []
 # action:
 #   - data:
-#       entity_id: light.christmas_lights_frontyard
+#       entity_id: light.christmas_lights_front
+#     service: light.turn_on
+#   - data:
+#       entity_id: light.christmas_lights_back
 #     service: light.turn_on

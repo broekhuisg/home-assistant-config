@@ -5,8 +5,8 @@ trigger:
   - platform: numeric_state
     entity_id: sun.sun
     attribute: elevation
-    # Can be a positive or negative number
-    below: -3.85
+    # Can be a positive (above horizon) or negative (under horizon) number
+    below: -3.1
 condition: []
 action:
   - data:
