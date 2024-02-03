@@ -1,0 +1,5 @@
+## Convert switch to light
+
+platform: switch
+name: Christmas lights front
+entity_id: switch.christmas_lights_front

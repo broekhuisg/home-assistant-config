@@ -32,7 +32,11 @@ condition:
             - condition: state
               entity_id: media_player.shield
               attribute: app_name
-              state: "Videoland v2"
+              state: "Videoland"
+            - condition: state
+              entity_id: media_player.shield
+              attribute: app_name
+              state: "Viaplay"
 action:
   - data:
       entity_id: script.movie_scene
