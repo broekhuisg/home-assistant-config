@@ -1,10 +1,10 @@
-alias: Ambilight off when shield is playing
+alias: Ambilight on when shield turns off
 description: >-
-  Deactivate the ambilight when stopping media player.
+  Deactivate the ambilight when turning off media player.
 trigger:
   - platform: state
-    entity_id: media_player.shield
-    from: "playing"
+    entity_id: media_player.shield_parent
+    to: "off"
 condition: []
 action:
   - data:

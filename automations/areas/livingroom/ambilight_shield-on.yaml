@@ -1,10 +1,10 @@
-alias: Ambilight on when shield is playing
+alias: Ambilight on when shield turns on
 description: >-
-  Activate the ambilight when starting media player.
+  Activate the ambilight when turning on media player.
 trigger:
   - platform: state
-    entity_id: media_player.shield
-    to: "playing"
+    entity_id: media_player.shield_parent
+    to: "on"
 condition: []
 action:
   - data:
