@@ -1,10 +1,19 @@
 """Zonneplan DataUpdateCoordinator"""
-from datetime import timedelta
+from collections.abc import Callable
+from datetime import datetime, timedelta
 from http import HTTPStatus
-import logging
+from typing import Any
 
+import logging
+import homeassistant.util.dt as dt_util
+import json
+import inspect
+import os
 from aiohttp.client_exceptions import ClientResponseError
 
+from homeassistant.core import HassJob
+from homeassistant.helpers.debounce import Debouncer
+from homeassistant.helpers.event import async_call_later
 from homeassistant.helpers.typing import HomeAssistantType
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.exceptions import ConfigEntryAuthFailed
@@ -25,6 +34,20 @@ def getGasPriceFromSummary(summary):
 
     return None
 
+def getNextGasPriceFromSummary(summary):
+    if not "price_per_hour" in summary:
+        return None
+
+    first_price_found = False
+    for hour in summary["price_per_hour"]:
+        if "gas_price" in hour:
+            if first_price_found:
+                return hour["gas_price"]
+            else:
+                first_price_found = True
+
+    return None
+
 class ZonneplanUpdateCoordinator(DataUpdateCoordinator):
     """Zonneplan status update coordinator"""
 
@@ -39,10 +62,19 @@ class ZonneplanUpdateCoordinator(DataUpdateCoordinator):
             _LOGGER,
             name=DOMAIN,
             update_interval=timedelta(seconds=300),
+            request_refresh_debouncer=Debouncer(
+                hass,
+                _LOGGER,
+                cooldown=60,
+                immediate=False
+            )
         )
+        self.last_accounts_update: datetime | None = None
         self.data: dict = {}
         self.api: AsyncConfigEntryAuth = api
+        self._delayed_fetch_charge_point: Callable[[], None] | None = None
 
+        self._test_file = None
     async def _async_update_data(self) -> dict:
         """Fetch the latest status."""
         try:
@@ -53,29 +85,61 @@ class ZonneplanUpdateCoordinator(DataUpdateCoordinator):
             raise e
 
     async def _fetch_data(self) -> dict:
-        result = {}
+
+        if self._test_file:
+            script_directory = os.path.dirname(os.path.abspath(
+                inspect.getfile(inspect.currentframe())))
+            f = open(script_directory + '/tests/' + self._test_file)
+            result = json.load(f)
+
+            _LOGGER.debug("TEST Result %s", result)
+
+            return result
+
+
+        result = self.data
+        accounts = None
+
         _LOGGER.info("_async_update_data: start")
         # Get all info of all connections (part of your account info)
-        accounts = await self.api.async_get_user_accounts()
-        if not accounts:
-            return result
-        _LOGGER.info("_async_update_data: parse addresses")
-        # Flatten all found connections
-        for address_group in accounts["address_groups"]:
-            for connection in address_group["connections"]:
-                if not connection["uuid"] in result:
-                    result[connection["uuid"]] = {
-                        "uuid": connection["uuid"],
-                        "live_data": {},
-                        "electricity_data": {},
-                        "gas_data": {},
-                        "summary_data": {},
-                        "charge_point_data": {},
-                    }
-                for contract in connection["contracts"]:
-                    if not contract["type"] in result[connection["uuid"]]:
-                        result[connection["uuid"]][contract["type"]] = []
-                    result[connection["uuid"]][contract["type"]].append(contract)
+        if not result or not self.last_accounts_update or self.last_accounts_update < dt_util.now() - timedelta(minutes=59):
+            accounts = await self.api.async_get_user_accounts()
+            if not accounts and not result:
+                return result
+        else:
+            _LOGGER.debug("Last time accounts are fetched: %s, next time to fetch: %s", self.last_accounts_update, self.last_accounts_update + timedelta(minutes=59))
+
+        if accounts:
+            self.last_accounts_update = dt_util.now()
+            _LOGGER.info("_async_update_data: parse addresses")
+            # Flatten all found connections
+            for address_group in accounts["address_groups"]:
+                for connection in address_group["connections"]:
+                    if not connection["uuid"] in result:
+                        result[connection["uuid"]] = {
+                            "uuid": connection["uuid"],
+                            "pv_data": {},
+                            "electricity_data": {},
+                            "gas_data": {},
+                            "summary_data": {},
+                            "charge_point_data": {},
+                            "battery_data": {},
+                        }
+
+                    # Remove known contracts
+                    if "pv_installation" in result[connection["uuid"]]:
+                        del result[connection["uuid"]]["pv_installation"]
+                    if "p1_installation" in result[connection["uuid"]]:
+                        del result[connection["uuid"]]["p1_installation"]
+                    if "charge_point_installation" in result[connection["uuid"]]:
+                        del result[connection["uuid"]]["charge_point_installation"]
+                    if "home_battery_installation" in result[connection["uuid"]]:
+                        del result[connection["uuid"]]["home_battery_installation"]
+
+                    for contract in connection["contracts"]:
+                        if not contract["type"] in result[connection["uuid"]]:
+                            result[connection["uuid"]][contract["type"]] = []
+                        result[connection["uuid"]][contract["type"]].append(contract)
 
         _LOGGER.info("_async_update_data: fetch live data")
 
@@ -83,11 +147,12 @@ class ZonneplanUpdateCoordinator(DataUpdateCoordinator):
         summary_retrieved = False
         for uuid, connection in result.items():
             if "pv_installation" in connection:
-                live_data = await self.api.async_get(
-                    uuid, "/pv_installation/charts/live"
+                pv_data = await self.api.async_get(
+                    uuid, "/pv-installation"
                 )
-                if live_data:
-                    result[uuid]["live_data"] = live_data[0]
+                if pv_data:
+                    result[uuid]["pv_data"] = pv_data
+
             if "p1_installation" in connection:
                 electricity = await self.api.async_get(uuid, "/electricity-delivered")
                 if electricity:
@@ -98,17 +163,25 @@ class ZonneplanUpdateCoordinator(DataUpdateCoordinator):
 
             # Electricity summary also contains gas data - only need to retrieve summary once
             # Prevent duplicate sensors being setup if there is also an electricity contract
-            if ("electricity" in connection or "gas" in connection) and summary_retrieved == False:
+            if (
+                "electricity" in connection or "gas" in connection
+            ) and summary_retrieved == False:
+                summary_retrieved = True
                 summary = await self.api.async_get(uuid, "/summary")
                 if summary:
                     result[uuid]["summary_data"] = summary
                     result[uuid]["summary_data"]["gas_price"] = getGasPriceFromSummary(summary)
-                    summary_retrieved = True
+                    result[uuid]["summary_data"]["gas_price_next"] = getNextGasPriceFromSummary(summary)
 
             if "charge_point_installation" in connection:
-                charge_point = await self.api.async_get(uuid, "/charge-points/" + connection["charge_point_installation"][0]["uuid"])
+                charge_point = await self._async_getChargePointData(uuid, connection["charge_point_installation"][0]["uuid"])
                 if charge_point:
                     result[uuid]["charge_point_data"] = charge_point["contracts"][0]
+
+            if "home_battery_installation" in connection:
+                battery_data = await self.api.async_get(uuid, "/home-battery-installation/" + connection["home_battery_installation"][0]["uuid"])
+                if battery_data:
+                    result[uuid]["battery_data"] = battery_data
 
         _LOGGER.info("_async_update_data: done")
         _LOGGER.debug("Result %s", result)
@@ -144,3 +217,68 @@ class ZonneplanUpdateCoordinator(DataUpdateCoordinator):
             rv = rv[key]
 
         return rv
+
+    async def _async_getChargePointData(self, connection_uuid: str, charge_point_uuid: str) -> dict:
+        return await self.api.async_get(connection_uuid, "/charge-points/" + charge_point_uuid )
+
+    async def async_updateChargePointData(self, connection_uuid: str, charge_point_uuid: str) -> None:
+        charge_point = await self._async_getChargePointData(connection_uuid, charge_point_uuid)
+        if charge_point:
+            self.data[connection_uuid]["charge_point_data"] = charge_point["contracts"][0]
+            self.async_update_listeners()
+
+    async def async_startCharge(
+        self, connection_uuid: str, charge_point_uuid: str
+    ) -> None:
+        await self.api.async_post(
+            connection_uuid,
+            "/charge-points/" + charge_point_uuid + "/actions/start_boost",
+        )
+
+        self.data[connection_uuid]["charge_point_data"]["state"]["processing"] = True
+        self.async_update_listeners()
+
+        await self.async_fetchChargePointData()
+
+    async def async_stopCharge(
+        self, connection_uuid: str, charge_point_uuid: str
+    ) -> None:
+        await self.api.async_post(
+            connection_uuid,
+            "/charge-points/" + charge_point_uuid + "/actions/stop_charging",
+        )
+
+        self.data[connection_uuid]["charge_point_data"]["state"]["processing"] = True
+
+        self.async_update_listeners()
+
+        await self.async_fetchChargePointData()
+
+    def _processing_charge_point_update(self) -> bool:
+        for connection_uuid, connection in self.connections.items():
+            processing = self.getConnectionValue(connection_uuid, "charge_point_data.state.processing")
+            if processing:
+                return True
+
+        return False
+
+    async def async_fetchChargePointData(self, _now: Any = None):
+
+        if self._delayed_fetch_charge_point:
+            self._delayed_fetch_charge_point()
+        self._delayed_fetch_charge_point = None
+
+        for connection_uuid, connection in self.connections.items():
+            processing = self.getConnectionValue(connection_uuid, "charge_point_data.state.processing")
+            charge_point_uuid = self.getConnectionValue(connection_uuid, "charge_point_data.uuid")
+            if processing and charge_point_uuid:
+                await self.async_updateChargePointData(connection_uuid, charge_point_uuid)
+
+
+        if self._processing_charge_point_update():
+            self._delayed_fetch_charge_point = async_call_later(
+                self.hass,
+                10,
+                HassJob(self.async_fetchChargePointData, cancel_on_shutdown=True),
+            )
+
