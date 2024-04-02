@@ -27,6 +27,9 @@ video
 tts
 
 # Files
+.vacuum
+.timeline
+frigate.*
 frigate.yml
 adbkey
 google_calendars.yaml
