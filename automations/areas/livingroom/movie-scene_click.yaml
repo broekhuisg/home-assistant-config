@@ -1,0 +1,12 @@
+alias: Activate movie scene on click
+description: >-
+  Turn the movie scene on by clicking the right arrow Tradfri remote.
+trigger:
+  - entity_id: sensor.living_room_switch_action
+    platform: state
+    to: "arrow_right_click"
+condition: []
+action:
+  - data:
+      entity_id: script.movie_scene
+    service: script.turn_on
