@@ -1,3 +1,0 @@
-platform: ffmpeg
-name: Driveway camera
-input: !secret rtsp_driveway_camera_full

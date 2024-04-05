@@ -17,8 +17,6 @@ condition:
           state: "playing"
 action:
   - data:
-      entity_id: light.living_room_lights
-    service: light.turn_on
-  - data:
-      entity_id: light.wled_living_room
-    service: light.turn_on
+      entity_id: script.living_room_lights_default
+    service: script.turn_on
+

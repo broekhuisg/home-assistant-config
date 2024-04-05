@@ -28,7 +28,7 @@ action:
       seconds: 2
 
   - data:
-      entity_id: light.backyard_lights
+      entity_id: light.backyard_spots
     service: light.turn_off
   - data:
       entity_id: light.shed_light
