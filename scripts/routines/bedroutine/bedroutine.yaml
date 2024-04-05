@@ -9,7 +9,7 @@ sequence:
   - service: light.turn_off
     entity_id: light.hallway_lights
   - service: light.turn_off
-    entity_id: light.backyard_lights
+    entity_id: light.backyard_spots
   - service: light.turn_off
     entity_id: light.office_lights
   - service: light.turn_off
