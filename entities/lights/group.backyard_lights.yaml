@@ -1,4 +1,0 @@
-platform: group
-name: Backyard lights
-entities:
-  - light.roofspots_backyard
