@@ -2,14 +2,18 @@
 from typing import Optional, Any
 from voluptuous.validators import Number
 from datetime import datetime
+from pytz import timezone
+
 
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
 )
 import logging
-from homeassistant.core import callback
+from homeassistant.core import ( 
+    callback, 
+    HomeAssistant
+)
 from homeassistant.helpers.restore_state import RestoreEntity
-from homeassistant.helpers.typing import HomeAssistantType
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
@@ -34,7 +38,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(hass: HomeAssistantType, config_entry, async_add_entities):
+async def async_setup_entry(hass: HomeAssistant, config_entry, async_add_entities):
     coordinator: ZonneplanUpdateCoordinator = hass.data[DOMAIN][config_entry.entry_id][
         "coordinator"
     ]
@@ -282,7 +286,12 @@ class ZonneplanSensor(CoordinatorEntity, RestoreEntity, SensorEntity):
         # Converting value is only needed when value isn't None or 0
         if value:
             if self.entity_description.device_class == SensorDeviceClass.TIMESTAMP:
-                value = dt_util.parse_datetime(value)
+                if isinstance(value, str):
+                    value = dt_util.parse_datetime(value)
+                elif value > 100000000000000:
+                    value = datetime.fromtimestamp(value/1000000, timezone('Europe/Amsterdam'))
+                else:
+                    value = datetime.fromtimestamp(value/1000, timezone('Europe/Amsterdam'))
 
             if self.entity_description.value_factor:
                 value = value * self.entity_description.value_factor
