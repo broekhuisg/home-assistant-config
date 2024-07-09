@@ -1,4 +1,4 @@
-"""Constants for the Zonneplan ONE integration."""
+"""Constants for the Zonneplan integration."""
 from __future__ import annotations
 from dataclasses import dataclass
 
@@ -33,6 +33,7 @@ BATTERY = "home_battery_installation"
 NONE_IS_ZERO = "none-is-zero"
 NONE_USE_PREVIOUS = "none-is-previous"
 
+VERSION = "2024.6.0"
 
 @dataclass
 class Attribute:
