@@ -2,23 +2,23 @@ alias: Wij gaan naar bed
 description: >-
   Script to set states when we are going to bed. Used for a Google Voice Command
 sequence:
-  - service: light.turn_off
+  - action: light.turn_off
     entity_id: light.living_room_lights
-  - service: light.turn_off
+  - action: light.turn_off
     entity_id: light.kitchen_lights
-  - service: light.turn_off
+  - action: light.turn_off
     entity_id: light.hallway_lights
-  - service: light.turn_off
+  - action: light.turn_off
     entity_id: light.backyard_spots
-  - service: light.turn_off
+  - action: light.turn_off
     entity_id: light.office_lights
-  - service: light.turn_off
+  - action: light.turn_off
     entity_id: light.frontdoor_lights
-  - service: light.turn_off
+  - action: light.turn_off
     entity_id: light.wled_living_room
-  - service: light.turn_off
+  - action: light.turn_off
     entity_id: light.wled_office
-  - service: climate.set_temperature
+  - action: climate.set_temperature
     data:
       entity_id: climate.heating
       temperature: 15

@@ -6,4 +6,4 @@ trigger:
   - platform: time_pattern
     minutes: 12
 action:
-  - service: recorder.purge
+  - action: recorder.purge

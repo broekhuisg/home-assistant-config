@@ -9,4 +9,4 @@ condition: []
 action:
   - data:
       entity_id: switch.backyard_camera_night_mode
-    service: switch.turn_off
+    action: switch.turn_off

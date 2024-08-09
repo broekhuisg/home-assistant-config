@@ -17,4 +17,4 @@ action:
         - media_player.office_home_mini
       message: Morgen moet het volgende afval naar buiten, {{ states('sensor.afvalinfo_home_trash_type_tomorrow') }}
       language: nl-NL
-    service: tts.cloud_say
+    action: tts.cloud_say

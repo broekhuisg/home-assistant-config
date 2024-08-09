@@ -9,4 +9,4 @@ condition: []
 action:
   - data:
       entity_id: script.movie_scene
-    service: script.turn_on
+    action: script.turn_on

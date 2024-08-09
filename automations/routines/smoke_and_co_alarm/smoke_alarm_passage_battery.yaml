@@ -10,4 +10,4 @@ action:
   - data:
       message: >-
         "Batterij van brandalarm overloop is bijna leeg"
-    service: notify.telegram_notify
+    action: notify.telegram_notify

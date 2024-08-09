@@ -9,4 +9,4 @@ condition: []
 action:
   - data:
       message: "Er is water gedetecteerd achter de wasmachine!"
-    service: notify.telegram_notify
+    action: notify.telegram_notify

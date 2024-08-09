@@ -7,5 +7,5 @@ sequence:
   - condition: state
     entity_id: binary_sensor.fridge_door_sensor_contact
     state: "on"
-  - service: script.turn_on
+  - action: script.turn_on
     entity_id: script.fridge_open_init

@@ -9,7 +9,7 @@ condition: []
 action:
   - data:
       entity_id: light.office_standing_corner_light
-    service: light.toggle
+    action: light.toggle
   - data:
       entity_id: light.wled_office
-    service: light.toggle
+    action: light.toggle

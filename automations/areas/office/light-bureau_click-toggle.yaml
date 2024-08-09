@@ -9,4 +9,4 @@ condition: []
 action:
   - data:
       entity_id: light.office_bureau_light
-    service: light.toggle
+    action: light.toggle

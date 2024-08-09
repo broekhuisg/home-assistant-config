@@ -10,4 +10,4 @@ action:
   - data:
       entity_id: light.kitchen_lights
       brightness_step_pct: -10
-    service: light.turn_on
+    action: light.turn_on

@@ -13,7 +13,7 @@ condition:
 action:
   - data:
       entity_id: light.office_lights
-    service: light.turn_on
+    action: light.turn_on
   - data:
       entity_id: light.wled_office
-    service: light.turn_on
+    action: light.turn_on

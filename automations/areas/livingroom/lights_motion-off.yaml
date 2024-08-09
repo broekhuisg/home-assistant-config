@@ -15,7 +15,7 @@ condition:
 action:
   - data:
       entity_id: light.living_room_lights
-    service: light.turn_off
+    action: light.turn_off
   - data:
       entity_id: light.wled_living_room
-    service: light.turn_off
+    action: light.turn_off

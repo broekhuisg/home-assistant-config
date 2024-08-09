@@ -17,9 +17,9 @@ action:
          utcnow()|as_timestamp)/60)|round}} minuten en {{((states('sensor.picnic_next_delivery_eta_end')|as_timestamp -             
          utcnow()|as_timestamp)/60)|round}} minuten!
       language: nl-NL
-    service: tts.cloud_say
+    action: tts.cloud_say
 
-  # - service: notify.mobile_devices_adults
+  # - action: notify.mobile_devices_adults
   #   data:
   #     title: Picnic komt eraan!
   #     message: >
@@ -38,13 +38,13 @@ action:
   #   entity_id: input_boolean.notify_picnic_voice
   #   state: "on"
   # - alias: "Play TTS"
-  #   service: tts.cloud_say
+  #   action: tts.cloud_say
   #   entity_id: media_player.living_room_display
   #   data:
   #     message: >
   #       Picnic bezorgt tussen {{ states('sensor.picnic_last_order_eta_start_time') }} en {{ states('sensor.picnic_last_order_eta_end_time') }}!
   # - delay: "00:00:08"
-  # - service: script.turn_on
+  # - action: script.turn_on
   #   target:
   #     entity_id: script.cast_helper
   #   data:
@@ -78,7 +78,7 @@ action:
 #       Wil je nog iets toevoegen aan je volgende Picnic bestelling? Na {{ as_timestamp(states("sensor.picnic_last_order_max_order_time")) | timestamp_custom("%H:%M") }} kan het niet meer.
 #     {% endif %}
 # action:
-#   - service: notify.mobile_devices_adults
+#   - action: notify.mobile_devices_adults
 #     data:
 #       title: Picnic bestelling sluit!
 #       message: "{{ message }}"
@@ -95,12 +95,12 @@ action:
 #     condition: state
 #     entity_id: input_boolean.notify_picnic_voice
 #     state: "on"
-#   - service: tts.microsoft_say
+#   - action: tts.microsoft_say
 #     entity_id: media_player.woonkamer
 #     data:
 #       message: "{{ message }}"
 #   - delay: "00:00:12"
-#   - service: script.turn_on
+#   - action: script.turn_on
 #     target:
 #       entity_id: script.cast_helper
 #     data:

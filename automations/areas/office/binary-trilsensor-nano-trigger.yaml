@@ -9,4 +9,4 @@ condition: []
 action:
   - data:
       message: "Nano is opgepakt!"
-    service: notify.telegram_notify
+    action: notify.telegram_notify
