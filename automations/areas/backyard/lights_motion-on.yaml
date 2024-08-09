@@ -13,4 +13,4 @@ condition:
 action:
   - data:
       entity_id: light.backyard_spots
-    service: light.turn_on
+    action: light.turn_on

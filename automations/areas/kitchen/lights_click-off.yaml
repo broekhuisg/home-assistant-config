@@ -9,4 +9,4 @@ condition: []
 action:
   - data:
       entity_id: light.kitchen_lights
-    service: light.turn_off
+    action: light.turn_off

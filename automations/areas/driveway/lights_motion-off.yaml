@@ -16,4 +16,4 @@ action:
   - data:
       entity_id: light.frontdoor_lights
       transition: 1
-    service: light.turn_off
+    action: light.turn_off

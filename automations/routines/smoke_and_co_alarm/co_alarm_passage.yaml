@@ -9,4 +9,4 @@ condition: []
 action:
   - data:
       message: "Koolmonoxide op de overloop gaat af!"
-    service: notify.telegram_notify
+    action: notify.telegram_notify

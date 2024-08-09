@@ -9,4 +9,4 @@ condition: []
 action:
   - data:
       entity_id: script.living_room_lights_default
-    service: script.turn_on
+    action: script.turn_on

@@ -10,4 +10,4 @@ action:
   - data:
       message: >-
         Batterij van water detectie wasmachine is bijna leeg
-    service: notify.telegram_notify
+    action: notify.telegram_notify

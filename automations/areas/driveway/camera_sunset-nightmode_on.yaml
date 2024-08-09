@@ -9,4 +9,4 @@ condition: []
 action:
   - data:
       entity_id: switch.driveway_camera_night_mode
-    service: switch.turn_on
+    action: switch.turn_on

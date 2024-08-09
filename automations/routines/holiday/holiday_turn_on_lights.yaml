@@ -8,4 +8,4 @@ condition: []
 action:
   - data:
       entity_id: light.holiday_lights
-    service: light.turn_on
+    action: light.turn_on
