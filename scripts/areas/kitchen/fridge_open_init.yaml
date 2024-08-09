@@ -8,9 +8,9 @@ sequence:
     entity_id:
       - media_player.living_room_display
       - media_player.office_home_mini
-    service: tts.cloud_say
+    action: tts.cloud_say
   - data:
       message: De koelkast staat nog open!
-    service: notify.telegram_notify
-  - service: script.turn_on
+    action: notify.telegram_notify
+  - action: script.turn_on
     entity_id: script.fridge_open_loop

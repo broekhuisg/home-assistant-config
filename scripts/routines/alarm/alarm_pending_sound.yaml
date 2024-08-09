@@ -2,9 +2,9 @@ alias: Alarm pending sound
 sequence:
   - data: {}
     entity_id: group.alarm_sound_players
-    service: media_player.volume_up
+    action: media_player.volume_up
   - data:
       entity_id: group.alarm_sound_players
       media_content_id: http://192.168.2.17:8123/local/alarm/pending-beep.mp3
       media_content_type: audio/mp3
-    service: media_player.play_media
+    action: media_player.play_media
