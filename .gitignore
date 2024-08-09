@@ -27,10 +27,13 @@ video
 tts
 
 # Files
+.exports
+.jwt_secret
 .vacuum
 .timeline
 frigate.*
 frigate.yml
+backup_config.yaml
 adbkey
 google_calendars.yaml
 secrets.yaml
