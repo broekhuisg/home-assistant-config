@@ -27,10 +27,13 @@ video
 tts
 
 # Files
+.exports
+.jwt_secret
 .vacuum
 .timeline
 frigate.*
 frigate.yml
+backup_config.yaml
 adbkey
 google_calendars.yaml
 secrets.yaml
@@ -49,6 +52,7 @@ image_processing.yaml
 .DS_Store
 *.DS_Store
 home-assistant.log.*
+set_git_credentials.sh
 
 # Wacthman report
 */watchman_report.txt
