@@ -52,6 +52,7 @@ image_processing.yaml
 .DS_Store
 *.DS_Store
 home-assistant.log.*
+set_git_credentials.sh
 
 # Wacthman report
 */watchman_report.txt
