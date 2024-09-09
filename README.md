@@ -6,7 +6,6 @@
 ## Home Assistant
 [Home Assistant][hassurl]
 My config for Home Assistant
-<img align="right" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Home_Assistant_Logo.svg/519px-Home_Assistant_Logo.svg.png?raw=true" height="170">
 
 ## Based on Frenck's config and Patatman's config
 See: [Frencks Github][frencksgithub]
@@ -31,4 +30,6 @@ If it's a virtual automation, like alarm:
 
 [last-commit-shield]: https://img.shields.io/github/last-commit/broekhuisg/home-assistant-config.svg
 [commits-shield]: https://img.shields.io/github/commit-activity/y/broekhuisg/home-assistant-config.svg
-[ha-version-shield]: https://img.shields.io/badge/Home%20Assistant-2024.8.0-blue.svg
+[ha-version-shield]: https://img.shields.io/badge/Home%20Assistant-2024.9.1-blue.svg
+
+<img align="right" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Home_Assistant_Logo.svg/519px-Home_Assistant_Logo.svg.png?raw=true" height="170">
