@@ -16,3 +16,4 @@ default_config:
 
 # Enable ffmpeg for Eufy
 ffmpeg:
+
