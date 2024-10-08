@@ -1,6 +1,6 @@
 ingress:
   frigate:
-    ui_mode: toolbar
+    ui_mode: normal
     title: Cameras
     icon: mdi:cctv
     url: !secret frigate_ip

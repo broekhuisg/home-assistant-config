@@ -19,6 +19,7 @@ from homeassistant.const import (
     UnitOfEnergy,
     UnitOfPower,
     UnitOfVolume,
+    UnitOfLength,
     PERCENTAGE,
 )
 
@@ -33,7 +34,7 @@ BATTERY = "home_battery_installation"
 NONE_IS_ZERO = "none-is-zero"
 NONE_USE_PREVIOUS = "none-is-previous"
 
-VERSION = "2024.6.0"
+VERSION = "2024.10.0"
 
 @dataclass
 class Attribute:
@@ -385,6 +386,7 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
                 entity_registry_enabled_default=False,
                 state_class=SensorStateClass.TOTAL,
                 last_reset_key="electricity_data.measurement_groups.0.date",
+                none_value_behaviour=NONE_IS_ZERO,
             ),
             "gas_total_today": ZonneplanSensorEntityDescription(
                 key="gas_data.measurement_groups.0.total",
@@ -478,6 +480,7 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
         "state_of_charge": ZonneplanSensorEntityDescription(
             key="battery_data.contracts.{install_index}.meta.state_of_charge",
             name="Percentage",
+            device_class=SensorDeviceClass.BATTERY,
             state_class=SensorStateClass.MEASUREMENT,
             entity_registry_enabled_default=True,
             value_factor=0.1,
@@ -548,6 +551,13 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
             icon="mdi:calendar-clock",
             entity_registry_enabled_default=True,
         ),
+        "cycle_count": ZonneplanSensorEntityDescription(
+            key="battery_data.contracts.{install_index}.meta.cycle_count",
+            name="Battery cycles",
+            icon="mdi:battery-sync",
+            entity_registry_enabled_default=True,
+            state_class=SensorStateClass.TOTAL,
+        ),
     },
     CHARGE_POINT: {
         "state": ZonneplanSensorEntityDescription(
@@ -581,6 +591,33 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
             entity_registry_enabled_default=True,
             state_class=SensorStateClass.TOTAL_INCREASING,
         ),
+        "session_charging_cost_total": ZonneplanSensorEntityDescription(
+            key="charge_point_data.meta.session_charging_cost_total",
+            name="Charge point session cost",
+            value_factor=0.0000001,
+            device_class=SensorDeviceClass.MONETARY,
+            native_unit_of_measurement='EUR',
+            entity_registry_enabled_default=True,
+            state_class=SensorStateClass.MEASUREMENT,
+        ),
+        "charging_cost_total": ZonneplanSensorEntityDescription(
+            key="charge_point_data.meta.charging_cost_total",
+            name="Charge point cost total",
+            value_factor=0.0000001,
+            device_class=SensorDeviceClass.MONETARY,
+            native_unit_of_measurement='EUR',
+            entity_registry_enabled_default=True,
+            state_class=SensorStateClass.TOTAL_INCREASING,
+        ),
+        "session_average_cost_in_cents": ZonneplanSensorEntityDescription(
+            key="charge_point_data.meta.session_average_cost_in_cents",
+            name="Charge point session average costs",
+            icon="mdi:cash",
+            value_factor=0.0000001,
+            native_unit_of_measurement=f"{CURRENCY_EURO}/{UnitOfEnergy.KILO_WATT_HOUR}",
+            state_class=SensorStateClass.MEASUREMENT,
+            entity_registry_enabled_default=True,
+        ),
         "charge_schedules.start_time": ZonneplanSensorEntityDescription(
             key="charge_point_data.charge_schedules.0.start_time",
             name="Charge point next schedule start",
@@ -598,6 +635,36 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
         "dynamic_load_balancing_health": ZonneplanSensorEntityDescription(
             key="charge_point_data.state.dynamic_load_balancing_health",
             name="Charge point dynamic load balancing health",
+        ),
+        "start_mode": ZonneplanSensorEntityDescription(
+            key="charge_point_data.state.start_mode",
+            name="Charge point start mode",
+        ),
+        "dynamic_charging_user_constraints.desired_distance_in_kilometers": ZonneplanSensorEntityDescription(
+            key="charge_point_data.state.dynamic_charging_user_constraints.desired_distance_in_kilometers",
+            name="Charge point dynamic load desired distance",
+            native_unit_of_measurement=UnitOfLength.KILOMETERS,
+            entity_registry_enabled_default=True,
+        ),
+        "dynamic_charging_user_constraints.desired_end_time": ZonneplanSensorEntityDescription(
+            key="charge_point_data.state.dynamic_charging_user_constraints.desired_end_time",
+            name="Charge point dynamic load desired end time",
+            device_class=SensorDeviceClass.TIMESTAMP,
+            icon="mdi:calendar-clock",
+            entity_registry_enabled_default=True,
+        ),
+        "charge_point_session.start_time": ZonneplanSensorEntityDescription(
+            key="charge_point_data.state.charge_point_session.start_time",
+            name="Charge point session start time",
+            device_class=SensorDeviceClass.TIMESTAMP,
+            icon="mdi:calendar-clock",
+            entity_registry_enabled_default=True,
+        ),
+        "charge_point_session.charged_distance_in_kilometers": ZonneplanSensorEntityDescription(
+            key="charge_point_data.state.charge_point_session.charged_distance_in_kilometers",
+            name="Charge point session charged distance",
+            native_unit_of_measurement=UnitOfLength.KILOMETERS,
+            entity_registry_enabled_default=True,
         ),
     },
 }
@@ -622,6 +689,11 @@ BINARY_SENSORS_TYPES: dict[str, list[ZonneplanBinarySensorEntityDescription]] = 
         "manual_control_enabled": ZonneplanBinarySensorEntityDescription(
             key="battery_data.contracts.{install_index}.meta.manual_control_enabled",
             name="Manual control enabled",
+            entity_registry_enabled_default=True,
+        ),
+        "self_consumption_enabled": ZonneplanBinarySensorEntityDescription(
+            key="battery_data.contracts.{install_index}.meta.self_consumption_enabled",
+            name="Self consumption enabled",
             entity_registry_enabled_default=True,
         ),
     },
@@ -671,6 +743,20 @@ BINARY_SENSORS_TYPES: dict[str, list[ZonneplanBinarySensorEntityDescription]] = 
         "overload_protection_active": ZonneplanBinarySensorEntityDescription(
             key="charge_point_data.state.overload_protection_active",
             name="Charge point overload protection active",
+        ),
+        "dynamic_charging_enabled": ZonneplanBinarySensorEntityDescription(
+            key="charge_point_data.state.dynamic_charging_enabled",
+            name="Charge point dynamic charging enabled",
+            entity_registry_enabled_default=True,
+        ),
+        "dynamic_charging_flex_enabled": ZonneplanBinarySensorEntityDescription(
+            key="charge_point_data.state.dynamic_charging_flex_enabled",
+            name="Charge point dynamic charging flex enabled",
+            entity_registry_enabled_default=True,
+        ),
+        "dynamic_charging_flex_suppressed": ZonneplanBinarySensorEntityDescription(
+            key="charge_point_data.state.dynamic_charging_flex_suppressed",
+            name="Charge point dynamic charging flex suppressed",
         ),
     }
 }
