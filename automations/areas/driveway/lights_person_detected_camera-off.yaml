@@ -1,12 +1,12 @@
-alias: Frontdoor lights turn off motion
+alias: Frontdoor lights turn off person detected
 description: >-
-  Turn lights off when there is no motion in the hallway in the morning
+  Turn lights on when there isnt a person detected anymore by the driveway camera
 trigger:
   - entity_id: binary_sensor.hallway_motion_sensor_occupancy
     platform: state
     to: "off"
     for:
-      minutes: 5
+      minutes: 6
 condition:
   - condition: time
     after: "05:00:00"

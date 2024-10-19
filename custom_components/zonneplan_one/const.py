@@ -34,7 +34,7 @@ BATTERY = "home_battery_installation"
 NONE_IS_ZERO = "none-is-zero"
 NONE_USE_PREVIOUS = "none-is-previous"
 
-VERSION = "2024.10.0"
+VERSION = "2024.10.1"
 
 @dataclass
 class Attribute:
@@ -136,6 +136,8 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
             native_unit_of_measurement=f"{CURRENCY_EURO}/{UnitOfVolume.CUBIC_METERS}",
             state_class=SensorStateClass.MEASUREMENT,
             entity_registry_enabled_default=True,
+            none_value_behaviour=NONE_USE_PREVIOUS,
+            daily_update_hour=6,
         ),
         "status_message": ZonneplanSensorEntityDescription(
             key="summary_data.usage.status_message",
@@ -272,15 +274,6 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
                 icon="mdi:calendar-clock",
                 entity_registry_enabled_default=True,
             ),
-            "expected_surplus_kwh": ZonneplanSensorEntityDescription(
-                key="pv_data.contracts.{install_index}.meta.expected_surplus_kwh",
-                name="Expected surplus",
-                native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
-                value_factor=0.001,
-                device_class=SensorDeviceClass.ENERGY,
-                entity_registry_enabled_default=False,
-                state_class=SensorStateClass.MEASUREMENT,
-            ),
             "total_earned": ZonneplanSensorEntityDescription(
                 key="pv_data.contracts.{install_index}.meta.total_earned",
                 name="Powerplay total",
@@ -299,12 +292,6 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
                 state_class=SensorStateClass.TOTAL,
                 last_reset_key="pv_data.measurement_groups.0.date",
                 entity_registry_enabled_default=False,
-            ),
-            "current_scenario": ZonneplanSensorEntityDescription(
-                key="pv_data.contracts.{install_index}.meta.current_scenario",
-                name="Current scenario",
-                entity_registry_enabled_default=False,
-                icon="mdi:message-text-outline",
             ),
         },
         "totals": {
@@ -338,33 +325,6 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
                 value_factor=0.001,
                 device_class=SensorDeviceClass.ENERGY,
                 entity_registry_enabled_default=True,
-                state_class=SensorStateClass.TOTAL_INCREASING,
-            ),
-            "electricity_total_today_low_tariff": ZonneplanSensorEntityDescription(
-                key="electricity_data.measurement_groups.0.meta.low_tariff_group",
-                name="Electricity consumption today low tariff",
-                native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
-                value_factor=0.001,
-                device_class=SensorDeviceClass.ENERGY,
-                entity_registry_enabled_default=False,
-                state_class=SensorStateClass.TOTAL_INCREASING,
-            ),
-            "electricity_total_today_normal_tariff": ZonneplanSensorEntityDescription(
-                key="electricity_data.measurement_groups.0.meta.normal_tariff_group",
-                name="Electricity consumption today normal tariff",
-                native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
-                value_factor=0.001,
-                device_class=SensorDeviceClass.ENERGY,
-                entity_registry_enabled_default=False,
-                state_class=SensorStateClass.TOTAL_INCREASING,
-            ),
-            "electricity_total_today_high_tariff": ZonneplanSensorEntityDescription(
-                key="electricity_data.measurement_groups.0.meta.high_tariff_group",
-                name="Electricity consumption today high tariff",
-                native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
-                value_factor=0.001,
-                device_class=SensorDeviceClass.ENERGY,
-                entity_registry_enabled_default=False,
                 state_class=SensorStateClass.TOTAL_INCREASING,
             ),
             "electricity_delivery_costs_incl_tax": ZonneplanSensorEntityDescription(
