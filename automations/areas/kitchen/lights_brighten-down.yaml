@@ -1,12 +1,12 @@
 alias: Kitchen lights dimmer on hold down
 description: >-
   Turn the lights dimmer when hold-press the switch down.
-trigger:
+triggers:
   - entity_id: sensor.kitchen_switch_action
-    platform: state
+    trigger: state
     to: "brightness_move_down"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: light.kitchen_lights
       brightness_step_pct: -10

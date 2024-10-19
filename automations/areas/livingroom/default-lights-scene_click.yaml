@@ -1,12 +1,12 @@
 alias: Activate activate default light scene on click
 description: >-
   Turn the default lights scene on by clicking the left arrow Tradfri remote.
-trigger:
+triggers:
   - entity_id: sensor.living_room_switch_action
-    platform: state
+    trigger: state
     to: "arrow_left_click"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: script.living_room_lights_default
     action: script.turn_on

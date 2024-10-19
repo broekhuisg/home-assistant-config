@@ -1,12 +1,12 @@
 alias: Backyard camera nightmode on
 description: >-
   Turn the backyard camera nightmode on on sunset.
-trigger:
-  - platform: sun
+triggers:
+  - trigger: sun
     event: sunset
     offset: "00:00:00"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: switch.backyard_camera_night_mode
     action: switch.turn_on

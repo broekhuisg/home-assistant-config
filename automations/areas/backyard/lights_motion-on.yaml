@@ -1,16 +1,16 @@
 alias: Backyard lights on
 description: >-
   Turn lights on when there is motion and after sunset.
-trigger:
+triggers:
   - entity_id: binary_sensor.backyard_motion_sensor_occupancy
-    platform: state
+    trigger: state
     to: "on"
-condition:
+conditions:
   - condition: numeric_state
     below: 2
     entity_id: sun.sun
     attribute: elevation
-action:
+actions:
   - data:
       entity_id: light.backyard_spots
     action: light.turn_on

@@ -1,12 +1,12 @@
 alias: Kitchen lights on single press
 description: >-
   Turn lights on when single-press the switch up.
-trigger:
+triggers:
   - entity_id: sensor.kitchen_switch_action
-    platform: state
+    trigger: state
     to: "on"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: light.kitchen_lights
       brightness_pct: 45

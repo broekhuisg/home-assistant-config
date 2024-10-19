@@ -1,14 +1,14 @@
 alias: Frontdoor lights turn on around sunset
 description: >-
   Turn the frontdoor lights just after sunset
-trigger:
-  - platform: numeric_state
+triggers:
+  - trigger: numeric_state
     entity_id: sun.sun
     attribute: elevation
     # Can be a positive (above horizon) or negative (under horizon) number
     below: -3.1
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: light.frontdoor_lights
       brightness: 153

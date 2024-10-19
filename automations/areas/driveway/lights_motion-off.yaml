@@ -1,18 +1,18 @@
 alias: Frontdoor lights turn off motion
 description: >-
   Turn lights off when there is no motion in the hallway in the morning
-trigger:
+triggers:
   - entity_id: binary_sensor.hallway_motion_sensor_occupancy
-    platform: state
+    trigger: state
     to: "off"
     for:
       minutes: 5
-condition:
+conditions:
   - condition: time
     after: "05:00:00"
   - condition: time
     before: "12:00:00"
-action:
+actions:
   - data:
       entity_id: light.frontdoor_lights
       transition: 1

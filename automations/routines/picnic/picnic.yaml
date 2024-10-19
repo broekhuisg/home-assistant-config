@@ -1,13 +1,13 @@
 alias: Picnic delivery soon
 mode: single
 description: Send a notification when the short window of the picnic delivery is near
-trigger:
-  - platform: template # Trigger 10 minutes before eta start time.
+triggers:
+  - trigger: template # Trigger 10 minutes before eta start time.
     value_template: >-
       {% if states('sensor.picnic_next_delivery_eta_start') not in ['unknown','unavailable','none'] %}
         {{ 601 > (as_timestamp(states('sensor.picnic_next_delivery_eta_start'), 0) - as_timestamp(now(), 0)) > 540}}
       {% endif %}
-action:
+actions:
   - data:
       entity_id:
         - media_player.living_room_display
@@ -57,14 +57,14 @@ action:
 # mode: single
 # description: >-
 #   Send a notification when there are 2 hours left to submit the current order
-# trigger:
-#   - platform: template
+# triggers:
+#   - trigger: template
 #     value_template: >-
 #       {% if states('sensor.picnic_selected_slot_max_order_time') not in ['unknown','unavailable','none'] %}
 #         {{ 7200 > (as_timestamp(states('sensor.picnic_selected_slot_max_order_time')) - as_timestamp(now(), 0)) > 0}}
 #       {% endif %}
 #     id: cart
-#   - platform: template
+#   - trigger: template
 #     value_template: >-
 #       {% if states('sensor.picnic_last_order_max_order_time') not in ['unknown','unavailable','none'] %}
 #         {{ 7200 > (as_timestamp(states('sensor.picnic_last_order_max_order_time')) - as_timestamp(now(), 0)) > 0}}
