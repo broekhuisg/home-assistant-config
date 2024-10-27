@@ -1,12 +1,12 @@
 alias: Shed lights on
 description: >-
   Turn lights on when there is motion
-trigger:
+triggers:
   - entity_id: binary_sensor.shed_motion_sensor_occupancy
-    platform: state
+    trigger: state
     to: "on"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: light.shed_light
     action: light.turn_on

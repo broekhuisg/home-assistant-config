@@ -2,14 +2,14 @@ alias: System recorder repack
 description: >-
   Repack recorder database
 mode: single
-trigger:
-  - platform: time
+triggers:
+  - trigger: time
     at: "05:00"
-condition:
+conditions:
   - condition: time
     weekday:
       - sun
-action:
+actions:
   - action: recorder.purge
     data:
       repack: true

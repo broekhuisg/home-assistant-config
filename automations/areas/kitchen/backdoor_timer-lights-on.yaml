@@ -1,0 +1,18 @@
+alias: Turn led on when backdoor is open for 2 minutes
+description: >-
+  Turn on the LED bulb when the backdoor is open for 2 minutes. Light turns off when closed.
+triggers:
+  - entity_id: binary_sensor.backdoor_door_sensor_contact
+    trigger: state
+    to: "on"
+    for:
+      seconds: 120
+conditions:
+  - condition: state
+    entity_id: light.kitchen_light_2
+    state: "off"
+actions:
+  - data:
+      entity_id: light.kitchen_light_1
+      brightness_pct: 100
+    action: light.turn_on

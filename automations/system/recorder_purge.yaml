@@ -2,8 +2,9 @@ alias: System recorder purge
 description: >-
   Purge recorder database
 mode: single
-trigger:
-  - platform: time_pattern
+triggers:
+  - trigger: time_pattern
     minutes: 12
-action:
+conditions: []
+actions:
   - action: recorder.purge

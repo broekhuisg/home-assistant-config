@@ -1,16 +1,16 @@
 alias: Garbage out tomorrow
 description: >-
   Notify via Google speakers which garbage has to go out tomorrow morning.
-trigger:
-  - platform: time
+triggers:
+  - trigger: time
     at: "20:30:00"
-condition:
+conditions:
   condition: not
   conditions:
     - condition: state
       entity_id: sensor.afvalinfo_home_trash_type_tomorrow
       state: "geen"
-action:
+actions:
   - data:
       entity_id:
         - media_player.living_room_display

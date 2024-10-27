@@ -1,12 +1,12 @@
 alias: Lights in and around the closet on left press
 description: >-
   Turns the big light and WLED light on left press
-trigger:
+triggers:
   - entity_id: sensor.office_double_switch_action
-    platform: state
+    trigger: state
     to: "single_left"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: light.office_standing_corner_light
     action: light.toggle

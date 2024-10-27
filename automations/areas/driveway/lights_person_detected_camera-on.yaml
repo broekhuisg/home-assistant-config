@@ -1,8 +1,8 @@
-alias: Frontdoor lights turn on motion
+alias: Frontdoor lights turn on person detected
 description: >-
-  Turn lights on when there is motion in the hallway in the morning
+  Turn lights on when there is a person detected by the driveway camera
 triggers:
-  - entity_id: binary_sensor.hallway_motion_sensor_occupancy
+  - entity_id: binary_sensor.driveway_person_occupancy
     trigger: state
     to: "on"
 conditions:

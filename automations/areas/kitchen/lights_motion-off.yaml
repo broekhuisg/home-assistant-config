@@ -1,14 +1,14 @@
 alias: Kitchen lights off
 description: >-
-  Turn lights off when 17 minutes no motion
-trigger:
+  Turn lights off when 20 minutes no motion
+triggers:
   - entity_id: binary_sensor.kitchen_motion_sensor_occupancy
-    platform: state
+    trigger: state
     to: "off"
     for:
-      minutes: 17
-condition: []
-action:
+      minutes: 20
+conditions: []
+actions:
   - data:
       entity_id: light.kitchen_lights
     action: light.turn_off

@@ -2,11 +2,11 @@
 alias: Killswitch lights
 description: >-
   Turn all the lights off at 2AM, as a double check so that no light is on the whole night long
-trigger:
-  - platform: time
+triggers:
+  - trigger: time
     at: "01:30:00"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: light.living_room_lights
     action: light.turn_off
