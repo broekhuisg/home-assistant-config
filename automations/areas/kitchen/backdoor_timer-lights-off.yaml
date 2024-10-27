@@ -1,0 +1,15 @@
+alias: Turn led off when backdoor is closed after being open for 2+ minutes
+description: >-
+  Turn off the LED bulb when the backdoor was open for 2 minutes.
+triggers:
+  - entity_id: binary_sensor.backdoor_door_sensor_contact
+    trigger: state
+    to: "off"
+conditions:
+  - condition: state
+    entity_id: light.kitchen_light_2
+    state: "off"
+actions:
+  - data:
+      entity_id: light.kitchen_light_1
+    action: light.turn_off
