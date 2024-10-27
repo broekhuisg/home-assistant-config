@@ -1,12 +1,12 @@
 alias: Kitchen lights of single press
 description: >-
   Turn lights off when single-press the switch down.
-trigger:
+triggers:
   - entity_id: sensor.kitchen_switch_action
-    platform: state
+    trigger: state
     to: "off"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: light.kitchen_lights
     action: light.turn_off

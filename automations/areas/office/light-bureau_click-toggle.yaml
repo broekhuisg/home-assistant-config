@@ -1,12 +1,12 @@
 alias: Office bureau light on right press
 description: >-
   Turns the office clost light on when you click on the right button.
-trigger:
+triggers:
   - entity_id: sensor.office_double_switch_action
-    platform: state
+    trigger: state
     to: "single_right"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: light.office_bureau_light
     action: light.toggle

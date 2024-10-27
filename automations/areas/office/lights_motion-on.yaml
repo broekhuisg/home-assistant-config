@@ -1,16 +1,16 @@
 alias: Office lights on
 description: >-
   Turn lights on when there is motion after sunset.
-trigger:
+triggers:
   - entity_id: binary_sensor.office_motion_sensor_occupancy
-    platform: state
+    trigger: state
     to: "on"
-condition:
+conditions:
   - condition: numeric_state
     below: 4
     entity_id: sun.sun
     attribute: elevation
-action:
+actions:
   - data:
       entity_id: light.office_lights
     action: light.turn_on

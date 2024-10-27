@@ -1,12 +1,12 @@
 alias: Smoke alarm hallway battery
 description: >-
   The battery of the smoke alarm hallway is almost empty
-trigger:
+triggers:
   - entity_id: binary_sensor.hallway_smoke_sensor_battery_low
-    platform: state
+    trigger: state
     to: "on"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       message: >-
         "Batterij van brandalarm gang is bijna leeg"

@@ -1,11 +1,11 @@
 alias: Living room activate movie scene
 description: >-
   Activate the movie scene when starting media player.
-trigger:
-  - platform: state
+triggers:
+  - trigger: state
     entity_id: media_player.shield
     to: "playing"
-condition:
+conditions:
   and:
     - condition: numeric_state
       below: 5
@@ -37,7 +37,7 @@ condition:
               entity_id: media_player.shield
               attribute: app_name
               state: "Viaplay"
-action:
+actions:
   - data:
       entity_id: script.movie_scene
     action: script.turn_on

@@ -1,12 +1,12 @@
 alias: Office lights toggle double click
 description: >-
   Toggles all office lights on double click
-trigger:
+triggers:
   - entity_id: sensor.office_double_switch_action
-    platform: state
+    trigger: state
     to: "single_both"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: light.office_lights
     action: light.toggle

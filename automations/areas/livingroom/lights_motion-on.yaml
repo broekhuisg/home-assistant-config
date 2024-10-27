@@ -1,11 +1,11 @@
 alias: Living room lights on
 description: >-
   Turn lights on when there is motion and after sunset.
-trigger:
+triggers:
   - entity_id: binary_sensor.living_room_motion_sensor_occupancy
-    platform: state
+    trigger: state
     to: "on"
-condition:
+conditions:
   and:
     - condition: numeric_state
       below: 4
@@ -15,7 +15,7 @@ condition:
         - condition: state
           entity_id: media_player.shield
           state: "playing"
-action:
+actions:
   - data:
       entity_id: script.living_room_lights_default
     action: script.turn_on

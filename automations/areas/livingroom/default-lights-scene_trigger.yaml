@@ -1,16 +1,16 @@
 alias: Living room activate default light scene
 description: >-
   Activate the default light scene when the media player stops.
-trigger:
-  - platform: state
+triggers:
+  - trigger: state
     entity_id: media_player.shield
     from: "playing"
-condition:
+conditions:
   - condition: numeric_state
     below: 5
     entity_id: sun.sun
     attribute: elevation
-action:
+actions:
   - data:
       entity_id: script.living_room_lights_default
     action: script.turn_on

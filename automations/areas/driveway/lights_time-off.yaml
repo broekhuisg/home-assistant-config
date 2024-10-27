@@ -1,11 +1,11 @@
 alias: Frontdoor lights turn off at midnight
 description: >-
   Turn the frontdoor lights off at 00.01AM
-trigger:
-  - platform: time
+triggers:
+  - trigger: time
     at: "00:01:00"
-condition: []
-action:
+conditions: []
+actions:
   - data:
       entity_id: light.frontdoor_lights
       transition: 1
