@@ -14,7 +14,6 @@ actions:
   - data:
       entity_id:
         - media_player.living_room_display
-        - media_player.office_home_mini
       message: Morgen moet het volgende afval naar buiten, {{ states('sensor.afvalinfo_home_trash_type_tomorrow') }}
       language: nl-NL
     action: tts.cloud_say
