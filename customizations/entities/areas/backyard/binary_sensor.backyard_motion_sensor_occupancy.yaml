@@ -1,2 +1,2 @@
 binary_sensor.backyard_motion_sensor_occupancy:
-  friendly_name: Achtertuin
+  friendly_name: Backyard motion

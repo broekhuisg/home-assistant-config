@@ -30,6 +30,6 @@ If it's a virtual automation, like alarm:
 
 [last-commit-shield]: https://img.shields.io/github/last-commit/broekhuisg/home-assistant-config.svg
 [commits-shield]: https://img.shields.io/github/commit-activity/y/broekhuisg/home-assistant-config.svg
-[ha-version-shield]: https://img.shields.io/badge/Home%20Assistant-2024.10.4-blue.svg
+[ha-version-shield]: https://img.shields.io/badge/Home%20Assistant-2024.11.2-blue.svg
 
 <img align="right" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Home_Assistant_Logo.svg/519px-Home_Assistant_Logo.svg.png?raw=true" height="160">

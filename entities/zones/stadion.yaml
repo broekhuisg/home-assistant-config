@@ -1,4 +1,4 @@
-name: Stadion
+name: !secret name_stadion
 latitude: !secret lat_stadion
 longitude: !secret lon_stadion
 radius: 100
