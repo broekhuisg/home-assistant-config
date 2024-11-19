@@ -15,4 +15,5 @@ actions:
   - data:
       entity_id: light.kitchen_light_1
       brightness_pct: 100
+      flash: long
     action: light.turn_on

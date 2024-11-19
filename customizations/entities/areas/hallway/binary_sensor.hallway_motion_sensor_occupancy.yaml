@@ -1,2 +1,2 @@
 binary_sensor.hallway_motion_sensor_occupancy:
-  friendly_name: Gang
+  friendly_name: Hallway motion

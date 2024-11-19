@@ -1,0 +1,4 @@
+name: Office lights
+entities:
+  - light.office_lights #Zigbee2MQTT Group
+  - light.wled_office

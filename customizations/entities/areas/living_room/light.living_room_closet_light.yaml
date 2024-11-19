@@ -1,5 +1,5 @@
 # Converted light from switch
 
 light.living_room_closet_light:
-  friendly_name: Kastlamp
+  friendly_name: Closet light
   icon: mdi:floor-lamp-torchiere-variant-outline
