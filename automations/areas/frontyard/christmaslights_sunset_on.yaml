@@ -3,7 +3,7 @@ description: "Turn on the christmas lights when its almost sunset"
 triggers:
   - trigger: sun
     event: sunset
-    offset: -01:00:00
+    offset: -00:30:00
 conditions: []
 actions:
   - action: switch.turn_on
