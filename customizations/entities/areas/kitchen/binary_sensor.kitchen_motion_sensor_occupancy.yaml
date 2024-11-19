@@ -1,2 +1,2 @@
 binary_sensor.kitchen_motion_sensor_occupancy:
-  friendly_name: Keuken
+  friendly_name: Kitchen motion

@@ -1,4 +1,4 @@
-name: Werk Gavin
+name: !secret name_work_gavin
 latitude: !secret lat_work_gavin
 longitude: !secret lon_work_gavin
 radius: 100

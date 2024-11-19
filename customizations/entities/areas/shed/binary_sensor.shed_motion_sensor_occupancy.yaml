@@ -1,2 +1,2 @@
 binary_sensor.shed_motion_sensor_occupancy:
-  friendly_name: Schuur
+  friendly_name: Shed motion

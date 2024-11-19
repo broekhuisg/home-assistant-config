@@ -1,3 +1,3 @@
 binary_sensor.frontdoor_door_sensor_contact:
-  friendly_name: Voordeur
+  friendly_name: Frontdoor
   icon: mdi:door

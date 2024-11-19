@@ -1,0 +1,13 @@
+alias: Turn christmas lights on morning 6am
+description: "Turn on the christmas lights when its 6am"
+triggers:
+  - trigger: time
+    at: 06:00:00
+conditions: []
+actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.sonoff_christmas_frontyard
+mode: single

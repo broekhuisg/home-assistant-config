@@ -1,0 +1,14 @@
+alias: Turn christmas lights on sunset
+description: "Turn on the christmas lights when its almost sunset"
+triggers:
+  - trigger: sun
+    event: sunset
+    offset: -00:30:00
+conditions: []
+actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.sonoff_christmas_frontyard
+mode: single

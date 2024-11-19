@@ -2,5 +2,5 @@
 # Converted to: light.livingroom_television_light via entities/lights
 
 light.living_room_television_light:
-  friendly_name: Televisie lamp
+  friendly_name: Television light
   icon: mdi:post-lamp
