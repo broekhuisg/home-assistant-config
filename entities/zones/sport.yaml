@@ -1,0 +1,5 @@
+name: !secret name_sport
+latitude: !secret lat_sport
+longitude: !secret lon_sport
+radius: 100
+icon: mdi:dumbbell
