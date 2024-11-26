@@ -1,0 +1,25 @@
+alias: Set climate preset to home
+description: "Set the preset mode of climate to home when at least one person is home"
+triggers:
+  - trigger: zone
+    entity_id:
+      - person.gavin
+      - person.jimini
+    zone: zone.home
+    event: enter
+conditions:
+  - condition: or
+    conditions:
+      - condition: state
+        entity_id: person.gavin
+        state: home
+      - condition: state
+        state: home
+        entity_id: person.jimini
+actions:
+  - device_id: 49b026b02dc9b77b85a3e2395afa5ed0
+    domain: climate
+    entity_id: 4dfd5c9a6f08eac750cfc44bc62d88f9
+    type: set_preset_mode
+    preset_mode: home
+mode: single

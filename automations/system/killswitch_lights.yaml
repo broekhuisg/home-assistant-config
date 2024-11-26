@@ -13,6 +13,9 @@ actions:
   - data:
       entity_id: light.kitchen_lights
     action: light.turn_off
+  - data:
+      entity_id: light.twinkly_f6bc91
+    action: light.turn_off
 
   - delay:
       seconds: 2

@@ -32,3 +32,6 @@ sequence:
       entity_id: light.living_room_standing_corner_light
       brightness_pct: 95
       transition: 5
+  - action: light.turn_on
+    data:
+      entity_id: light.twinkly_f6bc91
