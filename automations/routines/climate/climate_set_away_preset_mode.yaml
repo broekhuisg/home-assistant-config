@@ -1,0 +1,25 @@
+alias: Set climate preset to away
+description: "Set the preset mode of climate to away when everyone is not home"
+triggers:
+  - trigger: zone
+    entity_id:
+      - person.gavin
+      - person.jimini
+    zone: zone.home
+    event: leave
+conditions:
+  - condition: not
+    conditions:
+      - condition: state
+        entity_id: person.gavin
+        state: home
+      - condition: state
+        entity_id: person.jimini
+        state: home
+actions:
+  - device_id: 49b026b02dc9b77b85a3e2395afa5ed0
+    domain: climate
+    entity_id: 4dfd5c9a6f08eac750cfc44bc62d88f9
+    type: set_preset_mode
+    preset_mode: away
+mode: single
