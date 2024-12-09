@@ -1,4 +1,4 @@
-alias: Living room lights default
+alias: Living room lights default nochristmas
 description: >-
   Set the state of the living room lights to default.
 sequence:
@@ -28,8 +28,8 @@ sequence:
       entity_id: light.wled_living_room
       brightness_pct: 10
       transition: 3
-      rgb_color: [255, 0, 0]
-      effect: "Candle Multi"
+      rgb_color: [255, 122, 51]
+      effect: "Solid"
   - action: light.turn_on
     data:
       entity_id: light.living_room_standing_corner_light
