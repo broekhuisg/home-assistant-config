@@ -13,6 +13,6 @@ actions:
   - data:
       entity_id: light.wled_living_room
     action: light.toggle
-  - data:
-      entity_id: light.twinkly_f6bc91
-    action: light.toggle
+  # - data:
+  #     entity_id: light.twinkly_f6bc91
+  #   action: light.toggle
