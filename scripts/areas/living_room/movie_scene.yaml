@@ -16,6 +16,9 @@ sequence:
   - action: light.turn_off
     data:
       entity_id: light.living_room_television_light
+  # - action: light.turn_on
+  #   data:
+  #     entity_id: light.twinkly_f6bc91
 
   - delay:
       seconds: 2
@@ -42,6 +45,3 @@ sequence:
       entity_id: light.living_room_standing_corner_light
       brightness_pct: 20
       transition: 5
-  - action: light.turn_on
-    data:
-      entity_id: light.twinkly_f6bc91

@@ -25,19 +25,17 @@ CONF_REPLACE = 'replace'
 CONF_DEFAULT = 'default'
 CONF_INDEX = 'index'
 CONF_PARENT = 'parent'
-CONF_INGRESS = 'ingress'
 CONF_WORK_MODE = 'work_mode'
-CONF_TOOLBAR = 'toolbar'
 CONF_UI_MODE = 'ui_mode'
 CONF_REWRITE = 'rewrite'
 CONF_COOKIE_NAME = 'cookie_name'
 CONF_EXPIRE_TIME = 'expire_time'
+CONF_STATIC_TOKEN = 'static_token'
 CONF_DISABLE_CHUNKED = 'disable_chunked'
-CONF_DISABLE_STREAM = 'disable_stream'
 API_BASE = '/api/ingress'
 URL_BASE = '/files/ingress'
 
-WORK_MODES = ['ingress', 'iframe', 'auth', 'hassio']
+WORK_MODES = ['ingress', 'iframe', 'auth', 'hassio', 'subapp', 'custom']
 UI_MODES = ['normal', 'toolbar', 'replace']
 REWRITE_MODES = ['body', 'header']
 
@@ -53,10 +51,8 @@ CONFIG_SCHEMA = vol.Schema({
         })),
         vol.Optional(CONF_INDEX, default=''): cv.string,
         vol.Optional(CONF_PARENT): cv.string,
-        vol.Optional(CONF_INGRESS, default=True): cv.boolean,
-        vol.Optional(CONF_WORK_MODE): vol.In(WORK_MODES),
-        vol.Optional(CONF_TOOLBAR): cv.boolean,
-        vol.Optional(CONF_UI_MODE): vol.In(UI_MODES),
+        vol.Optional(CONF_WORK_MODE, default='ingress'): vol.In(WORK_MODES),
+        vol.Optional(CONF_UI_MODE, default='normal'): vol.In(UI_MODES),
         vol.Optional(CONF_HEADERS): vol.Schema({str: cv.string}),
         vol.Optional(CONF_REWRITE, default=[]): [vol.Schema({
             vol.Required(CONF_MODE): vol.In(REWRITE_MODES),
@@ -66,20 +62,22 @@ CONFIG_SCHEMA = vol.Schema({
             vol.Required(CONF_REPLACE): cv.string,
         })],
         vol.Optional(CONF_COOKIE_NAME): cv.string,
+        vol.Optional(CONF_STATIC_TOKEN): cv.string,
         vol.Optional(CONF_EXPIRE_TIME): cv.positive_int,
         vol.Optional(CONF_DISABLE_CHUNKED): cv.boolean,
-        vol.Optional(CONF_DISABLE_STREAM): cv.boolean,
     })),
 }, extra=vol.ALLOW_EXTRA)
 
 class IngressCfg:
+    sub_path = ''
     headers = {}
     cookie_name = 'ingress_token'
     cookie_names = {}
     expire_time = 3600
+    static_token = ''
     disable_chunked = False
-    disable_stream = False
     rewrite = []
+    sub_apps = []
 
     def __init__(self, **kwargs):
         self.__dict__.update((k,v) for k,v in kwargs.items() if v)
@@ -88,7 +86,13 @@ class IngressCfg:
         self.token = {}
 
 def new_token(now, cfgs, cfg: IngressCfg):
-    while True:
+    if cfg.static_token:
+        token = f't-{cfg.static_token}'
+        old = cfgs.get(token)
+        if old and old is not cfg:
+            _LOGGER.error('static_token conflict with %s, use dynamic for %s!', old.name, cfg.name)
+            del cfg.static_token
+    while not cfg.static_token:
         token = base64.urlsafe_b64encode(os.urandom(33)).decode()
         if token not in cfgs:
             break
@@ -99,7 +103,7 @@ def new_token(now, cfgs, cfg: IngressCfg):
     tkcfg['expire'] = now + cfg.expire_time
     return tkcfg
 
-def get_cfg_by_token(hass, cfgs, token):
+def get_cfg_by_token(hass, cfgs, token) -> tuple[str, IngressCfg]:
     cfg = cfgs.get(token)
     if cfg:
         # token valid, check refresh
@@ -110,7 +114,7 @@ def get_cfg_by_token(hass, cfgs, token):
             hass.bus.async_fire(EVENT_PANELS_UPDATED)
     return token, cfg
 
-def get_cfg_by_cookie(request, cfgs, name):
+def get_cfg_by_cookie(request, cfgs, name) -> IngressCfg:
     cookie_name = IngressCfg.cookie_names.get(name) or IngressCfg.cookie_name
     return cfgs.get(request.cookies.get(cookie_name))
 
@@ -131,38 +135,55 @@ async def _async_register_static_paths(hass_http, configs):
     else:
         for c in configs: hass_http.register_static_path(*c)
 
+async def get_js_url(hass, domain):
+    js_url = f'{URL_BASE}/entrypoint.js'
+    try:
+        from homeassistant.loader import async_get_integration
+        integration = await async_get_integration(hass, domain)
+        js_url = f'{js_url}?v={integration.version}'
+    except Exception:
+        pass
+    return js_url
+
 async def async_setup(hass, config):
     now = int(time.time())
-    cfgs, panels, children = {}, {}, []
+    cfgs, panels, ingresses, children = {}, {}, {}, []
+    placeholder = '$http_x_ingress_path'
+    js_url = await get_js_url(hass, DOMAIN)
     for name, data in config.get(DOMAIN, {}).items():
         ingress_cfg = None
-        work_mode = data.get(CONF_WORK_MODE)
-        if work_mode is None:
-            work_mode = 'ingress' if data[CONF_INGRESS] else 'iframe'
+        work_mode = data[CONF_WORK_MODE]
         url, front_url = data[CONF_URL], {}
         if isinstance(url, dict):
             url, front_url = url[CONF_DEFAULT], url
-        if work_mode != 'iframe':
+        if work_mode not in ('iframe', 'custom'):
+            ingress_path, sub_path = f'{API_BASE}/{name}', ''
             if work_mode != 'hassio':
-                url = url.rstrip('/')
+                url = url.replace(placeholder, ingress_path).rstrip('/')
                 if '://' not in url:
                     url = f'http://{url}'
+                pos = url.find('/', url.index('://')+3)
+                if pos > 0:
+                    url, sub_path = url[:pos], url[pos:]
+            headers = {}
+            for k, v in data.get(CONF_HEADERS, {}).items():
+                headers[k.title()] = v.replace(placeholder, ingress_path)
             ingress_cfg = dict(
-                mode=work_mode, name=name, url=url, entry=name,
-                headers=data.get(CONF_HEADERS),
+                mode=work_mode, name=name, origin=url, sub_path=sub_path, entry=name,
+                headers=headers,
                 cookie_name=data.get(CONF_COOKIE_NAME),
                 expire_time=data.get(CONF_EXPIRE_TIME),
+                static_token=data.get(CONF_STATIC_TOKEN),
             )
-            if work_mode == 'ingress':
+            url += sub_path
+            if work_mode in ('ingress', 'subapp'):
                 rewrite = data.get(CONF_REWRITE)
                 if rewrite:
-                    ingress_path = re.escape(f'{API_BASE}/{name}')
+                    ingress_path = re.escape(ingress_path)
                     for item in rewrite:
-                        item[CONF_REPLACE] = item[CONF_REPLACE].replace(
-                            '$http_x_ingress_path', ingress_path)
+                        item[CONF_REPLACE] = item[CONF_REPLACE].replace(placeholder, ingress_path)
                 ingress_cfg.update(
                     rewrite=rewrite,
-                    disable_stream=data.get(CONF_DISABLE_STREAM),
                     disable_chunked=data.get(CONF_DISABLE_CHUNKED),
                 )
             ingress_cfg = IngressCfg(**ingress_cfg)
@@ -172,6 +193,8 @@ async def async_setup(hass, config):
                 cfg['url'] = front_url
             elif work_mode == 'hassio':
                 cfg['addon'] = url
+            elif work_mode == 'ingress':
+                ingresses[name] = ingress_cfg
         else:
             cfg = {'url': front_url}
             if data[CONF_INDEX]:
@@ -182,11 +205,8 @@ async def async_setup(hass, config):
         elif 'url' in cfg:
             cfg['url'] = url
 
-        ui_mode = data.get(CONF_UI_MODE)
-        if ui_mode is None:
-            ui_mode = 'toolbar' if data.get(CONF_TOOLBAR) else 'normal'
-        cfg['ui_mode'] = ui_mode
-        title = data.get(CONF_TITLE)
+        cfg['ui_mode'] = work_mode if work_mode == 'custom' else data[CONF_UI_MODE]
+        title, icon = data.get(CONF_TITLE), data.get(CONF_ICON)
         parent = data.get(CONF_PARENT)
         if parent:
             if name.startswith(parent) and name[len(parent):len(parent)+1] == '_':
@@ -194,24 +214,41 @@ async def async_setup(hass, config):
             if ingress_cfg:
                 ingress_cfg.entry = f'{parent}/{name}'
             if title: cfg['title'] = title
-            children.append((name, parent, cfg))
+            if icon: cfg['icon'] = icon
+            children.append((name, parent, cfg, ingress_cfg))
             continue
 
         panels[name] = dict(
             webcomponent_name = 'ha-panel-ingress',
-            js_url = f'{URL_BASE}/entrypoint.js',
+            js_url = js_url,
             frontend_url_path = name,
             sidebar_title = title,
-            sidebar_icon = data.get(CONF_ICON),
+            sidebar_icon = icon,
             require_admin = data[panel_custom.CONF_REQUIRE_ADMIN],
             embed_iframe = False,
             config = cfg,
         )
 
-    for child, parent, cfg in children:
+    for child, parent, cfg, ingress_cfg in children:
+        if ingress_cfg and ingress_cfg.mode == 'subapp':
+            if parent not in ingresses:
+                _LOGGER.error('parent ingress[%s] not found, skip subapp[%s]!',
+                    parent, ingress_cfg.name)
+                continue
+            # ingress: add subapp to parent's sub_apps
+            pi_cfg = ingresses[parent]
+            if not pi_cfg.sub_apps:
+                pi_cfg.sub_apps = []
+            pi_cfg.sub_apps.append(ingress_cfg)
+            # panel: use parent's parent if parent is a child panel
+            if parent not in panels:
+                parent = pi_cfg.entry.partition('/')
+                parent, child = parent[0], f'{parent[2]}-{child}'
+                ingress_cfg.entry = f'{parent}/{child}'
         if parent not in panels:
             _LOGGER.error('parent panel[%s] not found, skip child panel[%s]!', parent, child)
             continue
+        # panel: add child to parent's children
         panels[parent]['config'].setdefault('children', {})[child] = cfg
 
     await asyncio.gather(*(panel_custom.async_register_panel(hass, **v) for v in panels.values()))
@@ -255,7 +292,7 @@ class IngressView(http.HomeAssistantView):
         if not name or not url:
             raise web.HTTPNotFound()
         # check ingressToken parameter
-        cfg = None
+        cfg: IngressCfg = None
         url = urlparse(url)
         params = parse_qs(url.query)
         if 'ingressToken' in params:
@@ -263,7 +300,7 @@ class IngressView(http.HomeAssistantView):
         if cfg:
             # valid, remove ingressToken if has X-Hass-Origin else return 200
             hass_origin = request.headers.get('X-Hass-Origin')
-            if hass_origin:
+            if hass_origin and request.method in ('GET', 'HEAD'):
                 del params['ingressToken']
                 url = url._replace(query=urlencode(params, doseq=True)).geturl()
                 resp = web.HTTPUnauthorized(headers={'Location': url})
@@ -278,9 +315,9 @@ class IngressView(http.HomeAssistantView):
             return web.Response(headers=cfg.headers)
         # cookie invalid, try redirect to entry
         for cfg in self._config.values():
-            if cfg.name == name and cfg.mode != 'hassio':
+            if cfg.name == name:
                 params = {'replace': ''}
-                root = urlparse(cfg.url + '/').path
+                root = cfg.sub_path + '/'
                 if url.path.startswith(root):
                     params['index'] = urlunparse(('', '', url.path[len(root):]) + url[3:])
                 hass_origin = request.headers.get('X-Hass-Origin', '')
@@ -315,7 +352,7 @@ class IngressView(http.HomeAssistantView):
 <html>
   <head>
     <meta charset="UTF-8"/>
-    <script type="module" src="/files/ingress/entrypoint.js"></script>
+    <script async src="/files/ingress/entrypoint.js"></script>
     <script>(async () => {
 await customElements.whenDefined("ha-panel-ingress");
 document.querySelector("ha-panel-ingress").setProperties({panel: {
@@ -332,32 +369,35 @@ document.querySelector("ha-panel-ingress").setProperties({panel: {
         if token == '_' and path == 'auth':
             return await self._handle_auth(request)
         token, cfg = get_cfg_by_token(self._hass, self._config, token)
-        if cfg:
+        if cfg and request.method in ('GET', 'HEAD'):
+            # only redirect when get or head method
             url = f'{API_BASE}/{cfg.name}/'
             if request.query_string:
                 path = f'{path}?{request.query_string}'
             resp = web.HTTPFound(url + path)
+            # set self cookie
             resp.set_cookie(cfg.cookie_name, token, path=url, httponly=True)
+            # set subapp's cookies
+            for cfg in cfg.sub_apps:
+                resp.headers.add('Set-Cookie', f'{cfg.cookie_name}={cfg.token["value"]};'
+                                 f' HttpOnly; Path={API_BASE}/{cfg.name}/')
             raise resp
-        cfg = get_cfg_by_cookie(request, self._config, token)
-        if not cfg:
+        elif not cfg:
+            cfg = get_cfg_by_cookie(request, self._config, token)
+        if not cfg or cfg.mode not in ('ingress', 'subapp'):
             # cookie invalid, try redirect to entry
-            for cfg in self._config.values():
-                if cfg.name == token:
-                    if request.query_string:
-                        path = f'{path}?{request.query_string}'
-                    if cfg.mode == 'auth':
-                        resp = await self._handle_redirect(cfg, request, path)
-                        if resp is not None: return resp
-                    path = urlencode({'replace':'', 'index':path})
-                    raise web.HTTPFound(f'/{cfg.entry}?{path}')
+            for cfg in ([cfg] if cfg else self._config.values()):
+                if cfg.name != token:
+                    continue
+                if request.query_string:
+                    path = f'{path}?{request.query_string}'
+                if cfg.mode == 'auth':
+                    resp = await self._handle_redirect(cfg, request, path)
+                    if resp is not None: return resp
+                path = urlencode({'replace':'', 'index':path})
+                raise web.HTTPFound(f'/{cfg.entry}?{path}')
             raise web.HTTPNotFound()
-        if cfg.mode == 'hassio':
-            if not path:
-                raise web.HTTPFound(f'/{cfg.entry}?replace')
-            url = f"http://{os.environ['SUPERVISOR']}/ingress/{quote(path)}"
-        else:
-            url = f'{cfg.url}/{path}'
+        url = f'{cfg.origin}{cfg.sub_path}/{path}'
 
         try:
             # Websocket
@@ -376,7 +416,7 @@ document.querySelector("ha-panel-ingress").setProperties({panel: {
     patch = _handle
     # options = _handle
 
-    async def _handle_websocket(self, request, cfg, url):
+    async def _handle_websocket(self, request, cfg: IngressCfg, url):
         if hdrs.SEC_WEBSOCKET_PROTOCOL in request.headers:
             req_protocols = [
                 str(proto.strip())
@@ -413,7 +453,7 @@ document.querySelector("ha-panel-ingress").setProperties({panel: {
 
         return ws_server
 
-    async def _handle_request(self, request, cfg, url):
+    async def _handle_request(self, request, cfg: IngressCfg, url):
         data = request.content
         if (request.headers.get(hdrs.TRANSFER_ENCODING) != 'chunked' and
             (cfg.disable_chunked or int(request.headers.get(hdrs.CONTENT_LENGTH, 0)) < 4194000)):
@@ -429,42 +469,43 @@ document.querySelector("ha-panel-ingress").setProperties({panel: {
             skip_auto_headers=[hdrs.CONTENT_TYPE],
         ) as result:
             headers = _response_header(result)
-            path = "/" + url.partition("://")[2].partition("/")[2]
 
+            rewrite_body = None
             if cfg.rewrite:
-                for name, value in headers.items():
-                    for rewrite in cfg.rewrite:
-                        if rewrite[CONF_MODE] != "header":
-                            continue
-                        if re.match(rewrite[CONF_PATH], path, re.I) is None:
-                            continue
-                        if rewrite[CONF_NAME] and re.match(rewrite[CONF_NAME], name, re.I) is None:
-                            continue
-                        headers[name] = re.sub(
-                            rewrite[CONF_MATCH],
-                            rewrite[CONF_REPLACE],
-                            value,
-                        )
+                def make_rewrite(rewrite, rewrite_body):
+                    if rewrite_body is None:
+                        rewrite_body = lambda body: body
+                    return lambda body: re.sub(
+                        rewrite[CONF_MATCH].encode(),
+                        rewrite[CONF_REPLACE].encode(),
+                        rewrite_body(body),
+                    )
+
+                path = "/" + url.partition("://")[2].partition("/")[2]
+                for rewrite in cfg.rewrite:
+                    if re.match(rewrite[CONF_PATH], path, re.I) is None:
+                        continue
+                    if rewrite[CONF_MODE] == "header":
+                        for name, value in headers.items():
+                            if rewrite[CONF_NAME] and re.match(rewrite[CONF_NAME], name, re.I) is None:
+                                continue
+                            headers[name] = re.sub(
+                                rewrite[CONF_MATCH],
+                                rewrite[CONF_REPLACE],
+                                value,
+                            )
+                    elif rewrite[CONF_MODE] == "body":
+                        rewrite_body = make_rewrite(rewrite, rewrite_body)
 
             # Simple request
             if (
                 hdrs.CONTENT_LENGTH in result.headers
                 and int(result.headers.get(hdrs.CONTENT_LENGTH, 0)) < 4194000
-            ) or result.status in (204, 304) or cfg.disable_stream:
+            ) or result.status in (204, 304) or rewrite_body:
                 # Return Response
                 body = await result.read()
-
-                if cfg.rewrite:
-                    for rewrite in cfg.rewrite:
-                        if rewrite[CONF_MODE] != "body":
-                            continue
-                        if re.match(rewrite[CONF_PATH], path, re.I) is None:
-                            continue
-                        body = re.sub(
-                            rewrite[CONF_MATCH].encode(),
-                            rewrite[CONF_REPLACE].encode(),
-                            body,
-                        )
+                if rewrite_body:
+                    body = rewrite_body(body)
 
                 return web.Response(
                     headers=headers,
@@ -491,7 +532,7 @@ document.querySelector("ha-panel-ingress").setProperties({panel: {
             return response
 
 
-def _init_header(request, cfg, url):
+def _init_header(request, cfg: IngressCfg, url):
     headers = {}
 
     # filter flags
@@ -511,13 +552,12 @@ def _init_header(request, cfg, url):
             if not value: continue
         headers[name] = value
     for name, value in cfg.headers.items():
-        headers[name] = value
+        if value != '$auto':
+            headers[name] = value
 
     # Set X-Ingress-Path
-    ingress_path = f'{API_BASE}/{cfg.name}'
-    if cfg.mode == 'hassio':
-        ingress_path += re.search(r'/ingress(/[^/]+)/', url).group(1)
-    headers['X-Ingress-Path'] = ingress_path
+    headers['X-Ingress-Path'] = f'{API_BASE}/{cfg.name}'
+    headers['X-Ingress-SubPath'] = cfg.sub_path
 
     # Set X-Forwarded-For
     forward_for = request.headers.get(hdrs.X_FORWARDED_FOR)
@@ -542,6 +582,10 @@ def _init_header(request, cfg, url):
     if not forward_proto:
         forward_proto = request.url.scheme
     headers[hdrs.X_FORWARDED_PROTO] = forward_proto
+
+    # Replace Origin placeholder
+    if 'Origin' in headers and cfg.headers.get('Origin') == '$auto':
+        headers['Origin'] = f'{forward_proto}://{forward_host}'
 
     return headers
 
