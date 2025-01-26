@@ -1,6 +1,6 @@
-alias: Kitchen lights on single press
+alias: Kitchen lights on press toggle
 description: >-
-  Turn lights on when single-press the switch up.
+  Turn lights on when single-press the toggle button.
 triggers:
   - entity_id: sensor.kitchen_switch_action
     trigger: state

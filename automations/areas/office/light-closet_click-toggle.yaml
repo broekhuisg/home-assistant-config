@@ -8,7 +8,7 @@ triggers:
 conditions: []
 actions:
   - data:
-      entity_id: light.office_standing_corner_light
+      entity_id: light.office_corner_color_light
     action: light.toggle
   - data:
       entity_id: light.wled_office

@@ -1,0 +1,12 @@
+alias: Shed light on single press
+description: >-
+  Turn shed lights on when single-press the switch up.
+triggers:
+  - entity_id: sensor.shed_switch_action
+    trigger: state
+    to: "on"
+conditions: []
+actions:
+  - data:
+      entity_id: light.shed_light
+    action: light.turn_on

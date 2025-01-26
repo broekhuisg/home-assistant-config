@@ -1,0 +1,46 @@
+alias: Exit movie scene
+description: >-
+  Set the state of the living room lights to after movie scene.
+sequence:
+  - action: light.turn_on
+    data:
+      entity_id: light.living_room_standing_corner_light
+      color_temp: 670
+      transition: 1
+
+  - delay:
+      seconds: 1
+
+  - action: light.turn_on
+    data:
+      entity_id: light.living_room_standing_corner_light
+      brightness_pct: 85
+      transition: 5
+
+  - delay:
+      seconds: 4
+
+  - action: light.turn_off
+    data:
+      entity_id: light.wled_living_room
+      transition: 3
+  - action: light.turn_on
+    data:
+      entity_id: light.living_room_television_light
+  - action: light.turn_on
+    data:
+      entity_id: light.living_room_closet_light
+  - action: light.turn_on
+    data:
+      entity_id: light.living_room_couch_light
+
+  # - action: light.turn_on
+  #   data:
+  #     entity_id: light.twinkly_f6bc91
+  # - action: light.turn_on
+  #   data:
+  #     entity_id: light.wled_living_room
+  #     brightness_pct: 10
+  #     transition: 3
+  #     rgb_color: [255, 122, 51]
+  #     effect: "Solid"

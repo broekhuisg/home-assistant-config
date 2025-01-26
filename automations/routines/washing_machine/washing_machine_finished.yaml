@@ -1,0 +1,14 @@
+alias: Washing machine is done
+description: >-
+  The washing machine is done and notify after 5 minutes of no power (W)
+triggers:
+  - entity_id: sensor.washing_machine_smart_plug_power
+    trigger: state
+    to: "0"
+    for:
+      minutes: 5
+conditions: []
+actions:
+  - data:
+      message: "De wasmachine is klaar."
+    action: notify.telegram_notify

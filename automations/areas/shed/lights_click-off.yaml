@@ -1,0 +1,12 @@
+alias: Shed light off single press
+description: >-
+  Turn shed lights off when single-press the switch down.
+triggers:
+  - entity_id: sensor.shed_switch_action
+    trigger: state
+    to: "off"
+conditions: []
+actions:
+  - data:
+      entity_id: light.shed_light
+    action: light.turn_off
