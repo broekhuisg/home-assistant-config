@@ -16,17 +16,13 @@ sequence:
   - action: light.turn_on
     data:
       entity_id: light.living_room_couch_light
+  - action: light.turn_off
+    data:
+      entity_id: light.wled_living_room
 
   - delay:
       seconds: 2
 
-  - action: light.turn_on
-    data:
-      entity_id: light.wled_living_room
-      brightness_pct: 10
-      transition: 3
-      rgb_color: [255, 122, 51]
-      effect: "Solid"
   - action: light.turn_on
     data:
       entity_id: light.living_room_standing_corner_light

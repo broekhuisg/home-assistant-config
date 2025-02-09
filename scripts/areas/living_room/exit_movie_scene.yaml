@@ -11,6 +11,9 @@ sequence:
   - delay:
       seconds: 1
 
+  - action: light.turn_off
+    data:
+      entity_id: light.wled_living_room
   - action: light.turn_on
     data:
       entity_id: light.living_room_standing_corner_light

@@ -12,6 +12,8 @@ actions:
   - data:
       entity_id: light.office_lights
     action: light.turn_off
+  - delay:
+      seconds: 2
   - data:
       entity_id: light.wled_office
     action: light.turn_off
