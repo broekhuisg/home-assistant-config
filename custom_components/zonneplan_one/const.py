@@ -34,7 +34,7 @@ BATTERY = "home_battery_installation"
 NONE_IS_ZERO = "none-is-zero"
 NONE_USE_PREVIOUS = "none-is-previous"
 
-VERSION = "2024.10.1"
+VERSION = "2025.2.0"
 
 @dataclass
 class Attribute:
@@ -555,7 +555,7 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
             key="charge_point_data.meta.session_charging_cost_total",
             name="Charge point session cost",
             value_factor=0.0000001,
-            device_class=SensorDeviceClass.MONETARY,
+            icon="mdi:cash",
             native_unit_of_measurement='EUR',
             entity_registry_enabled_default=True,
             state_class=SensorStateClass.MEASUREMENT,
@@ -564,10 +564,20 @@ SENSOR_TYPES: dict[str, list[ZonneplanSensorEntityDescription]] = {
             key="charge_point_data.meta.charging_cost_total",
             name="Charge point cost total",
             value_factor=0.0000001,
-            device_class=SensorDeviceClass.MONETARY,
+            icon="mdi:cash",
             native_unit_of_measurement='EUR',
             entity_registry_enabled_default=True,
             state_class=SensorStateClass.TOTAL_INCREASING,
+        ),
+        "session_flex_result": ZonneplanSensorEntityDescription(
+            key="charge_point_data.meta.session_flex_result",
+            name="Charge point session flex result",
+            icon="mdi:cash",
+            value_factor=0.0000001,
+            native_unit_of_measurement='EUR',
+            state_class=SensorStateClass.TOTAL_INCREASING,
+            entity_registry_enabled_default=True,
+            none_value_behaviour=NONE_IS_ZERO,
         ),
         "session_average_cost_in_cents": ZonneplanSensorEntityDescription(
             key="charge_point_data.meta.session_average_cost_in_cents",
