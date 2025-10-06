@@ -5,20 +5,14 @@ sequence:
   - action: light.turn_on
     data:
       entity_id: light.living_room_standing_corner_light
-      color_temp: 650
+      color_temp: 670
       transition: 1
   - action: light.turn_off
     data:
       entity_id: light.living_room_closet_light
   - action: light.turn_off
     data:
-      entity_id: light.living_room_couch_light
-  - action: light.turn_off
-    data:
       entity_id: light.living_room_television_light
-  # - action: light.turn_on
-  #   data:
-  #     entity_id: light.twinkly_f6bc91
 
   - delay:
       seconds: 2
@@ -26,8 +20,8 @@ sequence:
   - action: light.turn_on
     data:
       entity_id: light.wled_living_room
-      brightness_pct: 5
-      transition: 5
+      brightness_pct: 6
+      transition: 3
       rgb_color: [255, 48, 213]
       effect: "Candle Multi"
   - action: number.set_value
@@ -43,5 +37,8 @@ sequence:
   - action: light.turn_on
     data:
       entity_id: light.living_room_standing_corner_light
-      brightness_pct: 20
-      transition: 5
+      brightness_pct: 10
+      transition: 6
+  - action: light.turn_off
+    data:
+      entity_id: light.living_room_couch_light

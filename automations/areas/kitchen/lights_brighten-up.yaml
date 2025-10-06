@@ -4,7 +4,7 @@ description: >-
 triggers:
   - entity_id: sensor.kitchen_switch_action
     trigger: state
-    to: "brightness_move_up"
+    to: "brightness_step_up"
 conditions: []
 actions:
   - data:

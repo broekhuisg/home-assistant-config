@@ -17,9 +17,10 @@ conditions:
         state: home
         entity_id: person.jimini
 actions:
-  - device_id: 49b026b02dc9b77b85a3e2395afa5ed0
-    domain: climate
-    entity_id: 4dfd5c9a6f08eac750cfc44bc62d88f9
-    type: set_preset_mode
-    preset_mode: home
+  - action: climate.set_preset_mode
+    metadata: {}
+    data:
+      preset_mode: home
+    target:
+      device_id: 49b026b02dc9b77b85a3e2395afa5ed0
 mode: single

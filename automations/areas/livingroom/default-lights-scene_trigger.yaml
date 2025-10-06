@@ -12,5 +12,5 @@ conditions:
     attribute: elevation
 actions:
   - data:
-      entity_id: script.living_room_lights_default
+      entity_id: script.exit_movie_scene
     action: script.turn_on
