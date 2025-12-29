@@ -10,4 +10,9 @@ actions:
     data: {}
     target:
       entity_id: switch.christmas_lights_front
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.sonoff_christmas_backyard
 mode: single

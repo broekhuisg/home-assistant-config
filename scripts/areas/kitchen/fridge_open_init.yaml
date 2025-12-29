@@ -10,6 +10,6 @@ sequence:
     action: tts.cloud_say
   - data:
       message: De koelkast staat nog open!
-    action: notify.telegram_notify
+    action: notify.send_message
   - action: script.turn_on
     entity_id: script.fridge_open_loop

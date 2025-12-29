@@ -19,6 +19,9 @@ sequence:
   - action: light.turn_off
     data:
       entity_id: light.wled_living_room
+  - action: light.turn_on
+    data:
+      entity_id: light.twinkly_f6bc91
 
   - delay:
       seconds: 2
