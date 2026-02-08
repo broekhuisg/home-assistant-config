@@ -9,5 +9,10 @@
 #     metadata: {}
 #     data: {}
 #     target:
-#       entity_id: switch.sonoff_christmas_frontyard
+#       entity_id: switch.christmas_lights_front
+#   - action: switch.turn_off
+#     metadata: {}
+#     data: {}
+#     target:
+#       entity_id: switch.sonoff_christmas_backyard
 # mode: single

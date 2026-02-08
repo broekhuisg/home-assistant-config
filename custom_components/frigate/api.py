@@ -15,6 +15,7 @@ from yarl import URL
 from homeassistant.auth import jwt_wrapper
 
 TIMEOUT = 10
+REVIEW_SUMMARIZE_TIMEOUT = 60
 
 _LOGGER: logging.Logger = logging.getLogger(__name__)
 
@@ -64,6 +65,21 @@ class FrigateApiClient:
         return cast(
             dict[str, Any],
             await self.api_wrapper("get", str(URL(self._host) / "api/stats")),
+        )
+
+    async def async_get_event(
+        self,
+        event_id: str,
+        decode_json: bool = True,
+    ) -> dict[str, Any]:
+        """Get a single event by ID from the API."""
+        return cast(
+            dict[str, Any],
+            await self.api_wrapper(
+                "get",
+                str(URL(self._host) / f"api/events/{event_id}"),
+                decode_json=decode_json,
+            ),
         )
 
     async def async_get_events(
@@ -142,6 +158,39 @@ class FrigateApiClient:
             await self.api_wrapper("get", str(URL(self._host) / "api/config")),
         )
 
+    async def async_get_faces(self) -> list[str]:
+        """Get list of known faces."""
+        try:
+            result = await self.api_wrapper(
+                "get", str(URL(self._host) / "api/faces"), decode_json=True
+            )
+
+            if isinstance(result, dict):
+                return [name for name in result.keys() if name != "train"]
+
+            return []
+        except FrigateApiClientError:
+            return []
+
+    async def async_get_classification_model_classes(
+        self, model_name: str
+    ) -> list[str]:
+        """Get list of classification classes for a model."""
+        try:
+            result = await self.api_wrapper(
+                "get",
+                str(URL(self._host) / f"api/classification/{model_name}/dataset"),
+                decode_json=True,
+            )
+
+            if isinstance(result, dict) and "categories" in result:
+                categories = result["categories"]
+                if isinstance(categories, dict):
+                    return [name for name in categories.keys() if name != "none"]
+            return []
+        except FrigateApiClientError:
+            return []
+
     async def async_get_ptz_info(
         self,
         camera: str,
@@ -175,6 +224,7 @@ class FrigateApiClient:
         playback_factor: str,
         start_time: float,
         end_time: float,
+        name: str | None = None,
         decode_json: bool = True,
     ) -> dict[str, Any] | str:
         """Export recording."""
@@ -184,7 +234,7 @@ class FrigateApiClient:
                 URL(self._host)
                 / f"api/export/{camera}/start/{start_time}/end/{end_time}"
             ),
-            data={"playback": playback_factor},
+            data={"playback": playback_factor, "name": name},
             decode_json=decode_json,
         )
         return cast(dict[str, Any], result) if decode_json else result
@@ -262,6 +312,24 @@ class FrigateApiClient:
             ),
         )
 
+    async def async_review_summarize(
+        self,
+        start_time: float,
+        end_time: float,
+        decode_json: bool = True,
+    ) -> dict[str, Any] | str:
+        """Get review summary for a time period."""
+        result = await self.api_wrapper(
+            "post",
+            str(
+                URL(self._host)
+                / f"api/review/summarize/start/{start_time}/end/{end_time}"
+            ),
+            decode_json=decode_json,
+            timeout=REVIEW_SUMMARIZE_TIMEOUT,
+        )
+        return cast(dict[str, Any], result) if decode_json else result
+
     async def _get_token(self) -> None:
         """
         Obtain a new JWT token using the provided username and password.
@@ -334,6 +402,7 @@ class FrigateApiClient:
         headers: dict | None = None,
         decode_json: bool = True,
         is_login_request: bool = False,
+        timeout: int | None = None,
     ) -> Any:
         """Get information from the API."""
         if data is None:
@@ -345,7 +414,8 @@ class FrigateApiClient:
             headers.update(await self.get_auth_headers())
 
         try:
-            async with async_timeout.timeout(TIMEOUT):
+            timeout_value = timeout if timeout is not None else TIMEOUT
+            async with async_timeout.timeout(timeout_value):
                 func = getattr(self._session, method)
                 if func:
                     response = await func(

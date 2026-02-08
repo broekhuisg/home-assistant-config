@@ -11,7 +11,7 @@ from jinja2 import Template
 import voluptuous as vol
 from yarl import URL
 
-from custom_components.frigate.api import FrigateApiClient
+from custom_components.frigate.api import FrigateApiClient, FrigateApiClientError
 from homeassistant.components.camera import (
     Camera,
     CameraEntityFeature,
@@ -50,6 +50,7 @@ from .const import (
     ATTR_FAVORITE,
     ATTR_INCLUDE_RECORDING,
     ATTR_LABEL,
+    ATTR_NAME,
     ATTR_PLAYBACK_FACTOR,
     ATTR_PTZ_ACTION,
     ATTR_PTZ_ARGUMENT,
@@ -113,6 +114,7 @@ async def async_setup_entry(
             vol.Required(ATTR_PLAYBACK_FACTOR, default="realtime"): str,
             vol.Required(ATTR_START_TIME): str,
             vol.Required(ATTR_END_TIME): str,
+            vol.Optional(ATTR_NAME, default=None): vol.Any(str, None),
         },
         SERVICE_EXPORT_RECORDING,
     )
@@ -323,7 +325,7 @@ class FrigateCamera(
             "via_device": get_frigate_device_identifier(self._config_entry),
             "name": get_friendly_name(self._cam_name),
             "model": self._get_model(),
-            "configuration_url": f"{self._url}/cameras/{self._cam_name}",
+            "configuration_url": f"{self._url}/#{self._cam_name}",
             "manufacturer": NAME,
         }
 
@@ -408,15 +410,26 @@ class FrigateCamera(
         )
 
     async def export_recording(
-        self, playback_factor: str, start_time: str, end_time: str
+        self,
+        playback_factor: str,
+        start_time: str,
+        end_time: str,
+        name: str | None = None,
     ) -> None:
         """Export recording."""
-        await self._client.async_export_recording(
-            self._cam_name,
-            playback_factor,
-            datetime.datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").timestamp(),
-            datetime.datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S").timestamp(),
-        )
+        try:
+            await self._client.async_export_recording(
+                self._cam_name,
+                playback_factor,
+                datetime.datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").timestamp(),
+                datetime.datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S").timestamp(),
+                name=name,
+            )
+        except FrigateApiClientError as err:
+            raise ServiceValidationError(
+                f"Failed to export recording for {self._cam_name}: {err}. "
+                "This may occur if no recordings exist for the specified time range."
+            ) from err
 
     async def favorite_event(self, event_id: str, favorite: bool) -> None:
         """Favorite an event."""

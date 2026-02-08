@@ -1,68 +1,67 @@
-"""Zonneplan button"""
-from typing import Optional, Any
-from voluptuous.validators import Number
+"""Zonneplan button."""
 
-from homeassistant.helpers.update_coordinator import (
-    CoordinatorEntity,
-)
 import logging
-from homeassistant.core import ( 
-    callback, 
-    HomeAssistant
-)
+
 from homeassistant.components.button import (
     ButtonEntity,
 )
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
+from homeassistant.helpers.update_coordinator import (
+    CoordinatorEntity,
+)
 
-from .coordinator import ZonneplanUpdateCoordinator
 from .const import (
-    DOMAIN,
-    CHARGE_POINT,
     BUTTON_TYPES,
+    CHARGE_POINT,
     ZonneplanButtonEntityDescription,
 )
+from .coordinators.account_data_coordinator import ZonneplanConfigEntry
+from .coordinators.charge_point_data_coordinator import ChargePointDataUpdateCoordinator
+from .entity import ChargePointEntity
 
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(hass: HomeAssistant, config_entry, async_add_entities):
-    coordinator: ZonneplanUpdateCoordinator = hass.data[DOMAIN][config_entry.entry_id][
-        "coordinator"
-    ]
-
+async def async_setup_entry(
+    hass: HomeAssistant,  # noqa: ARG001 Unused function argument: `hass`
+    entry: ZonneplanConfigEntry,
+    async_add_entities: AddConfigEntryEntitiesCallback,
+) -> None:
     entities = []
-    for uuid, connection in coordinator.connections.items():
-        charge_point = coordinator.getConnectionValue(uuid, CHARGE_POINT)
+    for uuid, connection in entry.runtime_data.coordinators.items():
+        if connection.charge_point_installation:
+            _LOGGER.debug("Setup buttons for connnection %s", uuid)
 
-        _LOGGER.debug("Setup buttons for connnection %s", uuid)
-
-        if charge_point:
-            for install_index in range(len(charge_point)):
-                for sensor_key in BUTTON_TYPES[CHARGE_POINT]:
-                    entities.append(
-                        ZonneplanButton(
-                            uuid,
-                            sensor_key,
-                            coordinator,
-                            install_index,
-                            BUTTON_TYPES[CHARGE_POINT][sensor_key],
-                        )
-                    )
+            entities.extend(
+                ZonneplanChargePointButton(
+                    uuid,
+                    sensor_key,
+                    connection.charge_point_installation,
+                    0,
+                    BUTTON_TYPES[CHARGE_POINT][sensor_key],
+                )
+                for sensor_key in BUTTON_TYPES[CHARGE_POINT]
+            )
 
     async_add_entities(entities)
 
 
-class ZonneplanButton(CoordinatorEntity, ButtonEntity):
-    """Abstract class for a zonneplan sensor."""
+class ZonneplanChargePointButton(ChargePointEntity, CoordinatorEntity, ButtonEntity):
+    """Zonneplan Charge Point Button."""
 
-    coordinator: ZonneplanUpdateCoordinator
+    coordinator: ChargePointDataUpdateCoordinator
+    entity_description: ZonneplanButtonEntityDescription
+    _connection_uuid: str
+    _button_key: str
+    _install_index: int
 
     def __init__(
         self,
-        connection_uuid,
+        connection_uuid: str,
         button_key: str,
-        coordinator: ZonneplanUpdateCoordinator,
-        install_index: Number,
+        coordinator: ChargePointDataUpdateCoordinator,
+        install_index: int,
         description: ZonneplanButtonEntityDescription,
     ) -> None:
         """Initialize the button."""
@@ -73,29 +72,19 @@ class ZonneplanButton(CoordinatorEntity, ButtonEntity):
         self.entity_description = description
 
     @property
-    def install_uuid(self) -> str:
-        """Return install ID."""
-        return self.coordinator.getConnectionValue(
-            self._connection_uuid,
-            "charge_point_installation.{install_index}.uuid".format(
-                install_index=self._install_index
-            ),
-        )
-
-    @property
-    def unique_id(self) -> Optional[str]:
+    def unique_id(self) -> str | None:
         """Return a unique ID."""
         return self.install_uuid + "_" + self._button_key
 
     @property
     def available(self) -> bool:
         """Return if entity is available."""
-        if not self.coordinator.last_update_success:
+        if not self.coordinator.data or not self.coordinator.last_update_success:
             return False
 
-        state = self.coordinator.getConnectionValue(self._connection_uuid, "charge_point_data.state")
+        state = self.coordinator.get_data_value("state")
 
-        if not state["connectivity_state"]:
+        if not state or not state["connectivity_state"]:
             return False
 
         if "processing" in state:
@@ -104,50 +93,13 @@ class ZonneplanButton(CoordinatorEntity, ButtonEntity):
         if self._button_key == "stop" and state["state"] == "Charging":
             return True
 
-        if self._button_key == "start" and state["state"] == "VehicleDetected":
-            return True
-
-    @property
-    def device_info(self):
-        """Return the device information."""
-        return {
-            "identifiers": {(DOMAIN, self.install_uuid)},
-            "via_device": (DOMAIN, self._connection_uuid),
-            "manufacturer": "Zonneplan",
-            "name": self.coordinator.getConnectionValue(
-                self._connection_uuid,
-                "charge_point_installation.{install_index}.label".format(
-                    install_index=self._install_index
-                ),
-            ) + (f" ({self._install_index + 1})" if self._install_index and self._install_index > 0 else ""),
-            "model": self.coordinator.getConnectionValue(
-                self._connection_uuid,
-                "charge_point_installation.{install_index}.label".format(
-                    install_index=self._install_index
-                ),
-            ),
-            "serial_number": self.coordinator.getConnectionValue(
-                self._connection_uuid,
-                "charge_point_installation.{install_index}.meta.serial_number".format(
-                    install_index=self._install_index
-                ),
-            ),
-        }
+        return bool(self._button_key == "start" and state["state"] == "VehicleDetected")
 
     async def async_press(self) -> None:
         """Handle the button press."""
-
-        charge_point_uuid = self.coordinator.getConnectionValue(
-            self._connection_uuid, "charge_point_data.uuid"
-        )
-
         if self._button_key == "start":
-            await self.coordinator.async_startCharge(
-                self._connection_uuid, charge_point_uuid
-            )
+            await self.coordinator.async_start_charge()
         elif self._button_key == "stop":
-            await self.coordinator.async_stopCharge(
-                self._connection_uuid, charge_point_uuid
-            )
+            await self.coordinator.async_stop_charge()
         else:
             _LOGGER.warning("Unknown button action for %s", self._button_key)
