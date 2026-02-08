@@ -89,28 +89,68 @@
         "name": "Verwacht tarief uur 8"
       },
       "forecast_tariff_group_hour_1": {
-        "name": "Verwachte tariefgroep uur 1"
+        "name": "Verwachte tariefgroep uur 1",
+        "state": {
+          "high": "hoog",
+          "low": "laag",
+          "normal": "normaal"
+        }
       },
       "forecast_tariff_group_hour_2": {
-        "name": "Verwachte tariefgroep uur 2"
+        "name": "Verwachte tariefgroep uur 2",
+        "state": {
+          "high": "hoog",
+          "low": "laag",
+          "normal": "normaal"
+        }
       },
       "forecast_tariff_group_hour_3": {
-        "name": "Verwachte tariefgroep uur 3"
+        "name": "Verwachte tariefgroep uur 3",
+        "state": {
+          "high": "hoog",
+          "low": "laag",
+          "normal": "normaal"
+        }
       },
       "forecast_tariff_group_hour_4": {
-        "name": "Verwachte tariefgroep uur 4"
+        "name": "Verwachte tariefgroep uur 4",
+        "state": {
+          "high": "hoog",
+          "low": "laag",
+          "normal": "normaal"
+        }
       },
       "forecast_tariff_group_hour_5": {
-        "name": "Verwachte tariefgroep uur 5"
+        "name": "Verwachte tariefgroep uur 5",
+        "state": {
+          "high": "hoog",
+          "low": "laag",
+          "normal": "normaal"
+        }
       },
       "forecast_tariff_group_hour_6": {
-        "name": "Verwachte tariefgroep uur 6"
+        "name": "Verwachte tariefgroep uur 6",
+        "state": {
+          "high": "hoog",
+          "low": "laag",
+          "normal": "normaal"
+        }
       },
       "forecast_tariff_group_hour_7": {
-        "name": "Verwachte tariefgroep uur 7"
+        "name": "Verwachte tariefgroep uur 7",
+        "state": {
+          "high": "hoog",
+          "low": "laag",
+          "normal": "normaal"
+        }
       },
       "forecast_tariff_group_hour_8": {
-        "name": "Verwachte tariefgroep uur 8"
+        "name": "Verwachte tariefgroep uur 8",
+        "state": {
+          "high": "hoog",
+          "low": "laag",
+          "normal": "normaal"
+        }
       },
       "yield_total": {
         "name": "Opbrengst totaal"
@@ -134,34 +174,34 @@
         "name": "Opbrengst vandaag"
       },
       "electricity_consumption_today": {
-        "name": "Elektriciteitsverbruik vandaag"
+        "name": "Verbruik vandaag"
       },
       "electricity_returned_today": {
-        "name": "Elektriciteit teruggeleverd vandaag"
+        "name": "Teruggeleverd vandaag"
       },
       "electricity_delivery_costs_today": {
-        "name": "Elektriciteitsleveringskosten vandaag"
+        "name": "Afname vandaag"
       },
       "electricity_delivery_costs_this_month": {
-        "name": "Elektriciteitsleveringskosten deze maand"
+        "name": "Afname deze maand"
       },
       "electricity_delivery_costs_this_year": {
-        "name": "Elektriciteitsleveringskosten dit jaar"
+        "name": "Afname dit jaar"
       },
       "electricity_production_costs_today": {
-        "name": "Elektriciteitsproductiekosten vandaag"
+        "name": "Teruglevering vandaag"
       },
       "electricity_production_costs_this_month": {
-        "name": "Elektriciteitsproductiekosten deze maand"
+        "name": "Teruglevering deze maand"
       },
       "electricity_production_costs_this_year": {
-        "name": "Elektriciteitsproductiekosten dit jaar"
+        "name": "Teruglevering dit jaar"
       },
       "gas_consumption_today": {
         "name": "Gasverbruik vandaag"
       },
       "gas_delivery_costs_today": {
-        "name": "Gasleveringskosten vandaag"
+        "name": "Gas afname vandaag"
       },
       "electricity_consumption": {
         "name": "Elektriciteitsverbruik"
@@ -222,10 +262,10 @@
         "name": "Totaal verdiend"
       },
       "result_this_year": {
-        "name": "Resultaat dit jaar"
+        "name": "Opbrengst dit jaar"
       },
       "result_last_year": {
-        "name": "Resultaat vorig jaar"
+        "name": "Opbrengst vorig jaar"
       },
       "total_day": {
         "name": "Vandaag"
@@ -234,10 +274,10 @@
         "name": "Gemiddelde dag"
       },
       "result_this_month": {
-        "name": "Resultaat deze maand"
+        "name": "Opbrengst deze maand"
       },
       "result_last_month": {
-        "name": "Resultaat vorige maand"
+        "name": "Opbrengst vorige maand"
       },
       "delivery_today": {
         "name": "Levering vandaag"
@@ -297,6 +337,36 @@
       },
       "charge_point_session_charged_distance": {
         "name": "Laadpaal sessie geladen afstand"
+      },
+      "delivery_costs_this_month": {
+        "name": "Netto afname deze maand"
+      },
+      "delivery_costs_this_year": {
+        "name": "Netto afname dit jaar"
+      },
+      "production_costs_this_month": {
+        "name": "Netto teruggeleverd deze maand"
+      },
+      "production_costs_this_year": {
+        "name": "Netto teruggeleverd dit jaar"
+      },
+      "energy_delivered_sum_today": {
+        "name": "Netto afname vandaag"
+      },
+      "energy_delivered_sum_this_month": {
+        "name": "Netto afname deze maand"
+      },
+      "energy_delivered_sum_this_year": {
+        "name": "Netto afname dit jaar"
+      },
+      "energy_produced_sum_today": {
+        "name": "Netto teruggeleverd vandaag"
+      },
+      "energy_produced_sum_this_month": {
+        "name": "Netto teruggeleverd deze maand"
+      },
+      "energy_produced_sum_this_year": {
+        "name": "Netto teruggeleverd dit jaar"
       }
     },
     "binary_sensor": {

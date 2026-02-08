@@ -274,6 +274,36 @@
       },
       "charge_point_session_charged_distance": {
         "name": "Charge point session charged distance"
+      },
+      "delivery_costs_this_month": {
+        "name": "Net delivery costs this month"
+      },
+      "delivery_costs_this_year": {
+        "name": "Net delivery costs this year"
+      },
+      "production_costs_this_month": {
+        "name": "Net production costs this month"
+      },
+      "production_costs_this_year": {
+        "name": "Net production costs this year"
+      },
+      "energy_delivered_sum_today": {
+        "name": "Net delivery today"
+      },
+      "energy_delivered_sum_this_month": {
+        "name": "Net delivery this month"
+      },
+      "energy_delivered_sum_this_year": {
+        "name": "Net delivery this year"
+      },
+      "energy_produced_sum_today": {
+        "name": "Net production today"
+      },
+      "energy_produced_sum_this_month": {
+        "name": "Net production this month"
+      },
+      "energy_produced_sum_this_year": {
+        "name": "Net production this year"
       }
     },
     "binary_sensor": {
