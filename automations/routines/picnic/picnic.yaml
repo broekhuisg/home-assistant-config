@@ -1,19 +1,19 @@
-alias: Picnic delivery soon
-mode: single
-description: Send a notification when the short window of the picnic delivery is near
-triggers:
-  - trigger: template # Trigger 10 minutes before eta start time.
-    value_template: >-
-      {% if states('sensor.picnic_next_delivery_eta_start') not in ['unknown','unavailable','none'] %}
-        {{ 601 > (as_timestamp(states('sensor.picnic_next_delivery_eta_start'), 0) - as_timestamp(now(), 0)) > 540}}
-      {% endif %}
-actions:
-  - data:
-      entity_id:
-        - media_player.living_room_display
-      message: >
-        Picnic bezorgt tussen {{((states('sensor.picnic_next_delivery_eta_start')|as_timestamp -             
-         utcnow()|as_timestamp)/60)|round}} minuten en {{((states('sensor.picnic_next_delivery_eta_end')|as_timestamp -             
-         utcnow()|as_timestamp)/60)|round}} minuten!
-      language: nl-NL
-    action: tts.cloud_say
+# alias: Picnic delivery soon
+# mode: single
+# description: Send a notification when the short window of the picnic delivery is near
+# triggers:
+#   - trigger: template # Trigger 10 minutes before eta start time.
+#     value_template: >-
+#       {% if states('sensor.picnic_next_delivery_eta_start') not in ['unknown','unavailable','none'] %}
+#         {{ 601 > (as_timestamp(states('sensor.picnic_next_delivery_eta_start'), 0) - as_timestamp(now(), 0)) > 540}}
+#       {% endif %}
+# actions:
+#   - data:
+#       entity_id:
+#         - media_player.living_room_display
+#       message: >
+#         Picnic bezorgt tussen {{((states('sensor.picnic_next_delivery_eta_start')|as_timestamp -
+#          utcnow()|as_timestamp)/60)|round}} minuten en {{((states('sensor.picnic_next_delivery_eta_end')|as_timestamp -
+#          utcnow()|as_timestamp)/60)|round}} minuten!
+#       language: nl-NL
+#     action: tts.cloud_say

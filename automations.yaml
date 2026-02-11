@@ -1,0 +1,228 @@
+- id: '1770743450476'
+  alias: Keuken lampen toggle - knop
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: bb82727083e386f905ad52165ab829f5
+    type: action
+    subtype: 'on'
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    target:
+      entity_id: light.kitchen_lights
+    data: {}
+  mode: single
+- id: '1770746150187'
+  alias: Keuken lampen helderheid omhoog - knop
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: bb82727083e386f905ad52165ab829f5
+    type: action
+    subtype: brightness_step_up
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.kitchen_lights
+    data:
+      brightness_step_pct: 10
+  mode: single
+- id: '1770746302439'
+  alias: Keuken lampen helderheid omlaag - knop
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: bb82727083e386f905ad52165ab829f5
+    type: action
+    subtype: brightness_step_down
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.kitchen_lights
+    data:
+      brightness_step_pct: -10
+  mode: single
+- id: '1770753405757'
+  alias: Woonkamer lampen toggle - knop
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: ff9e223247ca4b341fbcd7adaa1be632
+    type: action
+    subtype: toggle
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    target:
+      entity_id: light.living_room_lights
+    data: {}
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.wled_living_room
+    data: {}
+  mode: single
+- id: '1770753509141'
+  alias: Woonkamer activeer film scene - knop
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: ff9e223247ca4b341fbcd7adaa1be632
+    type: action
+    subtype: arrow_left_click
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.movie_scene
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1770753612663'
+  alias: Woonkamer activeer standaard licht mode - knop
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: ff9e223247ca4b341fbcd7adaa1be632
+    type: action
+    subtype: arrow_right_click
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.living_room_lights_default
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1770754284761'
+  alias: Woonkamer activeer standaard licht mode - exit mediaspeler
+  description: Activeer de standaard licht mode wanneer de media klaar is met spelen
+  triggers:
+  - trigger: state
+    entity_id: media_player.shield
+    from: playing
+  conditions:
+  - condition: numeric_state
+    below: 5
+    entity_id: sun.sun
+    attribute: elevation
+  actions:
+  - action: script.exit_movie_scene
+    data: {}
+  mode: single
+- id: '1770754432469'
+  alias: Woonkamer activeer film scene - start mediaspeler
+  description: Activeer de film modus wanneer er media wordt afgespeeld
+  triggers:
+  - trigger: state
+    entity_id: media_player.shield
+    to: playing
+  conditions:
+  - condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sun.sun
+      below: 5
+    - condition: state
+      entity_id: media_player.shield
+      state:
+      - Netflix
+      - Kodi
+      attribute: app_name
+  actions:
+  - action: script.movie_scene
+    data: {}
+  mode: single
+- id: '1770790726944'
+  alias: Woonkamer lampen aan - beweging
+  description: ''
+  triggers:
+  - entity_id: binary_sensor.living_room_motion_sensor_occupancy
+    trigger: state
+    to: 'on'
+  conditions:
+  - condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: 4
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: media_player.shield
+        state:
+        - playing
+  actions:
+  - action: script.living_room_lights_default
+    data: {}
+  mode: single
+- id: '1770791075139'
+  alias: Woonkamer lampen uit - beweging
+  description: ''
+  triggers:
+  - entity_id: binary_sensor.living_room_motion_sensor_occupancy
+    trigger: state
+    to: 'off'
+    for:
+      minutes: 20
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: media_player.shield
+      state:
+      - playing
+  actions:
+  - data: {}
+    action: light.turn_off
+    target:
+      entity_id:
+      - light.living_room_lights
+      - light.wled_living_room
+  mode: single
+- id: '1770791672405'
+  alias: Keukenlamp 1 uit - achterdeur dicht na 2 minuten
+  description: ''
+  triggers:
+  - entity_id: binary_sensor.backdoor_door_sensor_contact
+    trigger: state
+    to: 'off'
+  conditions:
+  - condition: state
+    entity_id: light.kitchen_light_2
+    state: 'off'
+  actions:
+  - data:
+      entity_id: light.kitchen_light_1
+    action: light.turn_off
+  mode: single
+- id: '1770791760884'
+  alias: Keukenlamp 1 aan - achterdeur is 2+ minuten open
+  description: ''
+  triggers:
+  - entity_id: binary_sensor.backdoor_door_sensor_contact
+    trigger: state
+    to: 'on'
+    for:
+      seconds: 120
+  conditions:
+  - condition: state
+    entity_id: light.kitchen_light_2
+    state: 'off'
+  actions:
+  - data:
+      entity_id: light.kitchen_light_1
+      brightness_pct: 100
+      flash: long
+    action: light.turn_on
+  mode: single
