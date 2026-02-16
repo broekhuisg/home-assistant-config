@@ -17,3 +17,5 @@ default_config:
 # Enable ffmpeg for Eufy
 ffmpeg:
 
+frontend:
+  themes: !include_dir_merge_named themes
