@@ -160,10 +160,16 @@
       below: 4
     - condition: not
       conditions:
-      - condition: state
-        entity_id: media_player.shield
-        state:
-        - playing
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: media_player.shield
+          attribute: app_name
+          state: Netflix
+        - condition: state
+          entity_id: media_player.shield
+          attribute: app_name
+          state: Kodi
   actions:
   - action: light.turn_on
     metadata: {}
@@ -390,13 +396,16 @@
       entity_id: light.office_lights
     action: light.turn_off
   - delay:
-      seconds: 2
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
   - data:
       entity_id: light.wled_office
     action: light.turn_off
   mode: single
 - id: '1770842282219'
-  alias: Kantoor grote lamp en wled aan - knop
+  alias: Kantoor grote lamp en kleine lamp toggle - knop
   description: ''
   triggers:
   - domain: mqtt
@@ -409,22 +418,11 @@
   - action: light.toggle
     metadata: {}
     target:
-      entity_id: light.office_corner_color_light
+      entity_id: light.office_lights
     data: {}
-  - action: light.toggle
-    metadata: {}
-    target:
-      entity_id: light.wled_office
-    data:
-      effect: Rainbow Runner
-      brightness: 150
-      rgb_color:
-      - 255
-      - 255
-      - 255
   mode: single
 - id: '1770842401520'
-  alias: Kantoor kleine lamp aan - knop
+  alias: Kantoor wled toggle - knop
   description: ''
   triggers:
   - domain: mqtt
@@ -438,7 +436,7 @@
     metadata: {}
     data: {}
     target:
-      entity_id: light.office_bureau_light
+      entity_id: light.wled_office
   mode: single
 - id: '1770842480311'
   alias: Kantoor alle lampen aan - knop
@@ -1028,4 +1026,18 @@
   - data:
       message: Batterij van brandalarm overloop is bijna leeg
     action: notify.telegram_notify
+  mode: single
+- id: '1771935598996'
+  alias: Voortuin kerstverlichting aan in de ochtend - tijd
+  description: ''
+  triggers:
+  - trigger: time
+    at: 06:00:00
+  conditions: []
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.sonoff_christmas_backyard
   mode: single
