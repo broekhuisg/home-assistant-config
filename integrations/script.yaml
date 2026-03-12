@@ -1,1 +1,1 @@
-script: !include_dir_named ../scripts
+script: !include ../scripts.yaml

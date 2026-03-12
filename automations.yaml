@@ -84,8 +84,10 @@
     trigger: device
   conditions: []
   actions:
-  - action: script.movie_scene
+  - action: scene.turn_on
     metadata: {}
+    target:
+      entity_id: scene.film_scene
     data: {}
   mode: single
 - id: '1770753612663'
@@ -99,8 +101,10 @@
     trigger: device
   conditions: []
   actions:
-  - action: script.living_room_lights_default
+  - action: scene.turn_on
     metadata: {}
+    target:
+      entity_id: scene.woonkamer_standaard_licht_scene
     data: {}
   mode: single
 - id: '1770754284761'
@@ -116,8 +120,12 @@
     entity_id: sun.sun
     attribute: elevation
   actions:
-  - action: script.exit_movie_scene
-    data: {}
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.woonkamer_standaard_licht_scene
+    data:
+      transition: 5
   mode: single
 - id: '1770754432469'
   alias: Woonkamer activeer film scene - start mediaspeler
@@ -141,8 +149,12 @@
       attribute: app_name
       state: Netflix
   actions:
-  - action: script.movie_scene
-    data: {}
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.film_scene
+    data:
+      transition: 4
   mode: restart
 - id: '1770790726944'
   alias: Woonkamer lampen aan - beweging
@@ -171,15 +183,10 @@
           attribute: app_name
           state: Kodi
   actions:
-  - action: light.turn_on
+  - action: scene.turn_on
     metadata: {}
     target:
-      entity_id: light.living_room_lights
-    data: {}
-  - action: light.turn_off
-    metadata: {}
-    target:
-      entity_id: light.wled_living_room
+      entity_id: scene.woonkamer_standaard_licht_scene
     data: {}
   mode: single
 - id: '1770791075139'
@@ -305,20 +312,34 @@
     domain: switch
   mode: single
 - id: '1770841758032'
-  alias: Keuken deur staat te lang open - tijd
-  description: TTS to Google speakers when the fridge door is open for longer then
-    120 seconds. Repeats every 20 seconds until closed.
+  alias: Keuken koelkast deur staat te lang open - tijd
+  description: ''
   triggers:
-  - entity_id: binary_sensor.fridge_door_sensor_contact
+  - entity_id:
+    - binary_sensor.fridge_door_sensor_contact
     trigger: state
-    to: 'on'
+    to:
+    - 'on'
     for:
-      seconds: 120
+      hours: 0
+      minutes: 2
+      seconds: 10
   conditions: []
   actions:
-  - action: script.fridge_open_init
-    data: {}
-  mode: single
+  - repeat:
+      while:
+      - condition: state
+        entity_id: binary_sensor.fridge_door_sensor_contact
+        state: 'on'
+      sequence:
+      - action: notify.telegram_notify
+        metadata: {}
+        data:
+          message: De koelkast staat nog open!
+          title: Koelkast
+      - delay:
+          seconds: 30
+  mode: restart
 - id: '1770841831432'
   alias: Keuken lamp aan - beweging
   description: Turn lights on when there is motion after sunset.
@@ -875,7 +896,7 @@
     action: notify.telegram_notify
   mode: single
 - id: '1771062382074'
-  alias: Route vakantie lampen aan - zon
+  alias: Routine vakantie lampen aan - zon
   description: ''
   triggers:
   - trigger: sun
@@ -883,21 +904,24 @@
     offset: 0
   conditions: []
   actions:
-  - data:
+  - action: light.turn_on
+    metadata: {}
+    target:
       entity_id: light.holiday_lights
-    action: light.turn_on
+    data: {}
   mode: single
 - id: '1771062498198'
-  alias: Route vakantie lampen uit - tijd
+  alias: Routine vakantie lampen uit - tijd
   description: Turn lights off when when we are on holiday.
   triggers:
   - trigger: time
     at: '22:10:00'
   conditions: []
   actions:
-  - data:
-      entity_id: light.holiday_lights
+  - data: {}
     action: light.turn_off
+    target:
+      entity_id: light.holiday_lights
   mode: single
 - id: '1771062833591'
   alias: Routine picnic komt eraan - tijd
